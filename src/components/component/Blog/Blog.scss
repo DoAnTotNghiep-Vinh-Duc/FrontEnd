@@ -1,0 +1,99 @@
+.home-blog {
+    margin: 60px 0;
+    width: 100%;
+    padding: 0 50px;
+    font-family: "Josefin Sans", sans-serif;
+    .home-blog-title {
+        color: #1a0b5b;
+        text-align: center;
+        font-size: 30px;
+    }
+    .home-blog-list {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        color: #1a0b5b;
+        .home-blog-1 {
+            width: 30%;
+            height: 280px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            border-radius: 5px;
+            transition: all 0.5s ease-in-out;
+            cursor: pointer;
+            &:hover {
+                transform: translateY(-5%);
+            }
+            .home-blog-1-img {
+                width: 100%;
+                height: 70%;
+                border-radius: 5px;
+                overflow: hidden;
+                position: relative;
+                &:hover {
+                    &::after {
+                        opacity: 1;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    &::before {
+                        opacity: 1;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0%;
+                    height: 0%;
+                    background: rgba(rgb(49, 47, 47), 0.2);
+                    opacity: 0;
+                    transition: all 0.4s ease-out;
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0%;
+                    height: 0%;
+                    background: rgba(rgb(49, 47, 47), 0.2);
+                    opacity: 0;
+                    transition: all 0.5s ease-out;
+                }
+                img {
+                    border-radius: 5px;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .home-blog-1-location-time {
+                padding: 0 10px;
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+                .home-blog-1-location {
+                    display: flex;
+                    i {
+                        margin-right: 5px;
+                        color: #fb2e86;
+                    }
+                }
+                .home-blog-1-time {
+                    display: flex;
+                    i {
+                        margin-right: 5px;
+                        color: #ffa454;
+                    }
+                }
+            }
+            .home-blog-1-title {
+                padding: 0 10px;
+                margin-top: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,403 @@
+.product-content-filter-branch-filter-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-left: 15px;
+    height: 30px;
+    color: #7E81A2;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .product-content-filter-branch-filter-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark-branch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .product-content-filter-branch-filter-container:hover input ~ .checkmark-branch {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .product-content-filter-branch-filter-container input:checked ~ .checkmark-branch {
+    background-color: #603EFF;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark-branch:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .product-content-filter-branch-filter-container input:checked ~ .checkmark-branch:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .product-content-filter-branch-filter-container .checkmark-branch:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+
+
+
+/* price */
+
+.product-content-filter-price-filter-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 15px;
+  height: 30px;
+  color: #7E81A2;
+}
+
+/* Hide the browser's default checkbox */
+.product-content-filter-price-filter-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-price {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #FFDBF1;
+}
+
+/* On mouse-over, add a grey background color */
+.product-content-filter-price-filter-container:hover input ~ .checkmark-price {
+  background-color: rgb(243, 202, 229);
+}
+
+/* When the checkbox is checked, add a blue background */
+.product-content-filter-price-filter-container input:checked ~ .checkmark-price {
+  background-color: #FF3EB2;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-price:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.product-content-filter-price-filter-container input:checked ~ .checkmark-price:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.product-content-filter-price-filter-container .checkmark-price:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+/* color */
+.product-content-filter-color-filter-container {
+  /* display: block; */
+  width: 75px;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.product-content-filter-color-filter-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark-color-white {
+  border: 1px solid black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border-radius: 50%;
+}
+.checkmark-color-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border-radius: 50%;
+}
+.checkmark-color-brown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: brown;
+  border-radius: 50%;
+}
+.checkmark-color-ice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #FFBF95;
+  border-radius: 50%;
+}
+.checkmark-color-orange {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #FF9437;
+  border-radius: 50%;
+}
+.checkmark-color-blue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #5E37FF;
+  border-radius: 50%;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark-color-white:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkmark-color-black:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkmark-color-brown:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkmark-color-ice:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkmark-color-orange:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkmark-color-blue:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-white:after {
+  display: block;
+}
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-black:after {
+  display: block;
+}
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-brown:after {
+  display: block;
+}
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-ice:after {
+  display: block;
+}
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-orange:after {
+  display: block;
+}
+.product-content-filter-color-filter-container input:checked ~ .checkmark-color-blue:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.product-content-filter-color-filter-container .checkmark-color-white:after {
+  top: 4px;
+  left: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: black;
+}
+.product-content-filter-color-filter-container .checkmark-color-black:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+.product-content-filter-color-filter-container .checkmark-color-brown:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+.product-content-filter-color-filter-container .checkmark-color-ice:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: black;
+}
+.product-content-filter-color-filter-container .checkmark-color-orange:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+.product-content-filter-color-filter-container .checkmark-color-blue:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+
+
+/* RATE*/
+.product-content-filter-rate-filter-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 15px;
+  height: 30px;
+  color: #7E81A2;
+}
+
+/* Hide the browser's default checkbox */
+.product-content-filter-rate-filter-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-rate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #FFF6DA;
+}
+
+/* On mouse-over, add a grey background color */
+.product-content-filter-rate-filter-container:hover input ~ .checkmark-rate {
+  background-color: rgb(248, 247, 167);
+}
+
+/* When the checkbox is checked, add a blue background */
+.product-content-filter-rate-filter-container input:checked ~ .checkmark-rate {
+  background-color: #FFCC2E;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-rate:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.product-content-filter-rate-filter-container input:checked ~ .checkmark-rate:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.product-content-filter-rate-filter-container .checkmark-rate:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

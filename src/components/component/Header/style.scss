@@ -1,0 +1,183 @@
+.header {
+    width: 100%;
+    height: 50px;
+    padding: 10px 25px;
+    background-color: #7e33e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
+    position: relative;
+    z-index: 999;
+    .header-left {
+        display: flex;
+        .header-phone {
+            margin-right: 15px;
+            font-size: 13px;
+            a {
+                i {
+                    margin-right: 5px;
+                }
+            }
+            &:hover {
+                color: #fb2e86;
+            }
+        }
+        .header-mail {
+            font-size: 13px;
+            a {
+                i {
+                    margin-right: 5px;
+                }
+            }
+            &:hover {
+                color: #fb2e86;
+            }
+        }
+    }
+    .header-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+            font-size: 45px;
+            margin-right: 15px;
+            position: relative;
+            .free {
+                font-size: 10px;
+                position: absolute;
+                top: 32%;
+                left: 10%;
+            }
+        }
+        .title {
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .sub-title {
+            background-color: white;
+            color: #7e33e0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-style: italic;
+        }
+    }
+    .header-right {
+        display: flex;
+        .header-right-account {
+            margin-right: 20px;
+            i {
+                margin-right: 5px;
+            }
+            a {
+                &:hover {
+                    color: #fb2e86;
+                }
+            }
+        }
+        .line {
+            border: 1px solid white;
+            margin-right: 20px;
+        }
+        .header-right-languages {
+            margin-right: 15px;
+            position: relative;
+            cursor: pointer;
+
+            .language-vietnam {
+                i {
+                    margin-left: 10px;
+                }
+            }
+            &:hover {
+                .language-vietnam {
+                    color: #fb2e86;
+                }
+                .dropdown-languages {
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateY(0);
+                }
+            }
+            .dropdown-languages {
+                color: black;
+                position: absolute;
+                top: 20px;
+                right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                border-radius: 5px;
+                width: 130px;
+                height: 80px;
+                margin-top: 10px;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                background-color: white;
+                transition: all 0.3s;
+                transform: translateY(10px);
+                opacity: 0;
+                visibility: hidden;
+                z-index: 99;
+                a {
+                    padding-left: 15px;
+                    margin-bottom: 10px;
+                    width: 100%;
+                    &:hover {
+                        color: #fb2e86;
+                    }
+                }
+            }
+        }
+        .header-right-cash {
+            position: relative;
+            cursor: pointer;
+            .cash-vietnam {
+                i {
+                    margin-left: 10px;
+                }
+            }
+            &:hover {
+                .cash-vietnam {
+                    color: #fb2e86;
+                }
+                .dropdown-cash {
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateY(0);
+                }
+            }
+            .dropdown-cash {
+                color: black;
+                position: absolute;
+                top: 20px;
+                right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                border-radius: 5px;
+                width: 130px;
+                height: 80px;
+                margin-top: 10px;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                background-color: white;
+                transition: all 0.3s;
+                transform: translateY(10px);
+                opacity: 0;
+                visibility: hidden;
+                z-index: 99;
+                a {
+                    padding-left: 15px;
+                    margin-bottom: 10px;
+                    width: 100%;
+                    &:hover {
+                        color: #fb2e86;
+                    }
+                }
+            }
+        }
+    }
+}

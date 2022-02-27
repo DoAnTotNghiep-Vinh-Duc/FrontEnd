@@ -1,0 +1,110 @@
+.notification {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    .notification-title {
+        width: 100%;
+        height: 120px;
+        background-image: url(../../../../assets/images/bgr_title.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        .title {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            span {
+                margin: 0 10px;
+                color: white;
+            }
+            .cart-title-bill {
+                color: #fb2e86;
+            }
+        }
+    }
+    .notification-content {
+        width: 100%;
+        height: 300px;
+        margin: 40px 0;
+        padding: 0 200px;
+        display: flex;
+        justify-content: space-between;
+        .notification-content-left {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .notification-content-left-image {
+                width: 150px;
+                height: 150px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+        .notification-content-right {
+            width: 80%;
+            height: 100%;
+            padding: 0 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .notification-content-right-check {
+                margin-top: 30px;
+                width: 100%;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                .notification-content-right-check-image {
+                    border: 1px solid gray;
+                    border-radius: 50%;
+                    width: 50px;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    img {
+                        width: 80%;
+                        height: 80%;
+                    }
+                }
+            }
+            .notification-content-right-title {
+                margin-top: 15px;
+                width: 100%;
+                height: auto;
+                color: #101750;
+                font-size: 25px;
+                font-weight: bold;
+                text-align: center;
+            }
+            .notification-content-right-descrip {
+                margin-top: 15px;
+                width: 100%;
+                height: auto;
+                color: #8d92a7;
+                text-align: center;
+                font-size: 16px;
+            }
+            .notification-content-right-btnshopping {
+                margin-top: 30px;
+                width: 40%;
+                height: 20px;
+                padding: 20px 40px;
+                background-color: #fb2e86;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                border-radius: 5px;
+            }
+        }
+    }
+}
