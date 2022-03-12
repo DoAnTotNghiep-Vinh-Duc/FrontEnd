@@ -32,3 +32,13 @@ button {
     outline: none;
     background: none;
 }
+
+@each $color, $val in $colors {
+    .color-#{$color} {
+        color: $val;
+    }
+
+    .bg-#{$color} {
+        background-color: $val;
+    }
+}

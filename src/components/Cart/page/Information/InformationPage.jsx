@@ -80,9 +80,15 @@ function InformationPage(props) {
               size="small"
             />
           </div>
-          <div className="cart-information-content-btnback">
-            <i className="bi bi-arrow-return-left"></i>
-            Tiếp tục mua sắm
+          <div className="payment-content-information-btn">
+            <div className="payment-content-information-btnback">
+              <i className="bi bi-arrow-return-left"></i>
+              Quay lại
+            </div>
+            <div className="payment-content-information-btnpayment">
+              <i className="bi bi-arrow-return-right"></i>
+              Tiếp tục
+            </div>
           </div>
         </div>
         <div className="cart-information-content-cart">

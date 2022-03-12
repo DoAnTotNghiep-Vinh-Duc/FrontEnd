@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import PasswordField from "../../components/form-control/PasswordField";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 SignUp.propTypes = {};
 
@@ -39,15 +41,47 @@ function SignUp(props) {
     console.log(value);
   };
 
+  const responseGoogle = ({ tokenId }) => {
+    console.log(tokenId);
+  };
+
+  const clickFacebook = () => {
+    console.log("clicked fb");
+  };
+
+  const responseFacebook = ({ accessToken, userID }) => {
+    console.log({ accessToken, userID });
+  };
+
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
       <h1>Tạo tài khoản</h1>
       <div className="social-container">
-        <Link to="/" className="social-fb">
-          <i className="fab fa-facebook-f"></i>
+        <Link className="social-fb">
+          <i className="fab fa-facebook-f">
+            <div className="social-fb-login">
+              <FacebookLogin
+                appId="710231577005749"
+                fields="name,email,picture"
+                callback={responseFacebook}
+                onClick={clickFacebook}
+                textButton=""
+              />
+            </div>
+          </i>
         </Link>
-        <Link to="/" className="social-gg">
-          <i className="fab fa-google-plus-g"></i>
+        <Link className="social-gg">
+          <i className="fab fa-google-plus-g">
+            <div className="social-gg-login">
+              <GoogleLogin
+                clientId="470652201368-ordd9phkfdtrd8u44pmubg41t3vnm8mi.apps.googleusercontent.com"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                buttonText=""
+                cookiePolicy={"single_host_origin"}
+              />
+            </div>
+          </i>
         </Link>
       </div>
       <span>Hoặc sử dụng email để đăng kí</span>

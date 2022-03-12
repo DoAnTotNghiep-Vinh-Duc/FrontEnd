@@ -30,8 +30,7 @@ function Header(props) {
       <div className="header-right">
         <div className="header-right-account">
           <i className="far fa-user"></i>
-          <a href="/signin">Đăng nhập /</a>
-          <a href="/signin"> Đăng kí</a>
+          <a href="/auth">Tài khoản</a>
         </div>
         <div className="line"></div>
         <div className="header-right-languages">

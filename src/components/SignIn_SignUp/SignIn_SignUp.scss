@@ -20,6 +20,7 @@
             color: white;
             position: relative;
             z-index: 999;
+            cursor: pointer;
         }
     }
 }
@@ -99,6 +100,16 @@
                     margin: 0 5px;
                     height: 40px;
                     width: 40px;
+                    position: relative;
+                    .social-fb-login {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid red;
+                        opacity: 0;
+                    }
                 }
                 .social-gg {
                     background: red;
@@ -111,6 +122,16 @@
                     margin: 0 5px;
                     height: 40px;
                     width: 40px;
+                    position: relative;
+                    .social-gg-login {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid red;
+                        opacity: 0;
+                    }
                 }
             }
 

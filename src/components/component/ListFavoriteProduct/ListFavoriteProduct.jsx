@@ -2,6 +2,8 @@ import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import product2 from "../../../assets/product/product2.jpg";
 import product2a from "../../../assets/product/product2a.jpg";
+import AiryWTS from "../../../assets/product/AiryWTS-black.jpg";
+import TranhVintage from "../../../assets/product/TranhVintage-gray.jpg";
 import "./ListFavoriteProduct.scss";
 
 ListFavoriteProduct.propTypes = {};
@@ -25,9 +27,9 @@ function ListFavoriteProduct(props) {
           return (
             <div className="home-favoriteproduct">
               <div className="home-favoriteproduct-image">
-                <img src={product2} alt="" />
+                <img src={TranhVintage} alt="" />
                 <img
-                  src={product2a}
+                  src={AiryWTS}
                   alt=""
                   className="home-favoriteproduct-img-hover"
                 />

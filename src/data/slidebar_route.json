@@ -1,0 +1,49 @@
+[
+    {
+        "displayName": "Dashboard",
+        "route": "/admin",
+        "icon": "bi bi-ui-checks-grid"
+    },
+    {
+        "displayName": "Sản phẩm",
+        "route": "/admin/products",
+        "icon": "bi bi-layers"
+    },
+    {
+        "displayName": "Đơn hàng",
+        "route": "/admin/orders",
+        "icon": "bi bi-cart2"
+    },
+    {
+        "displayName": "Khách hàng",
+        "route": "/admin/customers",
+        "icon": "bi bi-card-list"
+    },
+    {
+        "displayName": "Thống kê",
+        "route": "/admin/analitics",
+        "icon": "bi bi-bar-chart"
+    },
+    {
+        "displayName": "Thể loại",
+        "route": "/admin/categories",
+        "icon": "bi bi-layout-wtf"
+    },
+    {
+        "displayName": "Giảm giá",
+        "route": "/admin/discounts",
+        "icon": "bi bi-gift"
+    },
+    {
+        "displayName": "Lịch sử",
+        "route": "/admin/history",
+        "icon": "bi bi-clock-history"
+    }
+    ,
+    {
+        "displayName": "Cài đặt",
+        "route": "/admin/setting",
+        "icon": "bi bi-gear"
+    }
+  
+]

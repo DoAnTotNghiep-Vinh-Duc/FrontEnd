@@ -1,0 +1,26 @@
+.scroll {
+    z-index: 9999;
+    background-color: white;
+    border: 1px solid rgba($color: gray, $alpha: 1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: fixed;
+    bottom: 5%;
+    right: 1%;
+    i {
+        color: #1a0b5b;
+        font-size: 22px;
+    }
+    &:hover {
+        border: 1px solid white;
+        background-color: #fb2e86;
+        i {
+            color: white;
+        }
+    }
+}

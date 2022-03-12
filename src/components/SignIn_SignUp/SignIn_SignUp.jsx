@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 import SignIn from "../../features/SignIn/SignIn";
 import SignUp from "../../features/SignUp/SignUp";
 import Header from "../component/Header/Header";
@@ -18,7 +19,9 @@ function SignIn_SignUp(props) {
       <div className="background-signin-signup">
         <Header />
         <div className="container-signin-signup">
-          <div className="signin-signup-logo">Lemon</div>
+          <Link to="/" className="signin-signup-logo">
+            Lemon
+          </Link>
           <div
             className={`${"frame-signin-signup"} ${
               open ? "right-panel-active" : ""

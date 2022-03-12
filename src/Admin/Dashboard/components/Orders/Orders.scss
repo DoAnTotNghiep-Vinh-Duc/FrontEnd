@@ -1,0 +1,171 @@
+.admin-content-body-lastOrder {
+    margin-top: 30px;
+    width: 100%;
+    height: 400px;
+    padding: 30px;
+    .admin-content-body-lastOrder-container {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-radius: 10px;
+        padding: 10px;
+        .admin-content-body-lastOrder-container-header {
+            width: 100%;
+            height: 13%;
+            display: flex;
+            .admin-content-body-lastOrder-container-header-title {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                color: #1f4173;
+                font-weight: bold;
+            }
+            .admin-content-body-lastOrder-container-header-search {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                .admin-content-body-lastOrder-container-header-search-container {
+                    display: inline-flex;
+                    border-bottom: 1px solid rgba(gray, 0.3);
+                    padding-bottom: 5px;
+                    input {
+                        color: #1f4173;
+                        &::placeholder {
+                            color: #1f4173;
+                        }
+                    }
+                    i {
+                        margin-left: 10px;
+                        color: #1f4173;
+                    }
+                }
+            }
+        }
+        .admin-content-body-lastOrder-container-body {
+            width: 100%;
+            height: 80%;
+            .admin-content-body-lastOrder-container-body-header {
+                width: 100%;
+                height: 10%;
+                display: flex;
+                color: #1f4173;
+                font-weight: bold;
+                .admin-content-body-lastOrder-container-body-header-seri {
+                    width: 15%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .admin-content-body-lastOrder-container-body-header-status {
+                    width: 25%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .admin-content-body-lastOrder-container-body-header-customer {
+                    width: 25%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .admin-content-body-lastOrder-container-body-header-date {
+                    width: 20%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .admin-content-body-lastOrder-container-body-header-cash {
+                    width: 15%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            .admin-content-body-lastOrder-container-body-orders {
+                width: 100%;
+                height: 90%;
+                .admin-content-body-lastOrder-container-body-orders-order {
+                    width: 100%;
+                    height: 20%;
+                    border-bottom: 1px solid rgba(gray, 0.3);
+                    display: flex;
+                    color: #1f4173;
+                    .admin-content-body-lastOrder-container-body-orders-order-seri {
+                        width: 15%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #003ad2;
+                    }
+                    .admin-content-body-lastOrder-container-body-orders-order-status {
+                        width: 25%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .admin-content-body-lastOrder-container-body-orders-order-status-container {
+                            width: 50%;
+                            height: 70%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 15px;
+                            border-radius: 5px;
+                        }
+                        .waiting {
+                            background-color: #fff5e5;
+                            color: #ff9900;
+                        }
+                        .cancel {
+                            background-color: #fde5e5;
+                            color: #e80000;
+                        }
+                        .shipping {
+                            background-color: #e5ebfb;
+                            color: #003ad2;
+                        }
+                        .done {
+                            background-color: #e8f9ef;
+                            color: #16c35b;
+                        }
+                    }
+                    .admin-content-body-lastOrder-container-body-orders-order-customer {
+                        width: 25%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-content-body-lastOrder-container-body-orders-order-date {
+                        width: 20%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-content-body-lastOrder-container-body-orders-order-cash {
+                        width: 15%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+        .admin-content-body-lastOrder-container-footer {
+            width: 100%;
+            height: 7%;
+        }
+    }
+}

@@ -10,6 +10,7 @@ import Header from "../component/Header/Header";
 import ListFavoriteProduct from "../component/ListFavoriteProduct/ListFavoriteProduct";
 import ListProduct from "../component/ListProduct/ListProduct";
 import Menu from "../component/Menu/Menu";
+import Scroll from "../component/Scroll/Scroll";
 import Slide from "../component/Slider/Slider";
 import Subscribe from "../component/Subscribe/Subscribe";
 import Support from "../component/Support/Support";
@@ -37,6 +38,7 @@ function Home(props) {
       <Subscribe />
       <Blog />
       <Footer />
+      <Scroll showBelow={250} />
     </div>
   );
 }

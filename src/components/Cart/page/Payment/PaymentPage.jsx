@@ -1,17 +1,29 @@
 import { Radio, TextField } from "@material-ui/core";
 import React, { useState } from "react";
+import { Alert } from "react-bootstrap";
+import Cards from "react-credit-cards";
+import "react-credit-cards/es/styles-compiled.css";
+import payment from "../../.././../assets/images/payment.png";
 import Footer from "../../../component/Footer/Footer";
 import Header from "../../../component/Header/Header";
 import Menu from "../../../component/Menu/Menu";
 import ListProduct from "../../components/ListProduct";
 import "./PaymentPage.scss";
+import useCard from "../../../../hooks/useCard";
 
 PaymentPage.propTypes = {};
 
 function PaymentPage(props) {
   const [selectedValue, setSelectedValue] = useState("");
+  // const [number, setNumber] = useState("");
+  // const [name, setName] = useState("");
+  // const [expiry, setExpiry] = useState("");
+  // const [cvc, setCvc] = useState("");
+  // const [focus, setFocus] = useState("");
 
-  const handleChange = (event) => {
+  const { handleChange, handleFocus, handleSubmit, values, error } = useCard();
+
+  const handleClickRadio = (event) => {
     setSelectedValue(event.target.value);
   };
 
@@ -67,7 +79,7 @@ function PaymentPage(props) {
                 <div className="payment-content-information-method-card-header-radio">
                   <Radio
                     checked={selectedValue === "a"}
-                    onChange={handleChange}
+                    onChange={handleClickRadio}
                     value="a"
                     name="radio-button-demo"
                     inputProps={{ "aria-label": "A" }}
@@ -77,17 +89,17 @@ function PaymentPage(props) {
                   Thẻ tín dụng
                 </div>
                 <div className="payment-content-information-method-card-header-icon">
-                  icon
+                  <img src={payment} alt="" />
                 </div>
               </div>
               <div className="payment-content-information-method-card-infor">
-                <div className="payment-content-information-method-card-infor-name">
-                  <TextField
-                    id="outlined-basic"
-                    label="Họ tên chủ thẻ"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
+                <div className="payment-content-information-method-card-infor-top">
+                  <Cards
+                    number={values.number}
+                    name={values.name}
+                    expiry={values.expiry}
+                    cvc={values.cvc}
+                    focused={values.focus}
                   />
                 </div>
                 <div className="payment-content-information-method-card-infor-seri">
@@ -97,6 +109,23 @@ function PaymentPage(props) {
                     variant="outlined"
                     size="small"
                     fullWidth
+                    name="number"
+                    value={values.number}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                  />
+                </div>
+                <div className="payment-content-information-method-card-infor-name">
+                  <TextField
+                    id="outlined-basic"
+                    label="Họ và tên"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
                   />
                 </div>
                 <div className="payment-content-information-method-card-infor-date-code">
@@ -107,6 +136,10 @@ function PaymentPage(props) {
                       variant="outlined"
                       size="small"
                       fullWidth
+                      name="expiry"
+                      value={values.expiry}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
                     />
                   </div>
                   <div className="payment-content-information-method-card-infor-code">
@@ -116,16 +149,25 @@ function PaymentPage(props) {
                       variant="outlined"
                       size="small"
                       fullWidth
+                      name="cvc"
+                      value={values.cvc}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
                     />
                   </div>
                 </div>
+                {error.show && (
+                  <div className="payment-content-information-method-card-infor-alert">
+                    <Alert>{error.message}</Alert>
+                  </div>
+                )}
               </div>
             </div>
             <div className="payment-content-information-method-cod">
               <div className="payment-content-information-method-cod-radio">
                 <Radio
                   checked={selectedValue === "b"}
-                  onChange={handleChange}
+                  onChange={handleClickRadio}
                   value="b"
                   name="radio-button-demo"
                   inputProps={{ "aria-label": "B" }}
@@ -137,9 +179,19 @@ function PaymentPage(props) {
               </div>
             </div>
           </div>
-          <div className="payment-content-information-btnback">
-            <i className="bi bi-arrow-return-left"></i>
-            Tiếp tục mua sắm
+          <div className="payment-content-information-btn">
+            <button className="payment-content-information-btnback">
+              <i className="bi bi-arrow-return-left"></i>
+              Quay lại
+            </button>
+            <button
+              className="payment-content-information-btnpayment"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              <i className="bi bi-arrow-return-right"></i>
+              Thanh toán
+            </button>
           </div>
         </div>
         <div className="payment-content-cart">

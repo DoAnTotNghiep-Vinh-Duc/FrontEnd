@@ -3,6 +3,7 @@ import CartFeature from "./components/Cart";
 import Home from "./components/Home/Home";
 import ProductFeature from "./components/Product";
 import SignIn_SignUp from "./components/SignIn_SignUp/SignIn_SignUp";
+import Dashboard from "./Admin/Dashboard/Dashboard.jsx";
 import "./sass/index.scss";
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
         <Route path="/" component={Home} exact></Route>
         <Route path="/products" component={ProductFeature}></Route>
         <Route path="/cart" component={CartFeature}></Route>
+        <Route path="/cart" component={CartFeature}></Route>
+        <Route path="/admin" component={Dashboard}></Route>
       </Switch>
     </div>
   );

@@ -2,8 +2,8 @@ import Rating from "@material-ui/lab/Rating";
 import PropTypes from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import product2 from "../../../assets/product/product2.jpg";
-import product2a from "../../../assets/product/product2a.jpg";
+import TheNewCouple_black from "../../../assets/product/TheNewCouple-black.jpg";
+import TheNewCouple_white from "../../../assets/product/TheNewCouple-white.jpg";
 
 Product.propTypes = {
   product: PropTypes.object,
@@ -25,8 +25,12 @@ function Product(props) {
   return (
     <div className="home-product" onClick={handleClick}>
       <div className="home-product-image">
-        <img src={product2} alt="" />
-        <img src={product2a} alt="" className="home-product-img-hover" />
+        <img src={TheNewCouple_black} alt="" />
+        <img
+          src={TheNewCouple_white}
+          alt=""
+          className="home-product-img-hover"
+        />
         <div className="home-product-group-fuction">
           <div className="addtocart">
             <i className="bi bi-handbag"></i>
@@ -51,6 +55,7 @@ function Product(props) {
             defaultValue={5}
             precision={0.1}
             readOnly
+            size="small"
           />
         </div>
         <div className="home-product-name">{product.name}</div>

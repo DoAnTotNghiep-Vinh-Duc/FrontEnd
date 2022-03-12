@@ -93,9 +93,9 @@ function ListProduct(props) {
             2.560.000
           </div>
         </div>
-        <div className="cart-information-content-cart-payment-btnpayment">
+        {/* <div className="cart-information-content-cart-payment-btnpayment">
           Thanh toán
-        </div>
+        </div> */}
       </div>
     </Fragment>
   );

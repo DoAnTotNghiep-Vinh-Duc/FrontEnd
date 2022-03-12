@@ -1,7 +1,7 @@
 import Rating from "@material-ui/lab/Rating";
 import React from "react";
-import product2 from "../../../assets/product/product2.jpg";
-import product2a from "../../../assets/product/product2a.jpg";
+import PhiHanhGia_black from "../../../assets/product/PhiHanhGia-black.jpg";
+import PhiHanhGia_blue from "../../../assets/product/PhiHanhGia-blue.jpg";
 import "./ListProduct.scss";
 
 ListProduct.propTypes = {};
@@ -37,9 +37,9 @@ function ListProduct(props) {
           return (
             <div className="home-product">
               <div className="home-product-image">
-                <img src={product2} alt="" />
+                <img src={PhiHanhGia_black} alt="" />
                 <img
-                  src={product2a}
+                  src={PhiHanhGia_blue}
                   alt=""
                   className="home-product-img-hover"
                 />

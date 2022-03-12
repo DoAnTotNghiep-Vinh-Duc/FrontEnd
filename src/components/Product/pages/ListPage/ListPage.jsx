@@ -6,6 +6,7 @@ import productAPI from "../../../../api/productAPI";
 import Footer from "../../../component/Footer/Footer";
 import Header from "../../../component/Header/Header";
 import Menu from "../../../component/Menu/Menu";
+import Scroll from "../../../component/Scroll/Scroll";
 import ProductFilters from "../../components/ProductFilters";
 import ProductList from "../../components/ProductList";
 import ProductSort from "../../components/ProductSort";
@@ -149,6 +150,7 @@ function ListPage(props) {
         </div>
       </div>
       <Footer />
+      <Scroll showBelow={250} />
     </div>
   );
 }
