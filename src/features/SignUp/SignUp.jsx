@@ -61,7 +61,7 @@ function SignUp(props) {
           <i className="fab fa-facebook-f">
             <div className="social-fb-login">
               <FacebookLogin
-                appId="710231577005749"
+                appId="484133043279715"
                 fields="name,email,picture"
                 callback={responseFacebook}
                 onClick={clickFacebook}
