@@ -1,0 +1,174 @@
+.admin-customers {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    .admin-customers-content {
+        width: 88%;
+        height: 100%;
+        .admin-customers-content-body {
+            width: 100%;
+            height: calc(100% - 50px);
+            background-color: #fff5f5;
+            padding: 30px;
+            .admin-customers-content-body-container {
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                padding: 10px;
+                .admin-customers-content-body-container-header {
+                    width: 100%;
+                    height: 5%;
+                    display: flex;
+                    color: #1f4173;
+                    .admin-customers-content-body-container-header-title {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .admin-customers-content-body-container-header-search {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        .admin-customers-content-body-container-header-search-container {
+                            bcustomer-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                            input {
+                                color: #1f4173;
+                                &::placeholder {
+                                    color: #1f4173;
+                                }
+                            }
+                            i {
+                                margin-left: 10px;
+                                color: #1f4173;
+                            }
+                        }
+                    }
+                }
+                .admin-customers-content-body-container-body {
+                    width: 100%;
+                    height: 90%;
+                    .admin-customers-content-body-container-body-header {
+                        width: 100%;
+                        height: 5%;
+                        display: flex;
+                        font-weight: bold;
+                        color: #1f4173;
+                        .admin-customers-content-body-container-body-header-seri {
+                            height: 100%;
+                            width: 15%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-customers-content-body-container-body-header-customer {
+                            height: 100%;
+                            width: 25%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-customers-content-body-container-body-header-phone {
+                            height: 100%;
+                            width: 15%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-customers-content-body-container-body-header-quantityOrder {
+                            height: 100%;
+                            width: 10%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-customers-content-body-container-body-header-address {
+                            height: 100%;
+                            width: 30%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-customers-content-body-container-body-header-action {
+                            height: 100%;
+                            width: 5%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                    .admin-customers-content-body-container-body-customers {
+                        width: 100%;
+                        height: 95%;
+                        color: #1f4173;
+                        .admin-customers-content-body-container-body-customers-customer {
+                            width: 100%;
+                            height: 10%;
+                            border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                            display: flex;
+                            .admin-customers-content-body-container-body-customers-customer-seri {
+                                height: 100%;
+                                width: 15%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: #003ad2;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-customer {
+                                height: 100%;
+                                width: 25%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-phone {
+                                height: 100%;
+                                width: 15%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-quantityOrder {
+                                height: 100%;
+                                width: 10%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-address {
+                                height: 100%;
+                                width: 30%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                text-align: center;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-action {
+                                height: 100%;
+                                width: 5%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                i {
+                                    cursor: pointer;
+                                    &:hover {
+                                        color: #fb2e86;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .admin-customers-content-body-container-footer {
+                    width: 100%;
+                    height: 5%;
+                }
+            }
+        }
+    }
+}

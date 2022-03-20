@@ -1,0 +1,198 @@
+.admin-orders {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    .admin-orders-content {
+        width: 88%;
+        height: 100%;
+        .admin-orders-content-body {
+            width: 100%;
+            height: calc(100% - 50px);
+            background-color: #e7ffde;
+            padding: 30px;
+            .admin-orders-content-body-container {
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                padding: 10px;
+                .admin-orders-content-body-container-header {
+                    width: 100%;
+                    height: 5%;
+                    display: flex;
+                    color: #1f4173;
+                    .admin-orders-content-body-container-header-title {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .admin-orders-content-body-container-header-search {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        .admin-orders-content-body-container-header-search-container {
+                            border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                            input {
+                                color: #1f4173;
+                                &::placeholder {
+                                    color: #1f4173;
+                                }
+                            }
+                            i {
+                                margin-left: 10px;
+                                color: #1f4173;
+                            }
+                        }
+                    }
+                }
+                .admin-orders-content-body-container-body {
+                    width: 100%;
+                    height: 90%;
+                    .admin-orders-content-body-container-body-header {
+                        width: 100%;
+                        height: 5%;
+                        display: flex;
+                        font-weight: bold;
+                        color: #1f4173;
+                        .admin-orders-content-body-container-body-header-seri {
+                            height: 100%;
+                            width: 15%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-orders-content-body-container-body-header-customer {
+                            height: 100%;
+                            width: 25%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-orders-content-body-container-body-header-cash {
+                            height: 100%;
+                            width: 15%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-orders-content-body-container-body-header-date {
+                            height: 100%;
+                            width: 20%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-orders-content-body-container-body-header-status {
+                            height: 100%;
+                            width: 20%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-orders-content-body-container-body-header-action {
+                            height: 100%;
+                            width: 5%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                    .admin-orders-content-body-container-body-orders {
+                        width: 100%;
+                        height: 95%;
+                        color: #1f4173;
+                        .admin-orders-content-body-container-body-orders-order {
+                            width: 100%;
+                            height: 10%;
+                            border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                            display: flex;
+                            .admin-orders-content-body-container-body-orders-order-seri {
+                                height: 100%;
+                                width: 15%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: #003ad2;
+                            }
+                            .admin-orders-content-body-container-body-orders-order-customer {
+                                height: 100%;
+                                width: 25%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-orders-content-body-container-body-orders-order-cash {
+                                height: 100%;
+                                width: 15%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-orders-content-body-container-body-orders-order-date {
+                                height: 100%;
+                                width: 20%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                            .admin-orders-content-body-container-body-orders-order-status {
+                                height: 100%;
+                                width: 20%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                .admin-orders-content-body-container-body-orders-order-status-container {
+                                    width: 70%;
+                                    height: 70%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 15px;
+                                    border-radius: 5px;
+                                }
+                                .waiting {
+                                    background-color: #fff5e5;
+                                    color: #ff9900;
+                                }
+                                .cancel {
+                                    background-color: #fde5e5;
+                                    color: #e80000;
+                                }
+                                .shipping {
+                                    background-color: #e5ebfb;
+                                    color: #003ad2;
+                                }
+                                .done {
+                                    background-color: #e8f9ef;
+                                    color: #16c35b;
+                                }
+                            }
+                            .admin-orders-content-body-container-body-orders-order-action {
+                                height: 100%;
+                                width: 5%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                i {
+                                    cursor: pointer;
+                                    &:hover {
+                                        color: #fb2e86;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .admin-orders-content-body-container-footer {
+                    width: 100%;
+                    height: 5%;
+                }
+            }
+        }
+    }
+}

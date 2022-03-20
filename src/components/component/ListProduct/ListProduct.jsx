@@ -1,8 +1,6 @@
-import Rating from "@material-ui/lab/Rating";
 import React from "react";
-import PhiHanhGia_black from "../../../assets/product/PhiHanhGia-black.jpg";
-import PhiHanhGia_blue from "../../../assets/product/PhiHanhGia-blue.jpg";
 import "./ListProduct.scss";
+import Product from "./Product/Product";
 
 ListProduct.propTypes = {};
 
@@ -17,11 +15,26 @@ function ListProduct(props) {
     { id: 7, name: "Áo Thun Teddy Bear White", price: "359.000 VNĐ" },
     { id: 8, name: "Áo Thun Cactus Always Be Smile", price: "350.000 VNĐ" },
   ];
+
+  const filters = [
+    { value: "", label: "MỚI NHẤT" },
+    { value: "", label: "BÁN CHẠY" },
+    { value: "", label: "GIẢM GIÁ" },
+  ];
+
   return (
     <div className="home-products">
       <div className="home-products-title">Sản phẩm</div>
       <div className="home-products-filter">
-        <div className="home-products-filter-new">
+        {filters.map((item, index) => {
+          return (
+            <div className="home-products-filter-new">
+              {item.label}
+              <div className="line"></div>
+            </div>
+          );
+        })}
+        {/* <div className="home-products-filter-new">
           MỚI NHẤT
           <div className="line"></div>
         </div>
@@ -30,53 +43,11 @@ function ListProduct(props) {
         </div>
         <div className="home-products-filter-sale">
           GIẢM GIÁ <div className="line"></div>
-        </div>
+        </div> */}
       </div>
       <div className="home-products-list">
         {data.map((data) => {
-          return (
-            <div className="home-product">
-              <div className="home-product-image">
-                <img src={PhiHanhGia_black} alt="" />
-                <img
-                  src={PhiHanhGia_blue}
-                  alt=""
-                  className="home-product-img-hover"
-                />
-                <div className="home-product-group-fuction">
-                  <div className="addtocart">
-                    <i className="bi bi-handbag"></i>
-                  </div>
-                  <div className="addtolistwish">
-                    <i className="bi bi-suit-heart"></i>
-                  </div>
-                  <div className="zoom">
-                    <i className="bi bi-zoom-in"></i>
-                  </div>
-                </div>
-                <div className="home-products-addtocart">
-                  <i className="bi bi-handbag"></i>
-                  Thêm vào giỏ hàng
-                </div>
-                <div className="home-products-promotion">Sale</div>
-              </div>
-              <div className="home-product-infor">
-                <div className="home-product-rating">
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={2.5}
-                    precision={0.1}
-                    readOnly
-                  />
-                </div>
-                <div className="home-product-name">{data.name}</div>
-                <div className="home-product-price">
-                  <p className="home-product-price-main">{data.price}</p>
-                  <p className="home-product-price-sub ">{data.price}</p>
-                </div>
-              </div>
-            </div>
-          );
+          return <Product product={data} />;
         })}
       </div>
       <div className="home-products-more">
