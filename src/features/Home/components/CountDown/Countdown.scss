@@ -1,0 +1,136 @@
+.countdown {
+    margin-top: 50px;
+    width: 100%;
+    height: 500px;
+    background-image: url(../../../../assets/images/slide10.jpg);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    position: relative;
+    font-family: "Josefin Sans", sans-serif;
+    .countdown-bgr {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 90%;
+        height: 80%;
+        background-color: rgba(white, 0.7);
+        z-index: 99;
+        display: flex;
+        justify-content: flex-end;
+        .countdown-content {
+            width: 50%;
+            height: 100%;
+            .countdown-content-title {
+                margin-top: 30px;
+                font-weight: bold;
+                width: 100%;
+                color: #1a0b5b;
+                font-size: 30px;
+            }
+            .countdown-time {
+                margin-top: 30px;
+                width: 80%;
+                display: flex;
+                justify-content: space-around;
+                .countdown-day {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                    border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    p {
+                        color: #1a0b5b;
+                        font-size: 30px;
+                        font-weight: bold;
+                    }
+                }
+                .countdown-hour {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                    border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    p {
+                        color: #1a0b5b;
+                        font-size: 30px;
+                        font-weight: bold;
+                    }
+                }
+                .countdown-minute {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                    border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    p {
+                        color: #1a0b5b;
+                        font-size: 30px;
+                        font-weight: bold;
+                    }
+                }
+                .countdown-second {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                    border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    p {
+                        color: #1a0b5b;
+                        font-size: 30px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .countdown-discount {
+                margin-top: 30px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                color: #1a0b5b;
+                .countdown-discount1 {
+                    font-size: 25px;
+                    font-weight: 600;
+                }
+                .countdown-discount2 {
+                    margin-left: 15px;
+                    font-style: italic;
+                    font-size: 50px;
+                    font-weight: bold;
+                }
+            }
+            .countdown-btn {
+                margin-top: 20px;
+                background-color: #7e33e0;
+                display: inline-block;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 20px;
+                cursor: pointer;
+                &:hover {
+                    background-color: #fb2e86;
+                }
+            }
+            .time-up {
+                margin-top: 50px;
+                font-size: 30px;
+                color: red;
+            }
+        }
+    }
+}
