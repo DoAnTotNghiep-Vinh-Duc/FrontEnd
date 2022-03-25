@@ -5,7 +5,7 @@ import "./Countdown.scss";
 import Timer from "./Timer";
 
 Countdown.propTypes = {
-  futureDate: PropTypes.string.isRequired,
+  futureDate: PropTypes.any,
 };
 
 function Countdown(props) {

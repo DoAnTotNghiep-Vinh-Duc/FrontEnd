@@ -1,0 +1,46 @@
+.verifyAccount {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    .verifyAccount-body {
+        width: 100%;
+        height: calc(100% - 50px - 80px - 300px);
+        .verifyAccount-body-header {
+            width: 100%;
+            height: 30%;
+            background-color: #f6f5ff;
+            display: flex;
+            align-items: center;
+            .verifyAccount-body-header-title {
+                margin-left: 50px;
+                font-size: 25px;
+                color: #1d3178;
+                font-weight: bold;
+            }
+        }
+        .verifyAccount-body-content {
+            width: 100%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .verifyAccount-body-content-image {
+                width: 100%;
+                height: 20%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+            .verifyAccount-body-content-success {
+                margin-top: 15px;
+                text-align: center;
+                font-size: 20px;
+            }
+        }
+    }
+}

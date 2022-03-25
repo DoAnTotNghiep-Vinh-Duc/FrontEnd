@@ -28,7 +28,7 @@ function ListProduct(props) {
       <div className="home-products-filter">
         {filters.map((item, index) => {
           return (
-            <div className="home-products-filter-new">
+            <div className="home-products-filter-new" key={index}>
               {item.label}
               <div className="line"></div>
             </div>
@@ -47,7 +47,7 @@ function ListProduct(props) {
       </div>
       <div className="home-products-list">
         {data.map((data) => {
-          return <Product product={data} />;
+          return <Product product={data} key={data.id} />;
         })}
       </div>
       <div className="home-products-more">

@@ -139,44 +139,6 @@
                     right: -10%;
                     opacity: 0;
                     transition: all 0.5s ease-in-out;
-                    .addtocart {
-                        padding: 10px;
-                        border-radius: 50%;
-                        color: #2f1ac4;
-                        margin-bottom: 15px;
-                        background-color: #eeeffb;
-                        &:hover {
-                            color: #fb2e86;
-                        }
-                        i {
-                            font-size: 20px;
-                        }
-                    }
-                    .addtolistwish {
-                        padding: 10px;
-                        border-radius: 50%;
-                        color: #2f1ac4;
-                        margin-bottom: 15px;
-                        background-color: #eeeffb;
-                        &:hover {
-                            color: #fb2e86;
-                        }
-                        i {
-                            font-size: 20px;
-                        }
-                    }
-                    .zoom {
-                        padding: 10px;
-                        border-radius: 50%;
-                        color: #2f1ac4;
-                        background-color: #eeeffb;
-                        &:hover {
-                            color: #fb2e86;
-                        }
-                        i {
-                            font-size: 20px;
-                        }
-                    }
                 }
                 .home-products-addtocart {
                     position: absolute;

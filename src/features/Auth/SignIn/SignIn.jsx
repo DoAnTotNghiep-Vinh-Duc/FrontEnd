@@ -92,7 +92,7 @@ function SignIn(props) {
       <span className="span-signin">Hoặc sử dụng tài khoản của bạn</span>
       <InputField name="email" label="Email" form={form} />
       <PasswordField name="password" label="Mật khẩu" form={form} />
-      <Link className="signin-forgot-password" to="/">
+      <Link className="signin-forgot-password" to="/forgotPassword">
         Quên mật khẩu?
       </Link>
       <button className="btn-signin" type="submit">

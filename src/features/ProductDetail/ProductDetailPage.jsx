@@ -10,7 +10,6 @@ import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
-import "./css/ProductDetailPage.css";
 import "./css/ProductDetailPage.scss";
 
 ProductDetailPage.propTypes = {};

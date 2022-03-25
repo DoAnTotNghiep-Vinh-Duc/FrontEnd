@@ -27,91 +27,148 @@ function Menu(props) {
             </a>
           </li>
           <li className="product_menu">
-            <a href="\">
+            <a href="\products">
               Nam<i className="bi bi-chevron-down"></i>
             </a>
             <div className="dropdown_product">
               <ul className="shoplayout">
                 <li>
-                  <a href="\" className="title_product">
-                    Danh mục
+                  <a href="\products" className="title_product">
+                    Tay dài
                   </a>
                 </li>
                 <li>
-                  <a href="\">Tất cả</a>
+                  <a href="\products">Áo thun không cổ</a>
                 </li>
                 <li>
-                  <a href="\">Áo thun trơn</a>
+                  <a href="\products">Áo thun có cổ</a>
                 </li>
                 <li>
-                  <a href="\">Áo thun sọc</a>
+                  <a href="\products">Áo thun tanktop</a>
                 </li>
                 <li>
-                  <a href="\">Áo thun in hình</a>
+                  <a href="\products">Áo thun in hình</a>
                 </li>
                 <li>
-                  <a href="\">Áo thun nam</a>
+                  <a href="\products">Áo thun có chữ</a>
                 </li>
                 <li>
-                  <a href="\">Áo thun nữ</a>
+                  <a href="\products">Áo thun trơn</a>
                 </li>
                 <li>
-                  <a href="\">Unisex</a>
+                  <a href="\products">Unisex</a>
                 </li>
               </ul>
               <ul className="productlayout">
                 <li>
-                  <a href="\" className="title_product">
-                    Xu hướng
+                  <a href="\products" className="title_product">
+                    Tay ngắn
                   </a>
                 </li>
                 <li>
-                  <a href="\">Hàng mới về</a>
+                  <a href="\products">Áo thun không cổ</a>
                 </li>
                 <li>
-                  <a href="\">Giảm nhiều nhất</a>
+                  <a href="\products">Áo thun có cổ</a>
                 </li>
                 <li>
-                  <a href="\">Bán chạy nhất</a>
+                  <a href="\products">Áo thun tanktop</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun in hình</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun có chữ</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun trơn</a>
+                </li>
+                <li>
+                  <a href="\products">Unisex</a>
                 </li>
               </ul>
             </div>
           </li>
-          <li className="introduce_menu">
-            <a href="\">
+          <li className="product_menu">
+            <a href="\products">
               Nữ<i className="bi bi-chevron-down"></i>
             </a>
-            <div className="dropdown_introduce">
-              <ul>
+            <div className="dropdown_product">
+              <ul className="shoplayout">
                 <li>
-                  <a href="\">Về chúng tôi</a>
+                  <a href="\products" className="title_product">
+                    Tay dài
+                  </a>
                 </li>
                 <li>
-                  <a href="\">Liên hệ</a>
+                  <a href="\products">Áo thun cổ tròn</a>
                 </li>
                 <li>
-                  <a href="\">Khách hàng hài lòng 100%</a>
+                  <a href="\products">Áo thun cổ xẻ/tim</a>
                 </li>
                 <li>
-                  <a href="\">Tài khoản của tôi</a>
+                  <a href="\products">Áo thun croptop</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun in hình</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun có chữ</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun trơn</a>
+                </li>
+                <li>
+                  <a href="\products">Unisex</a>
+                </li>
+              </ul>
+              <ul className="productlayout">
+                <li>
+                  <a href="\products" className="title_product">
+                    Tay ngắn
+                  </a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun cổ tròn</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun cổ xẻ/tim</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun croptop</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun in hình</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun có chữ</a>
+                </li>
+                <li>
+                  <a href="\products">Áo thun trơn</a>
+                </li>
+                <li>
+                  <a href="\products">Unisex</a>
                 </li>
               </ul>
             </div>
           </li>
           <li className="knowDress_menu">
-            <a href="\">
+            <a href="\products">
               Liên hệ<i className="bi bi-chevron-down"></i>
             </a>
             <div className="dropdown_knowDress">
               <ul>
                 <li>
-                  <a href="\">Hướng dẫn chọn size</a>
+                  <a href="\products">Về chúng tôi</a>
                 </li>
                 <li>
-                  <a href="\">Blog</a>
+                  <a href="\products">Liên hệ</a>
                 </li>
                 <li>
-                  <a href="\">Nhóm mặc đẹp sống chất</a>
+                  <a href="\products">Khách hàng hài lòng 100%</a>
+                </li>
+                <li>
+                  <a href="\products">Tài khoản của tôi</a>
                 </li>
               </ul>
             </div>

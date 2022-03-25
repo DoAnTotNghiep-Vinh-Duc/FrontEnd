@@ -2,6 +2,7 @@ import Rating from "@material-ui/lab/Rating";
 import React from "react";
 import AiryWTS from "../../../../assets/product/AiryWTS-black.jpg";
 import TranhVintage from "../../../../assets/product/TranhVintage-gray.jpg";
+import ListButton from "../../../../components/ListButton/ListButton";
 import "./ListFavoriteProduct.scss";
 
 ListFavoriteProduct.propTypes = {};
@@ -23,7 +24,7 @@ function ListFavoriteProduct(props) {
       <div className="listfavoriteproduct-list">
         {data.map((data) => {
           return (
-            <div className="home-favoriteproduct">
+            <div className="home-favoriteproduct" key={data.id}>
               <div className="home-favoriteproduct-image">
                 <img src={TranhVintage} alt="" />
                 <img
@@ -32,15 +33,7 @@ function ListFavoriteProduct(props) {
                   className="home-favoriteproduct-img-hover"
                 />
                 <div className="home-favoriteproduct-group-fuction">
-                  <div className="addtocart">
-                    <i className="bi bi-handbag"></i>
-                  </div>
-                  <div className="addtolistwish">
-                    <i className="bi bi-suit-heart"></i>
-                  </div>
-                  <div className="zoom">
-                    <i className="bi bi-zoom-in"></i>
-                  </div>
+                  <ListButton />
                 </div>
                 <div className="home-favoriteproduct-addtocart">
                   <i className="bi bi-handbag"></i>

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Rating } from "@material-ui/lab";
 import PhiHanhGia_black from "../../../../../assets/product/PhiHanhGia-black.jpg";
 import PhiHanhGia_blue from "../../../../../assets/product/PhiHanhGia-blue.jpg";
+import ListButton from "../../../../../components/ListButton/ListButton";
 
 Product.propTypes = {
   product: PropTypes.object,
@@ -12,18 +13,10 @@ function Product({ product }) {
   return (
     <div className="home-product">
       <div className="home-product-image">
-        <img src={PhiHanhGia_black} alt="" />
+        <img src={PhiHanhGia_black} alt="" effect="blur" />
         <img src={PhiHanhGia_blue} alt="" className="home-product-img-hover" />
         <div className="home-product-group-fuction">
-          <div className="addtocart">
-            <i className="bi bi-handbag"></i>
-          </div>
-          <div className="addtolistwish">
-            <i className="bi bi-suit-heart"></i>
-          </div>
-          <div className="zoom">
-            <i className="bi bi-zoom-in"></i>
-          </div>
+          <ListButton />
         </div>
         <div className="home-products-addtocart">
           <i className="bi bi-handbag"></i>
