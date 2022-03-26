@@ -1,11 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
-import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
 
@@ -35,25 +32,16 @@ function SignIn(props) {
     console.log(value);
   };
 
-  const responseGoogle = ({ tokenId }) => {
-    console.log(tokenId);
-    const fetchSignin = async () => {
-      try {
-        const res = await userAPI.signin();
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSignin();
+  const google = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
   };
 
-  const clickFacebook = () => {
-    console.log("clicked fb");
+  const github = () => {
+    window.open("http://localhost:5000/auth/github", "_self");
   };
 
-  const responseFacebook = ({ accessToken, userID }) => {
-    console.log({ accessToken, userID });
+  const facebook = () => {
+    window.open("http://localhost:5000/auth/facebook", "_self");
   };
 
   return (
@@ -64,28 +52,12 @@ function SignIn(props) {
       <div className="social-container">
         <Link className="social-fb">
           <i className="fab fa-facebook-f">
-            <div className="social-fb-login">
-              <FacebookLogin
-                appId="710231577005749"
-                fields="name,email,picture"
-                callback={responseFacebook}
-                onClick={clickFacebook}
-                textButton=""
-              />
-            </div>
+            <div className="social-fb-login" onClick={facebook}></div>
           </i>
         </Link>
         <Link className="social-gg">
           <i className="fab fa-google-plus-g">
-            <div className="social-gg-login">
-              <GoogleLogin
-                clientId="470652201368-ordd9phkfdtrd8u44pmubg41t3vnm8mi.apps.googleusercontent.com"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                buttonText=""
-                cookiePolicy={"single_host_origin"}
-              />
-            </div>
+            <div className="social-gg-login" onClick={google}></div>
           </i>
         </Link>
       </div>
