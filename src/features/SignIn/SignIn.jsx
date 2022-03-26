@@ -1,9 +1,12 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import InputField from "../../components/form-control/InputField";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import userAPI from "../../api/userAPI";
+import InputField from "../../components/form-control/InputField";
 import PasswordField from "../../components/form-control/PasswordField";
 
 SignIn.propTypes = {};
@@ -20,6 +23,19 @@ function SignIn(props) {
       .min(6, "Mật khẩu ít nhất 6 kí tự!"),
   });
 
+  ///////////////////////////////////////
+  const google = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
+  };
+
+  const github = () => {
+    window.open("http://localhost:5000/auth/github", "_self");
+  };
+
+  const facebook = () => {
+    window.open("http://localhost:5000/auth/facebook", "_self");
+  };
+  //////////////////////////////////////
   const form = useForm({
     defaultValues: {
       email: "",
@@ -32,17 +48,54 @@ function SignIn(props) {
     console.log(value);
   };
 
+  const responseGoogle = ({ }) => {
+    const fetchSignin = async () => {
+      try {
+        const res = await userAPI.signinGoogle();
+        console.log("RESSSSSSSSSSSSSSSss");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSignin();
+  };
+
+  const clickFacebook = () => {
+    console.log("clicked fb");
+  };
+
+  const responseFacebook = ({  }) => {
+
+    const fetchSignin = async () => {
+      try {
+        const res = await userAPI.signinFacebook();
+        console.log("RESSSSSSSSSSSSSSSss");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSignin();
+  };
+
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
       <h1>
         <b>Đăng nhập</b>
       </h1>
       <div className="social-container">
-        <Link to="/" className="social-fb">
-          <i className="fab fa-facebook-f"></i>
+        <Link className="social-fb">
+          <i className="fab fa-facebook-f">
+            <div className="social-fb-login" onClick={facebook}>
+              
+            </div>
+          </i>
         </Link>
-        <Link to="/" className="social-gg">
-          <i className="fab fa-google-plus-g"></i>
+        <Link className="social-gg">
+          <i className="fab fa-google-plus-g">
+            <div className="social-gg-login" onClick={google}>
+              
+            </div>
+          </i>
         </Link>
       </div>
       <span className="span-signin">Hoặc sử dụng tài khoản của bạn</span>
