@@ -178,6 +178,7 @@ function ProductDetailPage(props) {
                 </div>
               </div>
               <div className="product-details-content-product-infor-action">
+                <i className="fas fa-plus"></i>
                 <i
                   className="bi bi-dash-lg"
                   onClick={() => updateQuantity("minus")}
@@ -185,6 +186,7 @@ function ProductDetailPage(props) {
                 <div className="product-details-content-product-infor-action-quantity">
                   {quantity}
                 </div>
+                <i className="fas fa-minus"></i>
                 <i
                   className="bi bi-plus-lg"
                   onClick={() => updateQuantity("plus")}

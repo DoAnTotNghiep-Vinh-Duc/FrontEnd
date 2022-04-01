@@ -1,14 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as yup from "yup";
+import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
 
 SignIn.propTypes = {};
 
 function SignIn(props) {
+  const History = useHistory();
+
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -29,15 +32,30 @@ function SignIn(props) {
   });
 
   const handleSubmit = (value) => {
-    console.log(value);
+    const signIn = async () => {
+      try {
+        const res = await userAPI
+          .signInWithWebAccount({
+            email: value.email,
+            password: value.password,
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              History.push("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    signIn();
   };
 
   const google = () => {
     window.open("http://localhost:5000/auth/google", "_self");
-  };
-
-  const github = () => {
-    window.open("http://localhost:5000/auth/github", "_self");
   };
 
   const facebook = () => {

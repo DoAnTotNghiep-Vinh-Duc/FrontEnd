@@ -22,64 +22,34 @@
         line-height: 49px;
         align-items: center;
         justify-content: space-around;
-        .home-products-filter-new {
+        .home-products-filter-item {
             cursor: pointer;
-            color: #fb2e86;
             position: relative;
+            &:hover {
+                color: #fb2e86;
+                .line {
+                    border: 1px solid #fb2e86;
+                    width: 100%;
+                }
+            }
+            .line {
+                text-align: center;
+                width: 0%;
+                transition: all 0.5s ease-in-out;
+                border: 1px solid white;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        .activeFilterItem {
+            color: #fb2e86;
             .line {
                 text-align: center;
                 width: 100%;
                 transition: all 0.5s ease-in-out;
                 border: 1px solid #fb2e86;
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            &:hover {
-                color: #fb2e86;
-                .line {
-                    border: 1px solid #fb2e86;
-                    width: 100%;
-                }
-            }
-        }
-        .home-products-filter-bestseller {
-            cursor: pointer;
-            position: relative;
-            &:hover {
-                color: #fb2e86;
-                .line {
-                    border: 1px solid #fb2e86;
-                    width: 100%;
-                }
-            }
-            .line {
-                text-align: center;
-                width: 0%;
-                transition: all 0.5s ease-in-out;
-                border: 1px solid white;
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-        .home-products-filter-sale {
-            cursor: pointer;
-            position: relative;
-            &:hover {
-                color: #fb2e86;
-                .line {
-                    border: 1px solid #fb2e86;
-                    width: 100%;
-                }
-            }
-            .line {
-                text-align: center;
-                width: 0%;
-                transition: all 0.5s ease-in-out;
-                border: 1px solid white;
                 position: absolute;
                 bottom: 0;
                 left: 50%;

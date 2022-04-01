@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ListProduct.scss";
 import Product from "./Product/Product";
 
 ListProduct.propTypes = {};
 
 function ListProduct(props) {
+  const [filterSelected, setFilterSelected] = useState(0);
+
   const data = [
     { id: 1, name: "Áo Thun BC Space Theme", price: "350.000 VNĐ" },
     { id: 2, name: "Áo Thun BW Embroi Signature", price: "200.000 VNĐ" },
@@ -17,9 +19,9 @@ function ListProduct(props) {
   ];
 
   const filters = [
-    { value: "", label: "MỚI NHẤT" },
-    { value: "", label: "BÁN CHẠY" },
-    { value: "", label: "GIẢM GIÁ" },
+    { value: 0, label: "Mới nhất" },
+    { value: 1, label: "Bán chạy" },
+    { value: 2, label: "Giảm giá" },
   ];
 
   return (
@@ -28,22 +30,18 @@ function ListProduct(props) {
       <div className="home-products-filter">
         {filters.map((item, index) => {
           return (
-            <div className="home-products-filter-new" key={index}>
+            <div
+              className={`${"home-products-filter-item"} ${
+                filterSelected === index ? "activeFilterItem" : ""
+              }`}
+              key={index}
+              onClick={() => setFilterSelected(item.value)}
+            >
               {item.label}
               <div className="line"></div>
             </div>
           );
         })}
-        {/* <div className="home-products-filter-new">
-          MỚI NHẤT
-          <div className="line"></div>
-        </div>
-        <div className="home-products-filter-bestseller">
-          BÁN CHẠY <div className="line"></div>
-        </div>
-        <div className="home-products-filter-sale">
-          GIẢM GIÁ <div className="line"></div>
-        </div> */}
       </div>
       <div className="home-products-list">
         {data.map((data) => {

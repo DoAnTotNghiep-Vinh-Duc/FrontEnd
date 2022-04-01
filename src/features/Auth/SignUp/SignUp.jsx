@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
+import userAPI from "../../../api/userAPI";
 
 SignUp.propTypes = {};
 
@@ -35,7 +36,25 @@ function SignUp(props) {
   });
 
   const handleSubmit = (value) => {
-    console.log(value);
+    const signUp = async () => {
+      try {
+        const res = userAPI
+          .signUpWithWebAccount({
+            name: value.name,
+            email: value.email,
+            password: value.password,
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    signUp();
   };
 
   return (

@@ -29,7 +29,7 @@ function ListButton(props) {
         <i className="bi bi-suit-heart"></i>
       </div>
       <div className="zoom" onClick={handleClickOpen}>
-        <i className="bi bi-zoom-in"></i>
+        <i className="bi bi-eye"></i>
       </div>
 
       <Dialog
@@ -39,6 +39,7 @@ function ListButton(props) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
+        maxWidth="lg"
       >
         <QuickView closeQuickView={handleClose} />
       </Dialog>
