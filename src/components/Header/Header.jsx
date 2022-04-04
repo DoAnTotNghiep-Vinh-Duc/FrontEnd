@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
 
 Header.propTypes = {};
 
 function Header(props) {
+  const local = localStorage.getItem("account");
+  const account = local && JSON.parse(local);
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="header">
       <div className="header-left">
@@ -29,8 +33,20 @@ function Header(props) {
       </div>
       <div className="header-right">
         <div className="header-right-account">
-          <i className="far fa-user"></i>
-          <a href="/auth">Tài khoản</a>
+          <div className="header-right-account-container">
+            <i className="far fa-user"></i>
+            {!account ? (
+              <a href="/auth">Tài khoản</a>
+            ) : (
+              <p onClick={() => setOpen((x) => !x)}>
+                Xin chào, Đỗ Đạt Đức
+                <div className={`${"account-logout"} ${open ? "active" : ""}`}>
+                  <i className="bi bi-box-arrow-left"></i>
+                  <p>Đăng xuất</p>
+                </div>
+              </p>
+            )}
+          </div>
         </div>
         <div className="line"></div>
         <div className="header-right-languages">

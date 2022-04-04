@@ -1,16 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
-import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
+import { signIn } from "../../../redux/userSlice";
 
+toast.configure();
 SignIn.propTypes = {};
 
 function SignIn(props) {
   const History = useHistory();
+  const dispatch = useDispatch();
 
   const schema = yup.object().shape({
     email: yup
@@ -32,26 +37,44 @@ function SignIn(props) {
   });
 
   const handleSubmit = (value) => {
-    const signIn = async () => {
-      try {
-        const res = await userAPI
-          .signInWithWebAccount({
-            email: value.email,
-            password: value.password,
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              History.push("/");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.log(error);
-      }
+    // const fetchSignIn = async () => {
+    //   try {
+    //     const action = signIn({ email: value.email, password: value.password });
+    //     const actionResult = await dispatch(action);
+    //     const response = unwrapResult(actionResult);
+
+    //     if (response.status === 200) {
+    //       toast.success("Đăng nhập thành công", {
+    //         position: toast.POSITION.TOP_RIGHT,
+    //         autoClose: 2000,
+    //         theme: "colored",
+    //       });
+    //       History.push("/");
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // fetchSignIn();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      email: "vinhmasxibua@gmail.com",
+      password: "vinsh",
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
     };
-    signIn();
+
+    fetch("http://localhost:5000/auth/signin", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   const google = () => {
@@ -68,12 +91,12 @@ function SignIn(props) {
         <b>Đăng nhập</b>
       </h1>
       <div className="social-container">
-        <Link className="social-fb">
+        <Link to="" className="social-fb">
           <i className="fab fa-facebook-f">
             <div className="social-fb-login" onClick={facebook}></div>
           </i>
         </Link>
-        <Link className="social-gg">
+        <Link to="" className="social-gg">
           <i className="fab fa-google-plus-g">
             <div className="social-gg-login" onClick={google}></div>
           </i>

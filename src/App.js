@@ -14,6 +14,7 @@ import ListProduct from "./features/ListProduct/index";
 import VerifyAccount from "./features/VerifyAccount/VerifyAccount";
 import ForgotPassword from "./features/ForgotPassword/ForgotPassword";
 import ChangePassword from "./features/ChangePassword/ChangePassword";
+import "react-toastify/dist/ReactToastify.css";
 // const Customers_Admin = lazy(() =>
 //   import("./features/Admin/Customers/Customers")
 // );

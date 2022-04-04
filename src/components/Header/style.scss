@@ -66,14 +66,43 @@
     }
     .header-right {
         display: flex;
+        justify-content: center;
         .header-right-account {
             margin-right: 20px;
-            i {
-                margin-right: 5px;
-            }
-            a {
+            .header-right-account-container {
+                display: flex;
+                cursor: pointer;
                 &:hover {
                     color: #fb2e86;
+                }
+                i {
+                    margin-right: 5px;
+                }
+                p {
+                    position: relative;
+                    .account-logout {
+                        position: absolute;
+                        left: 0;
+                        bottom: -300%;
+                        background-color: white;
+                        color: black;
+                        width: 130px;
+                        height: 40px;
+                        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                        border-radius: 5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        opacity: 0;
+                        visibility: hidden;
+                        &:hover {
+                            color: #fb2e86;
+                        }
+                    }
+                    .active {
+                        opacity: 1;
+                        visibility: visible;
+                    }
                 }
             }
         }

@@ -1,13 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as yup from "yup";
+import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
-import userAPI from "../../../api/userAPI";
 
+toast.configure();
 SignUp.propTypes = {};
-
 function SignUp(props) {
   const schema = yup.object().shape({
     fullname: yup.string().required("Vui lòng nhập Họ tên"),
@@ -46,6 +47,14 @@ function SignUp(props) {
           })
           .then((response) => {
             console.log(response);
+            if (response.status === 200) {
+              toast.success("Đăng kí thành công", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+                theme: "dark",
+              });
+              form.reset();
+            }
           })
           .catch((err) => {
             console.log(err);
