@@ -55,6 +55,8 @@ function ProductDetailPage(props) {
 
   const { product, loading } = useProductDetail(productId);
 
+  console.log(product);
+
   if (loading) {
     return <div>Loading</div>;
   }
@@ -108,14 +110,14 @@ function ProductDetailPage(props) {
                 <div className="product-details-content-product-infor-rate-start">
                   <Rating
                     name="half-rating-read"
-                    defaultValue={5}
+                    defaultValue={product.point}
                     precision={0.1}
                     readOnly
                     size="small"
                   />
                 </div>
                 <div className="product-details-content-product-infor-rate-number">
-                  (22)
+                  ({product.voted})
                 </div>
               </div>
               <div className="product-details-content-product-infor-price">
@@ -123,17 +125,17 @@ function ProductDetailPage(props) {
                   {new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(product.originalPrice)}
+                  }).format(product.price)}
                 </span>
                 <span className="product-details-content-product-infor-price-sale">
                   {new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(product.salePrice)}
+                  }).format(product.price)}
                 </span>
               </div>
               <div className="product-details-content-product-infor-descripton">
-                {product.shortDescription}
+                {product.description}
               </div>
               <div className="product-details-content-product-infor-color">
                 <span className="product-details-content-product-infor-color-title">
@@ -178,7 +180,6 @@ function ProductDetailPage(props) {
                 </div>
               </div>
               <div className="product-details-content-product-infor-action">
-                <i className="fas fa-plus"></i>
                 <i
                   className="bi bi-dash-lg"
                   onClick={() => updateQuantity("minus")}
@@ -186,7 +187,6 @@ function ProductDetailPage(props) {
                 <div className="product-details-content-product-infor-action-quantity">
                   {quantity}
                 </div>
-                <i className="fas fa-minus"></i>
                 <i
                   className="bi bi-plus-lg"
                   onClick={() => updateQuantity("plus")}

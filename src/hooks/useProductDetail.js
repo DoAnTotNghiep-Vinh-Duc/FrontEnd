@@ -9,8 +9,9 @@ export default function useProductDetail(productId) {
     (async () => {
       try {
         setLoading(true);
-        const result = await productAPI.get(productId);
-        setProduct(result.data);
+        const result = await productAPI.getProductById(productId);
+        console.log(result.data.data.listProductDetail);
+        setProduct(result.data.data.product);
       } catch (error) {
         console.log(error);
       }

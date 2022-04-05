@@ -74,29 +74,40 @@
                 cursor: pointer;
                 &:hover {
                     color: #fb2e86;
+                    a {
+                        color: #fb2e86;
+                    }
                 }
                 i {
                     margin-right: 5px;
                 }
-                p {
+                .account-name {
                     position: relative;
-                    .account-logout {
+                    .account-function {
                         position: absolute;
                         left: 0;
-                        bottom: -300%;
+                        bottom: -750%;
                         background-color: white;
                         color: black;
-                        width: 130px;
-                        height: 40px;
+                        width: 150px;
+                        height: 100px;
                         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-                        border-radius: 5px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
                         opacity: 0;
                         visibility: hidden;
-                        &:hover {
-                            color: #fb2e86;
+                        border-radius: 5px;
+                        .account-item {
+                            color: #1a0b5b;
+                            display: flex;
+                            align-items: center;
+                            height: calc(100% / 3);
+                            border-bottom: 1px solid gray;
+                            &:hover {
+                                background-color: #7e33e0;
+                                color: white;
+                            }
+                            i {
+                                margin-left: 10px;
+                            }
                         }
                     }
                     .active {

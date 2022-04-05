@@ -20,35 +20,28 @@ import "./Home.scss";
 Home.propTypes = {};
 
 function Home(props) {
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
-
   const futureDate = add(new Date(), {
     days: 7,
     hours: 22,
     minutes: 40,
   });
 
-  if (account) {
-    return (
-      <div className="container">
-        <Header />
-        <Menu />
-        <Slide />
-        <Intro />
-        <ListProduct />
-        <Countdown futureDate={futureDate} />
-        <ListFavoriteProduct />
-        <Support />
-        <Subscribe />
-        <Blog />
-        <Footer />
-        <Scroll showBelow={250} />
-      </div>
-    );
-  } else {
-    return <Redirect to="/auth" />;
-  }
+  return (
+    <div className="container">
+      <Header />
+      <Menu />
+      <Slide />
+      <Intro />
+      <ListProduct />
+      <Countdown futureDate={futureDate} />
+      <ListFavoriteProduct />
+      <Support />
+      <Subscribe />
+      <Blog />
+      <Footer />
+      <Scroll showBelow={250} />
+    </div>
+  );
 }
 
 export default Home;

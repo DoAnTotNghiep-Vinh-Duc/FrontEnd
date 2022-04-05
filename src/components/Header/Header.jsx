@@ -38,13 +38,25 @@ function Header(props) {
             {!account ? (
               <a href="/auth">Tài khoản</a>
             ) : (
-              <p onClick={() => setOpen((x) => !x)}>
+              <div className="account-name" onClick={() => setOpen((x) => !x)}>
                 Xin chào, Đỗ Đạt Đức
-                <div className={`${"account-logout"} ${open ? "active" : ""}`}>
-                  <i className="bi bi-box-arrow-left"></i>
-                  <p>Đăng xuất</p>
+                <div
+                  className={`${"account-function"} ${open ? "active" : ""}`}
+                >
+                  <div className="account-item">
+                    <i className="bi bi-card-checklist"></i>
+                    <p>Thông tin cá nhân</p>
+                  </div>
+                  <div className="account-item">
+                    <i className="bi bi-key"></i>
+                    <p>Đổi mật khẩu</p>
+                  </div>
+                  <div className="account-item">
+                    <i className="bi bi-box-arrow-left"></i>
+                    <p>Đăng xuất</p>
+                  </div>
                 </div>
-              </p>
+              </div>
             )}
           </div>
         </div>

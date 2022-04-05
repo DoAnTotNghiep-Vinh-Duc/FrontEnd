@@ -1,4 +1,5 @@
 import axiosClient from "./axiosClient";
+import axiosClient2 from "./axiosClient2";
 
 const productAPI = {
   async getAll(params) {
@@ -26,9 +27,17 @@ const productAPI = {
       },
     };
   },
+  getProducts() {
+    const url = "/product";
+    return axiosClient2.get(url);
+  },
   get(id) {
     const url = `/products/${id}`;
     return axiosClient.get(url);
+  },
+  getProductById(id) {
+    const url = `/product/${id}`;
+    return axiosClient2.get(url);
   },
 };
 

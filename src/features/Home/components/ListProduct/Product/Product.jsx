@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Rating } from "@material-ui/lab";
-import PhiHanhGia_black from "../../../../../assets/product/PhiHanhGia-black.jpg";
-import PhiHanhGia_blue from "../../../../../assets/product/PhiHanhGia-blue.jpg";
+import PropTypes from "prop-types";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import ListButton from "../../../../../components/ListButton/ListButton";
 
 Product.propTypes = {
@@ -10,11 +9,21 @@ Product.propTypes = {
 };
 
 function Product({ product }) {
+  const History = useHistory();
+
+  const handleClick = () => {
+    History.push(`/products/${product._id}`);
+  };
+
   return (
-    <div className="home-product">
+    <div className="home-product" onClick={handleClick}>
       <div className="home-product-image">
-        <img src={PhiHanhGia_black} alt="" effect="blur" />
-        <img src={PhiHanhGia_blue} alt="" className="home-product-img-hover" />
+        <img src={product.images[0]} alt="" effect="blur" />
+        <img
+          src={product.images[1]}
+          alt=""
+          className="home-product-img-hover"
+        />
         <div className="home-product-group-fuction">
           <ListButton />
         </div>
@@ -28,15 +37,25 @@ function Product({ product }) {
         <div className="home-product-rating">
           <Rating
             name="half-rating-read"
-            defaultValue={2.5}
+            defaultValue={product.point}
             precision={0.1}
             readOnly
           />
         </div>
         <div className="home-product-name">{product.name}</div>
         <div className="home-product-price">
-          <p className="home-product-price-main">{product.price}</p>
-          <p className="home-product-price-sub ">{product.price}</p>
+          <p className="home-product-price-main">
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(product.price)}
+          </p>
+          <p className="home-product-price-sub ">
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(product.price)}
+          </p>
         </div>
       </div>
     </div>

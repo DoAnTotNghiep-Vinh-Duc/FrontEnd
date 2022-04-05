@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ListProduct.scss";
 import Product from "./Product/Product";
+import productAPI from "../../../../api/productAPI";
 
 ListProduct.propTypes = {};
 
@@ -18,11 +19,26 @@ function ListProduct(props) {
     { id: 8, name: "Áo Thun Cactus Always Be Smile", price: "350.000 VNĐ" },
   ];
 
+  const [listProduct, setListProduct] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await productAPI.getProducts();
+        setListProduct(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   const filters = [
     { value: 0, label: "Mới nhất" },
     { value: 1, label: "Bán chạy" },
     { value: 2, label: "Giảm giá" },
   ];
+
+  console.log(listProduct);
 
   return (
     <div className="home-products">
@@ -44,8 +60,8 @@ function ListProduct(props) {
         })}
       </div>
       <div className="home-products-list">
-        {data.map((data) => {
-          return <Product product={data} key={data.id} />;
+        {listProduct.map((data) => {
+          return <Product product={data} key={data._id} />;
         })}
       </div>
       <div className="home-products-more">

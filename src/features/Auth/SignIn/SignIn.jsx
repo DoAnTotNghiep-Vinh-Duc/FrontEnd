@@ -37,44 +37,27 @@ function SignIn(props) {
   });
 
   const handleSubmit = (value) => {
-    // const fetchSignIn = async () => {
-    //   try {
-    //     const action = signIn({ email: value.email, password: value.password });
-    //     const actionResult = await dispatch(action);
-    //     const response = unwrapResult(actionResult);
+    const fetchSignIn = async () => {
+      try {
+        const action = signIn({ email: value.email, password: value.password });
+        const actionResult = await dispatch(action);
+        const response = unwrapResult(actionResult);
 
-    //     if (response.status === 200) {
-    //       toast.success("Đăng nhập thành công", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //         autoClose: 2000,
-    //         theme: "colored",
-    //       });
-    //       History.push("/");
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // fetchSignIn();
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+        console.log(response);
 
-    var raw = JSON.stringify({
-      email: "vinhmasxibua@gmail.com",
-      password: "vinsh",
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
+        if (response.status === 200) {
+          toast.success("Đăng nhập thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "colored",
+          });
+          History.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
-
-    fetch("http://localhost:5000/auth/signin", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    fetchSignIn();
   };
 
   const google = () => {

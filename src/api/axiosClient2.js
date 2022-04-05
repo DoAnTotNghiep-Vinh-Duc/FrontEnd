@@ -3,9 +3,12 @@ import axios from "axios";
 const axiosClient2 = axios.create({
   baseURL: "http://localhost:5000/",
   credentials: true,
+  methods: "GET,POST,PUT,DELETE",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": true,
   },
 });
@@ -20,11 +23,11 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  function (response) {
+  async function (response) {
     return response;
   },
-  function (error) {
-    console.log("ERROR REPONSE:", error.response);
+  async function (error) {
+    console.log(error);
     return Promise.reject(error);
   }
 );
