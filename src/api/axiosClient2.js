@@ -1,19 +1,19 @@
 import axios from "axios";
 
+var header = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "*",
+};
+
 const axiosClient2 = axios.create({
   baseURL: "http://localhost:5000/",
-  credentials: true,
-  methods: "GET,POST,PUT,DELETE",
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Credentials": true,
-  },
+  headers: header,
 });
 
-axios.interceptors.request.use(
+axiosClient2.interceptors.request.use(
   function (config) {
     return config;
   },
@@ -22,14 +22,18 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(
-  async function (response) {
-    return response;
+axiosClient2.interceptors.response.use(
+  async function (reponse) {
+    return reponse;
   },
   async function (error) {
-    console.log(error);
+    const { config, status, data } = error.response;
+
+    if (config.url === "/auth/signin" && status === 403) {
+      const error = data.error;
+      return Promise.reject(error);
+    }
     return Promise.reject(error);
   }
 );
-
 export default axiosClient2;

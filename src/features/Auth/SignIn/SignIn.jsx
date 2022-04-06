@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { unwrapResult } from "@reduxjs/toolkit";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -16,6 +16,7 @@ SignIn.propTypes = {};
 function SignIn(props) {
   const History = useHistory();
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   const schema = yup.object().shape({
     email: yup
@@ -41,11 +42,8 @@ function SignIn(props) {
       try {
         const action = signIn({ email: value.email, password: value.password });
         const actionResult = await dispatch(action);
-        const response = unwrapResult(actionResult);
-
-        console.log(response);
-
-        if (response.status === 200) {
+        const result = unwrapResult(actionResult);
+        if (result.status === 200) {
           toast.success("Đăng nhập thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
@@ -54,7 +52,7 @@ function SignIn(props) {
           History.push("/");
         }
       } catch (error) {
-        console.log(error);
+        setError(error.message);
       }
     };
     fetchSignIn();
@@ -88,6 +86,7 @@ function SignIn(props) {
       <span className="span-signin">Hoặc sử dụng tài khoản của bạn</span>
       <InputField name="email" label="Email" form={form} />
       <PasswordField name="password" label="Mật khẩu" form={form} />
+      <span className="error">{error}</span>
       <Link className="signin-forgot-password" to="/forgotPassword">
         Quên mật khẩu?
       </Link>

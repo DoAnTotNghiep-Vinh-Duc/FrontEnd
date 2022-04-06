@@ -13,11 +13,12 @@ function Product({ product }) {
 
   const handleClick = () => {
     History.push(`/products/${product._id}`);
+    console.log("hehe");
   };
 
   return (
-    <div className="home-product" onClick={handleClick}>
-      <div className="home-product-image">
+    <div className="home-product">
+      <div className="home-product-image" onClick={handleClick}>
         <img src={product.images[0]} alt="" effect="blur" />
         <img
           src={product.images[1]}

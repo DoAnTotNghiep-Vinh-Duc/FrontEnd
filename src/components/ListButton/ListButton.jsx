@@ -15,6 +15,7 @@ function ListButton(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    console.log("haha");
   };
 
   const handleClose = () => {

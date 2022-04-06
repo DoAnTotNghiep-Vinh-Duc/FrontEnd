@@ -1,8 +1,7 @@
-import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
-import PhiHanhGia_black from "../../../assets/product/PhiHanhGia-black.jpg";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { Fragment, useState } from "react";
 import { Navigation, Thumbs } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 ProductImageSlider.propTypes = {
   data: PropTypes.array.isRequired,
@@ -25,7 +24,7 @@ function ProductImageSlider({ data }) {
         {data.map((value, index) => (
           <SwiperSlide key={index}>
             <div className="product-details-content-product-imagemain-container">
-              <img src={PhiHanhGia_black} alt="" />
+              <img src={value} alt="" />
             </div>
           </SwiperSlide>
         ))}
@@ -40,7 +39,7 @@ function ProductImageSlider({ data }) {
         {data.map((value, index) => (
           <SwiperSlide key={index}>
             <div className="product-details-content-product-imagesub-img">
-              <img src={PhiHanhGia_black} alt="" />
+              <img src={value} alt="" />
             </div>
           </SwiperSlide>
         ))}

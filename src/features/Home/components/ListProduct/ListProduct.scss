@@ -81,6 +81,8 @@
                     .home-product-group-fuction {
                         opacity: 1;
                         right: 0;
+                        z-index: 99;
+                        background-color: red;
                     }
                     .home-products-addtocart {
                         visibility: visible;

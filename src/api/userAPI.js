@@ -1,13 +1,9 @@
 import axiosClient2 from "./axiosClient2";
 
 const userAPI = {
-  signin(tokenId) {
-    const url = "/login";
-    return axiosClient2.post(url, tokenId);
-  },
-  signInWithWebAccount(account) {
+  signInWithWebAccount(email, password) {
     const url = "/auth/signin";
-    return axiosClient2.post(url, account);
+    return axiosClient2.post(url, email, password);
   },
   signUpWithWebAccount(newAccount) {
     const url = "/auth/signup";

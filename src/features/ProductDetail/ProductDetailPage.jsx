@@ -98,7 +98,7 @@ function ProductDetailPage(props) {
       <div className="product-details-content">
         <div className="product-details-content-product">
           <div className="product-details-content-product-left">
-            <ProductImageSlider data={data.data} />
+            <ProductImageSlider data={product.images} />
           </div>
 
           <div className="product-details-content-product-right">
