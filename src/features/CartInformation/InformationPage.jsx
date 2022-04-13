@@ -1,5 +1,6 @@
 import { TextField } from "@material-ui/core";
 import React from "react";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import ListProductCart from "../../components/ListProductCart/ListProductCart";
@@ -9,6 +10,17 @@ import "./InformationPage.scss";
 InformationPage.propTypes = {};
 
 function InformationPage(props) {
+  const match = useRouteMatch();
+  const History = useHistory();
+
+  const handleBtnBack = () => {
+    History.goBack();
+  };
+
+  const handleBtnContinue = () => {
+    History.push(`${match.url}/payment`);
+  };
+
   return (
     <div className="cart-information">
       <Header />
@@ -81,11 +93,17 @@ function InformationPage(props) {
             />
           </div>
           <div className="payment-content-information-btn">
-            <div className="payment-content-information-btnback">
+            <div
+              className="payment-content-information-btnback"
+              onClick={handleBtnBack}
+            >
               <i className="bi bi-arrow-return-left"></i>
               Quay lại
             </div>
-            <div className="payment-content-information-btnpayment">
+            <div
+              className="payment-content-information-btnpayment"
+              onClick={handleBtnContinue}
+            >
               <i className="bi bi-arrow-return-right"></i>
               Tiếp tục
             </div>

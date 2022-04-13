@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import { useHistory } from "react-router-dom";
 import payment from "../../assets/images/payment.png";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -14,12 +15,18 @@ import "./PaymentPage.scss";
 PaymentPage.propTypes = {};
 
 function PaymentPage(props) {
+  const History = useHistory();
+
   const [selectedValue, setSelectedValue] = useState("");
 
   const { handleChange, handleFocus, handleSubmit, values, error } = useCard();
 
   const handleClickRadio = (event) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleBtnBack = () => {
+    History.goBack();
   };
 
   return (
@@ -175,7 +182,10 @@ function PaymentPage(props) {
             </div>
           </div>
           <div className="payment-content-information-btn">
-            <button className="payment-content-information-btnback">
+            <button
+              className="payment-content-information-btnback"
+              onClick={handleBtnBack}
+            >
               <i className="bi bi-arrow-return-left"></i>
               Quay lại
             </button>

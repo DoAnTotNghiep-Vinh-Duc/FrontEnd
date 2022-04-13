@@ -18,9 +18,13 @@ function CartFeature(props) {
           exact
           component={InformationPage}
         />
-        <Route path={`${match.url}/payment`} exact component={PaymentPage} />
         <Route
-          path={`${match.url}/notification`}
+          path={`${match.url}/information/payment`}
+          exact
+          component={PaymentPage}
+        />
+        <Route
+          path={`${match.url}/information/payment/notification`}
           exact
           component={NotificationPage}
         />

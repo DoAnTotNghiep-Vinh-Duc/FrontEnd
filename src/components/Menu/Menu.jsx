@@ -1,12 +1,21 @@
 import { TextField } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import useCart from "../../hooks/useCart";
 import "./menu.scss";
 
 Menu.propTypes = {};
 
 function Menu(props) {
+  const local = localStorage.getItem("account");
+  const account = local && JSON.parse(local);
+
+  const History = useHistory();
+
   const [scroll, setScroll] = useState(false);
+
+  const { cart } = useCart(account._id);
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {
@@ -15,6 +24,10 @@ function Menu(props) {
       setScroll(false);
     }
   });
+
+  const handleClickCart = () => {
+    History.push("/cart");
+  };
 
   return (
     <div className={`${"menu"} ${scroll ? "menu-scroll" : ""}`}>
@@ -193,9 +206,9 @@ function Menu(props) {
           <i className="bi bi-suit-heart"></i>
           <span>3</span>
         </div>
-        <div className="menu-right-bag">
+        <div className="menu-right-bag" onClick={handleClickCart}>
           <i className="bi bi-handbag"></i>
-          <span>2</span>
+          <span>{cart.listCartDetail?.length ?? 0}</span>
         </div>
       </div>
     </div>
