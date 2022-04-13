@@ -5,9 +5,10 @@ const userAPI = {
     const url = "/auth/signin";
     return axiosClient2.post(url, email, password);
   },
-  signUpWithWebAccount(newAccount) {
+  signUpWithWebAccount(name, email, password) {
+    console.log(name, email, password);
     const url = "/auth/signup";
-    return axiosClient2.post(url, newAccount);
+    return axiosClient2.post(url, name, email, password);
   },
 };
 

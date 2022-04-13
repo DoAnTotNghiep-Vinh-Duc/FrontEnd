@@ -41,11 +41,16 @@
                         bottom: 0;
                     }
                 }
-                img {
-                    border-radius: 10px;
+                .home-favoriteproduct-image-container {
                     width: 100%;
                     height: 100%;
+                    img {
+                        border-radius: 10px;
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
+
                 .home-favoriteproduct-img-hover {
                     position: absolute;
                     top: 0;
@@ -67,7 +72,7 @@
                         border-radius: 50%;
                         color: #2f1ac4;
                         margin-bottom: 15px;
-                        background-color: #eeeffb;
+                        background-color: white;
                         &:hover {
                             color: #fb2e86;
                         }
@@ -80,7 +85,7 @@
                         border-radius: 50%;
                         color: #2f1ac4;
                         margin-bottom: 15px;
-                        background-color: #eeeffb;
+                        background-color: white;
                         &:hover {
                             color: #fb2e86;
                         }
@@ -92,7 +97,7 @@
                         padding: 10px;
                         border-radius: 50%;
                         color: #2f1ac4;
-                        background-color: #eeeffb;
+                        background-color: white;
                         &:hover {
                             color: #fb2e86;
                         }

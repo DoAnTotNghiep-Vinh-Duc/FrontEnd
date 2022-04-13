@@ -2,10 +2,13 @@ import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import { Navigation, Thumbs } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PhiHanhGia_black from "../../../assets/product/PhiHanhGia-black.jpg";
 
 QuickViewImageSlider.propTypes = {
   data: PropTypes.array.isRequired,
+};
+
+QuickViewImageSlider.defaultProps = {
+  data: [],
 };
 
 function QuickViewImageSlider({ data }) {
@@ -20,7 +23,7 @@ function QuickViewImageSlider({ data }) {
       >
         {data.map((value, index) => (
           <SwiperSlide key={index}>
-            <img src={PhiHanhGia_black} alt="" />
+            <img src={value} alt="" />
           </SwiperSlide>
         ))}
       </Swiper>

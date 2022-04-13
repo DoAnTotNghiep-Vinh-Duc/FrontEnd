@@ -1,33 +1,47 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import Menu from "../../components/Menu/Menu";
-import check from "../../assets/images/check.png";
 import "./VerifyAccount.scss";
 
 VerifyAccount.propTypes = {};
+
 function VerifyAccount(props) {
   return (
-    <div className="verifyAccount">
-      <Header />
-      <Menu />
-      <div className="verifyAccount-body">
-        <div className="verifyAccount-body-header">
-          <span className="verifyAccount-body-header-title">
-            Xác thực tài khoản
-          </span>
+    <div className="verify">
+      <div className="verify-container">
+        <div className="verify-logo">
+          <a href="/">Lemon</a>
         </div>
-        <div className="verifyAccount-body-content">
-          <div className="verifyAccount-body-content-image">
-            <img src={check} alt="" />
+        <div className="verify-content">
+          <div className="verify-icon">
+            <span>
+              <i className="bi bi-envelope"></i>
+            </span>
           </div>
-          <div className="verifyAccount-body-content-success">
-            Bạn đã xác thực tài khoản thành công!
+          <div className="verify-title">Xác thực tài khoản</div>
+          <div className="verify-text">
+            Một yêu cầu xác thực email đã được gửi đến <br />
+            <b> 12345ddduc@gmail.com</b>
           </div>
+          <div className="verify-text">
+            Vui lòng kiểm tra email và xác nhận tài khoản của bạn bằng cách nhấn
+            vào nút <b>"Xác thực tài khoản"</b>
+          </div>
+          <div className="verify-text">
+            Nếu không nhận được email xác thực, vui lòng kiểm tra hộp thư spam
+            hoặc nhấn vào nút bên dưới để gửi lại email xác thực tài khoản của
+            bạn. <br /> Nếu bạn tiếp tục gặp vấn đề, vui lòng gửi
+            <a href="mailto:thanhvinhplayground@gmail.com">
+              <b>
+                <i style={{ color: "dodgerblue" }}> email hỗ trợ</i>
+              </b>
+            </a>
+            .
+          </div>
+          <div className="verify-button">GỬI LẠI EMAIL</div>
         </div>
       </div>
-      <Footer />
+      <div className="verify-signin">
+        <a href="/auth">Đăng nhập</a>
+      </div>
     </div>
   );
 }

@@ -135,12 +135,13 @@
                         align-items: center;
                         .product-details-content-product-infor-color-title {
                             height: 100%;
-                            width: 10%;
+                            width: 80px;
                             color: #151875;
+                            font-size: 18px;
                         }
                         .product-details-content-product-infor-color-filter {
                             height: 100%;
-                            width: 90%;
+                            width: calc(100% - 80px);
                             display: flex;
                             align-items: center;
                             margin-left: 25px;
@@ -148,8 +149,8 @@
                                 display: flex;
                                 align-items: center;
                                 justify-content: center;
-                                width: 25px;
-                                height: 25px;
+                                width: 35px;
+                                height: 35px;
                                 border-radius: 50%;
                                 border: 1px solid rgba(gray, 0.5);
                                 cursor: pointer;
@@ -161,8 +162,8 @@
                                     border: 1px solid #fb2e86;
                                 }
                                 .circle {
-                                    width: 19px;
-                                    height: 19px;
+                                    width: 29px;
+                                    height: 29px;
                                     border-radius: 50%;
                                 }
                             }
@@ -175,18 +176,19 @@
                         align-items: center;
                         justify-content: flex-start;
                         .product-details-content-product-infor-size-title {
-                            width: 10%;
+                            width: 80px;
                             height: 100%;
+                            font-size: 18px;
                         }
                         .product-details-content-product-infor-size-container {
-                            width: 90%;
+                            width: calc(100%-80px);
                             height: 100%;
                             margin-left: 25px;
                             .size {
                                 margin-right: 10px;
                                 display: inline-flex;
-                                width: 25px;
-                                height: 25px;
+                                width: 35px;
+                                height: 35px;
                                 border: 1px solid rgba(gray, 0.5);
                                 align-items: center;
                                 justify-content: center;

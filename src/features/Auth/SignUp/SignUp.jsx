@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import userAPI from "../../../api/userAPI";
@@ -10,6 +11,10 @@ import PasswordField from "../../../form-control/PasswordField";
 toast.configure();
 SignUp.propTypes = {};
 function SignUp(props) {
+  const History = useHistory();
+  const location = useLocation();
+  const [error, setError] = useState("");
+
   const schema = yup.object().shape({
     fullname: yup.string().required("Vui lòng nhập Họ tên"),
     email: yup
@@ -37,33 +42,27 @@ function SignUp(props) {
   });
 
   const handleSubmit = (value) => {
-    const signUp = async () => {
+    (async () => {
       try {
-        const res = userAPI
-          .signUpWithWebAccount({
-            name: value.name,
-            email: value.email,
-            password: value.password,
-          })
-          .then((response) => {
-            console.log(response);
-            if (response.status === 200) {
-              toast.success("Đăng kí thành công", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 2000,
-                theme: "dark",
-              });
-              form.reset();
-            }
-          })
-          .catch((err) => {
-            console.log(err);
+        const res = await userAPI.signUpWithWebAccount({
+          name: value.fullname,
+          email: value.email,
+          password: value.password,
+        });
+
+        if (res.status === 201) {
+          toast.success("Đăng kí thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
           });
+          form.reset();
+          History.push(`${location.pathname}/verify`);
+        }
       } catch (error) {
-        console.log(error);
+        setError(error.message);
       }
-    };
-    signUp();
+    })();
   };
 
   return (
@@ -77,6 +76,7 @@ function SignUp(props) {
         label="Nhập lại mật khẩu"
         form={form}
       />
+      <span className="error">{error}</span>
       <button className="btn-signin" type="submit">
         Đăng kí
       </button>

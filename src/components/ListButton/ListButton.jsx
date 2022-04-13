@@ -11,16 +11,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function ListButton(props) {
+  const { product } = props;
   const [open, setOpen] = useState(false);
+  const [productSelected, setProductSelected] = useState({});
 
   const handleClickOpen = () => {
+    setProductSelected(product);
     setOpen(true);
-    console.log("haha");
   };
 
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <div className="addtocart">
@@ -42,7 +45,10 @@ function ListButton(props) {
         aria-describedby="alert-dialog-slide-description"
         maxWidth="lg"
       >
-        <QuickView closeQuickView={handleClose} />
+        <QuickView
+          closeQuickView={handleClose}
+          productSelected={productSelected}
+        />
       </Dialog>
     </>
   );

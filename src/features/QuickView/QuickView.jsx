@@ -1,17 +1,29 @@
-import React, { useState } from "react";
-import QuickViewImageSlider from "./components/QuickViewImageSlider";
-import data from "../../data/data";
+import { Rating } from "@material-ui/lab";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import QuickViewImageSlider from "./components/QuickViewImageSlider";
 import "./QuickView.scss";
-import Rating from "@material-ui/lab/Rating";
 
-QuickView.propTypes = {};
+QuickView.propTypes = {
+  productSelected: PropTypes.object.isRequired,
+};
 
-function QuickView({ closeQuickView }) {
+QuickView.defaultProps = {
+  productSelected: {},
+};
+
+function QuickView({ closeQuickView, productSelected }) {
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    setProduct(productSelected);
+  }, [productSelected]);
 
   const sizes = [
     { id: "1", size: "S" },
@@ -51,7 +63,7 @@ function QuickView({ closeQuickView }) {
     <>
       <div className="quickview">
         <div className="quickview-left">
-          <QuickViewImageSlider data={data.data} />
+          <QuickViewImageSlider data={product.images} />
         </div>
         <div className="quickview-right">
           <div className="quickview-exit">
@@ -59,18 +71,28 @@ function QuickView({ closeQuickView }) {
               <i className="bi bi-x"></i>
             </div>
           </div>
-          <div className="quickview-name">Áo thun BC Space Theme</div>
+          <div className="quickview-name">{product.name}</div>
           <div className="quickview-rate">
             <Rating
               name="half-rating-read"
-              defaultValue={5}
+              defaultValue={product ?? 5}
               precision={0.1}
               readOnly
               size="small"
             />
           </div>
-          <div className="quickview-pricemain">355.000 VNĐ</div>
-          <div className="quickview-pricesale">295.000 VNĐ</div>
+          <div className="quickview-pricemain">
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(product.price)}
+          </div>
+          <div className="quickview-pricesale">
+            {new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(product.price)}
+          </div>
           <div className="quickview-color">
             <p className="quickview-color-title">Màu sắc</p>
             {colors.map((item) => (

@@ -1,10 +1,10 @@
 import Rating from "@material-ui/lab/Rating";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import data from "../../data/data";
+import cartAPI from "../../api/cartAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
@@ -15,51 +15,35 @@ import "./css/ProductDetailPage.scss";
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
-  const sizes = [
-    { id: "1", size: "S" },
-    { id: "2", size: "M" },
-    { id: "3", size: "L" },
-    { id: "4", size: "XL" },
-  ];
-
-  const colors = [
-    {
-      id: "1",
-      color: "white",
-    },
-    {
-      id: "2",
-      color: "black",
-    },
-    {
-      id: "3",
-      color: "orange",
-    },
-    {
-      id: "4",
-      color: "red",
-    },
-    {
-      id: "5",
-      color: "blue",
-    },
-  ];
+  const local = localStorage.getItem("account");
+  const account = local && JSON.parse(local);
 
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
+  const [sizeDetails, setSizeDetails] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
 
   const {
     params: { productId },
   } = useRouteMatch();
 
-  const { product, loading } = useProductDetail(productId);
-
-  console.log(product);
+  const { product, loading, colorDetails } = useProductDetail(productId);
 
   if (loading) {
     return <div>Loading</div>;
   }
+
+  const handleClickColor = (item) => {
+    setColor(Object.keys(item)[0]);
+    setSizeDetails(Object.values(item)[0]);
+    setSize(undefined);
+  };
+
+  const handleClickSize = (item) => {
+    setSize(item.size);
+    setProductDetails(item);
+  };
 
   const updateQuantity = (type) => {
     if (type === "plus") {
@@ -82,7 +66,21 @@ function ProductDetailPage(props) {
   };
 
   const addToCart = () => {
-    if (check()) console.log({ color, size, quantity });
+    if (check()) {
+      (async () => {
+        try {
+          const response = await cartAPI.addItemToCart({
+            accountId: account._id,
+            productDetailId: productDetails._id,
+            quantity: quantity,
+          });
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
   };
 
   return (
@@ -142,17 +140,22 @@ function ProductDetailPage(props) {
                   Màu sắc
                 </span>
                 <div className="product-details-content-product-infor-color-filter">
-                  {colors.map((item) => (
-                    <div
-                      key={item.id}
-                      className={`${"product-details-content-product-infor-color-filter-container"} ${
-                        color === item.color ? "active-color" : ""
-                      }`}
-                      onClick={() => setColor(item.color)}
-                    >
-                      <div className={`circle bg-${item.color}`}></div>
-                    </div>
-                  ))}
+                  {colorDetails.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={`${"product-details-content-product-infor-color-filter-container"} ${
+                          color === Object.keys(item)[0] ? "active-color" : ""
+                        }`}
+                        onClick={() => handleClickColor(item)}
+                      >
+                        <div
+                          className={`circle`}
+                          style={{ backgroundColor: `${Object.keys(item)[0]}` }}
+                        ></div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="product-details-content-product-infor-size">
@@ -160,23 +163,27 @@ function ProductDetailPage(props) {
                   Kích cỡ
                 </span>
                 <div className="product-details-content-product-infor-size-container">
-                  {sizes.map((item) => (
-                    <span
-                      key={item.id}
-                      className={`${"size"} ${
-                        size === item.size ? "active-size" : ""
-                      }`}
-                      onClick={() => setSize(item.size)}
-                    >
-                      {item.size}
-                    </span>
-                  ))}
-                  {/* <span className="size">S</span>
-                  <span className="size size-none">
+                  {sizeDetails.length ? (
+                    <>
+                      {sizeDetails.map((item, index) => (
+                        <span
+                          key={index}
+                          className={`${"size"} ${
+                            size === item.size ? "active-size" : ""
+                          }`}
+                          onClick={() => handleClickSize(item)}
+                        >
+                          {item.size}
+                        </span>
+                      ))}
+                    </>
+                  ) : (
+                    <p>Vui lòng chọn màu trước</p>
+                  )}
+
+                  {/* <span className="size size-none">
                     M<div className="line"></div>
-                  </span>
-                  <span className="size">L</span>
-                  <span className="size">XL</span> */}
+                  </span> */}
                 </div>
               </div>
               <div className="product-details-content-product-infor-action">

@@ -13,20 +13,22 @@ function Product({ product }) {
 
   const handleClick = () => {
     History.push(`/products/${product._id}`);
-    console.log("hehe");
   };
 
   return (
     <div className="home-product">
-      <div className="home-product-image" onClick={handleClick}>
-        <img src={product.images[0]} alt="" effect="blur" />
-        <img
-          src={product.images[1]}
-          alt=""
-          className="home-product-img-hover"
-        />
+      <div className="home-product-image">
+        <div className="home-product-image-container" onClick={handleClick}>
+          <img src={product.images[0]} alt="" effect="blur" />
+          <img
+            src={product.images[1]}
+            alt=""
+            className="home-product-img-hover"
+          />
+        </div>
+
         <div className="home-product-group-fuction">
-          <ListButton />
+          <ListButton product={product} />
         </div>
         <div className="home-products-addtocart">
           <i className="bi bi-handbag"></i>

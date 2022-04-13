@@ -26,14 +26,17 @@ function ListFavoriteProduct(props) {
           return (
             <div className="home-favoriteproduct" key={data.id}>
               <div className="home-favoriteproduct-image">
-                <img src={TranhVintage} alt="" />
-                <img
-                  src={AiryWTS}
-                  alt=""
-                  className="home-favoriteproduct-img-hover"
-                />
+                <div className="home-favoriteproduct-image-container">
+                  <img src={TranhVintage} alt="" />
+                  <img
+                    src={AiryWTS}
+                    alt=""
+                    className="home-favoriteproduct-img-hover"
+                  />
+                </div>
+
                 <div className="home-favoriteproduct-group-fuction">
-                  <ListButton />
+                  {/* <ListButton /> */}
                 </div>
                 <div className="home-favoriteproduct-addtocart">
                   <i className="bi bi-handbag"></i>

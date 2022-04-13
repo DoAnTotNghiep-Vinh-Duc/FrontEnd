@@ -82,7 +82,6 @@
                         opacity: 1;
                         right: 0;
                         z-index: 99;
-                        background-color: red;
                     }
                     .home-products-addtocart {
                         visibility: visible;
@@ -90,11 +89,16 @@
                         bottom: 0;
                     }
                 }
-                img {
-                    border-radius: 10px;
+                .home-product-image-container {
                     width: 100%;
                     height: 100%;
+                    img {
+                        border-radius: 10px;
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
+
                 .home-product-img-hover {
                     position: absolute;
                     top: 0;

@@ -27,9 +27,14 @@ axiosClient2.interceptors.response.use(
     return reponse;
   },
   async function (error) {
+    // console.log(error.response);
     const { config, status, data } = error.response;
 
     if (config.url === "/auth/signin" && status === 403) {
+      const error = data.error;
+      return Promise.reject(error);
+    }
+    if (config.url === "/auth/signup" && status === 409) {
       const error = data.error;
       return Promise.reject(error);
     }
