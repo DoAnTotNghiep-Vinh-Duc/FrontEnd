@@ -17,6 +17,10 @@ const cartAPI = {
     const url = "/cart/decrease-quantity";
     return axiosClient2.put(url, accountId, productDetailId);
   },
+  removeItem(accountId, productDetailId) {
+    const url = "/cart/remove-item";
+    return axiosClient2.put(url, accountId, productDetailId);
+  },
 };
 
 export default cartAPI;
