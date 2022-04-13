@@ -1,6 +1,7 @@
 import Rating from "@material-ui/lab/Rating";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { toast } from "react-toastify";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
@@ -12,6 +13,7 @@ import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
 import "./css/ProductDetailPage.scss";
 
+toast.configure();
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
@@ -74,8 +76,13 @@ function ProductDetailPage(props) {
             productDetailId: productDetails._id,
             quantity: quantity,
           });
-
-          console.log(response);
+          if (response.status === 204) {
+            toast.success("Thêm vào giỏ hành thành công", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000,
+              theme: "dark",
+            });
+          }
         } catch (error) {
           console.log(error);
         }
