@@ -2,7 +2,6 @@ import { Dialog, useMediaQuery, useTheme } from "@material-ui/core";
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import cartAPI from "../../api/cartAPI";
-import product2 from "../../assets/product/product2.jpg";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
@@ -31,7 +30,7 @@ function CartPage(props) {
       try {
         const response = await cartAPI.increaseQuantity({
           accountId: account._id,
-          productDetailId: element.productDetail,
+          productDetailId: element.productDetail._id,
         });
       } catch (error) {
         console.log(error);
@@ -44,7 +43,7 @@ function CartPage(props) {
       try {
         const response = await cartAPI.decreaseQuantity({
           accountId: account._id,
-          productDetailId: element.productDetail,
+          productDetailId: element.productDetail._id,
         });
       } catch (error) {
         console.log(error);
@@ -99,20 +98,20 @@ function CartPage(props) {
                   return (
                     <div
                       className="cart-content-cart-product"
-                      key={element.productDetail}
+                      key={element.productDetail._id}
                     >
                       <div className="cart-content-cart-product-image">
-                        <img src={product2} alt="" />
+                        <img src={element.productDetail.image} alt="" />
                       </div>
                       <div className="cart-content-cart-product-infor">
                         <div className="cart-content-cart-product-infor-name">
-                          AIRism Cotton Áo Thun Chống UV Cổ Tròn Dài Tay
+                          {element.productDetail.product.name}
                         </div>
                         <div className="cart-content-cart-product-infor-color">
-                          Màu sắc: Trắng
+                          Màu sắc: {element.productDetail.color.name}
                         </div>
                         <div className="cart-content-cart-product-infor-size">
-                          Kích cỡ: M
+                          Kích cỡ: {element.productDetail.size}
                         </div>
                       </div>
                       <div className="cart-content-cart-product-price">
