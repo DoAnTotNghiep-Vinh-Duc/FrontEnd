@@ -16,7 +16,7 @@ function ProductList(props) {
   return (
     <Fragment>
       {data.map((product) => {
-        return <Product product={product} key={product.id} />;
+        return <Product product={product} key={product._id} />;
       })}
     </Fragment>
   );

@@ -19,9 +19,17 @@ function Product({ product }) {
     <div className="home-product">
       <div className="home-product-image">
         <div className="home-product-image-container" onClick={handleClick}>
-          <img src={product.images[0]} alt="" effect="blur" />
           <img
-            src={product.images[1]}
+            src={
+              product.images[Math.floor(Math.random() * product.images.length)]
+            }
+            alt=""
+            effect="blur"
+          />
+          <img
+            src={
+              product.images[Math.floor(Math.random() * product.images.length)]
+            }
             alt=""
             className="home-product-img-hover"
           />
@@ -34,7 +42,13 @@ function Product({ product }) {
           <i className="bi bi-handbag"></i>
           Thêm vào giỏ hàng
         </div>
-        <div className="home-products-promotion">Sale</div>
+        {product.discount.percentDiscount > 0 ? (
+          <>
+            <div className="home-products-promotion">Sale</div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
       <div className="home-product-infor">
         <div className="home-product-rating">
@@ -51,13 +65,19 @@ function Product({ product }) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(product.price)}
+            }).format(product.price * (1 - product.discount.percentDiscount))}
           </p>
           <p className="home-product-price-sub ">
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(product.price)}
+            {product.discount.percentDiscount > 0 ? (
+              <>
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(product.price)}
+              </>
+            ) : (
+              ""
+            )}
           </p>
         </div>
       </div>

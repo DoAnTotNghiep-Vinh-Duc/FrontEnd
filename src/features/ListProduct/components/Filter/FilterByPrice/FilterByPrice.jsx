@@ -1,35 +1,9 @@
-import React, { Fragment, useState } from "react";
-import PropTypes from "prop-types";
 import { Button, TextField } from "@material-ui/core";
+import React, { Fragment } from "react";
 
-FilterByPrice.propTypes = {
-  onChange: PropTypes.func,
-};
+FilterByPrice.propTypes = {};
 
 function FilterByPrice({ onChange }) {
-  const [value, setValue] = useState({
-    salePrice_gte: 0,
-    salePrice_lte: 0,
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setValue((pre) => ({
-      ...pre,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    if (onChange) {
-      onChange(value);
-    }
-    setValue({
-      salePrice_gte: 0,
-      salePrice_lte: 0,
-    });
-  };
-
   return (
     <Fragment>
       <div className="product-content-filter-price-title">Giá cả</div>
@@ -67,8 +41,6 @@ function FilterByPrice({ onChange }) {
               size="small"
               type="number"
               name="salePrice_gte"
-              value={value.salePrice_gte}
-              onChange={handleChange}
             />
           </div>
           <i className="bi bi-arrow-right-short"></i>
@@ -80,17 +52,10 @@ function FilterByPrice({ onChange }) {
               size="small"
               type="number"
               name="salePrice_lte"
-              value={value.salePrice_lte}
-              onChange={handleChange}
             />
           </div>
         </div>
-        <Button
-          color="primary"
-          variant="outlined"
-          size="small"
-          onClick={handleSubmit}
-        >
+        <Button color="primary" variant="outlined" size="small">
           Tìm
         </Button>
       </div>

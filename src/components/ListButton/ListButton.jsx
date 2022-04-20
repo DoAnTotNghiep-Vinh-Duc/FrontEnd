@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function ListButton(props) {
   const { product } = props;
   const [open, setOpen] = useState(false);
-  const [productSelected, setProductSelected] = useState({});
+  const [productSelected, setProductSelected] = useState(product);
 
   const handleClickOpen = () => {
     setProductSelected(product);

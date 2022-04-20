@@ -1,9 +1,10 @@
 import { Rating } from "@material-ui/lab";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import useProductDetail from "../../hooks/useProductDetail";
 import QuickViewImageSlider from "./components/QuickViewImageSlider";
 import "./QuickView.scss";
 
@@ -18,46 +19,25 @@ QuickView.defaultProps = {
 function QuickView({ closeQuickView, productSelected }) {
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
+  const [sizeDetails, setSizeDetails] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
 
-  const [product, setProduct] = useState({});
-
-  useEffect(() => {
-    setProduct(productSelected);
-  }, [productSelected]);
-
-  const sizes = [
-    { id: "1", size: "S" },
-    { id: "2", size: "M" },
-    { id: "3", size: "L" },
-    { id: "4", size: "XL" },
-  ];
+  const { product, colorDetails } = useProductDetail(productSelected._id);
 
   const handleClose = () => {
     closeQuickView(false);
   };
 
-  const colors = [
-    {
-      id: "1",
-      color: "white",
-    },
-    {
-      id: "2",
-      color: "black",
-    },
-    {
-      id: "3",
-      color: "orange",
-    },
-    {
-      id: "4",
-      color: "red",
-    },
-    {
-      id: "5",
-      color: "blue",
-    },
-  ];
+  const handleClickColor = (item) => {
+    setColor(Object.keys(item)[0]);
+    setSizeDetails(Object.values(item)[0]);
+    setSize(undefined);
+  };
+
+  const handleClickSize = (item) => {
+    setSize(item.size);
+    setProductDetails(item);
+  };
 
   return (
     <>
@@ -75,9 +55,9 @@ function QuickView({ closeQuickView, productSelected }) {
           <div className="quickview-rate">
             <Rating
               name="half-rating-read"
-              defaultValue={product ?? 5}
               precision={0.1}
               readOnly
+              value={product.point ?? 0}
               size="small"
             />
           </div>
@@ -95,31 +75,40 @@ function QuickView({ closeQuickView, productSelected }) {
           </div>
           <div className="quickview-color">
             <p className="quickview-color-title">Màu sắc</p>
-            {colors.map((item) => (
+            {colorDetails.map((item, index) => (
               <div
-                key={item.id}
+                key={index}
                 className={`${"quickview-color-item"} ${
-                  color === item.color ? "active-color" : ""
+                  color === Object.keys(item)[0] ? "active-color" : ""
                 }`}
-                onClick={() => setColor(item.color)}
+                onClick={() => handleClickColor(item)}
               >
-                <div className={`circle bg-${item.color}`}></div>
+                <div
+                  className={`circle`}
+                  style={{ backgroundColor: `${Object.keys(item)[0]}` }}
+                ></div>
               </div>
             ))}
           </div>
           <div className="quickview-size">
             <p className="quickview-size-title">Kích cỡ</p>
-            {sizes.map((item) => (
-              <span
-                key={item.id}
-                className={`${"quickview-size-item"} ${
-                  size === item.size ? "active-size" : ""
-                }`}
-                onClick={() => setSize(item.size)}
-              >
-                {item.size}
-              </span>
-            ))}
+            {sizeDetails.length ? (
+              <>
+                {sizeDetails.map((item, index) => (
+                  <span
+                    key={index}
+                    className={`${"quickview-size-item"} ${
+                      size === item.size ? "active-size" : ""
+                    }`}
+                    onClick={() => handleClickSize(item)}
+                  >
+                    {item.size}
+                  </span>
+                ))}
+              </>
+            ) : (
+              <p>Vui lòng chọn màu trước</p>
+            )}
           </div>
           <div className="quickview-btn-group">
             <div className="quickview-btn-group-left">

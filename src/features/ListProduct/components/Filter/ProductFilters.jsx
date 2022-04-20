@@ -1,35 +1,18 @@
 import Rating from "@material-ui/lab/Rating";
-import PropTypes from "prop-types";
 import React, { Fragment } from "react";
 import FilterByBrand from "./FilterByBrand/FilterByBrand";
 import FilterByPrice from "./FilterByPrice/FilterByPrice";
 
-ProductFilters.propTypes = {
-  onChange: PropTypes.func,
-};
+ProductFilters.propTypes = {};
 
-function ProductFilters({ onChange }) {
-  const handleBrandChange = (newCategoryId) => {
-    if (!onChange) return;
-    const newFilters = {
-      "category.id": newCategoryId,
-    };
-    onChange(newFilters);
-  };
-
-  const handlePriceChange = (values) => {
-    if (onChange) {
-      onChange(values);
-    }
-  };
-
+function ProductFilters(props) {
   return (
     <Fragment>
       <div className="product-content-filter-branch">
-        <FilterByBrand onChange={handleBrandChange} />
+        <FilterByBrand />
       </div>
       <div className="producr-content-filter-price">
-        <FilterByPrice onChange={handlePriceChange} />
+        <FilterByPrice />
       </div>
       <div className="producr-content-filter-color">
         <div className="product-content-filter-color-title">Màu sắc</div>

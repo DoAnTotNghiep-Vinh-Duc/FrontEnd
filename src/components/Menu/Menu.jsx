@@ -1,7 +1,10 @@
 import { TextField } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
+import queryString from "query-string";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import product_female from "../../data/product_female.json";
+import product_male from "../../data/product_male.json";
 import useCart from "../../hooks/useCart";
 import "./menu.scss";
 
@@ -29,6 +32,76 @@ function Menu(props) {
     History.push("/cart");
   };
 
+  const handleClickProductMale = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nam"] }),
+    });
+  };
+  const handleClickProductMaleLong = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nam", "tay dài"] }),
+    });
+  };
+  const handleClickProductMaleShort = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nam", "tay ngắn"] }),
+    });
+  };
+  const handleClickProductMaleLongDetails = (element) => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({
+        listType: ["nam", "tay dài", `${element.value}`],
+      }),
+    });
+  };
+  const handleClickProductMaleShortDetails = (element) => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({
+        listType: ["nam", "tay ngắn", `${element.value}`],
+      }),
+    });
+  };
+
+  const handleClickProductFeMale = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nữ"] }),
+    });
+  };
+  const handleClickProductFeMaleLong = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nữ", "tay dài"] }),
+    });
+  };
+  const handleClickProductFeMaleLongDetail = (element) => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({
+        listType: ["nữ", "tay dài", `${element.value}`],
+      }),
+    });
+  };
+  const handleClickProductFeMaleShort = () => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({ listType: ["nữ", "tay ngắn"] }),
+    });
+  };
+  const handleClickProductFeMaleShortDetail = (element) => {
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({
+        listType: ["nữ", "tay ngắn", `${element.value}`],
+      }),
+    });
+  };
+
   return (
     <div className={`${"menu"} ${scroll ? "menu-scroll" : ""}`}>
       <div className="menu-left">
@@ -40,128 +113,108 @@ function Menu(props) {
             </a>
           </li>
           <li className="product_menu">
-            <a href="\products">
+            <a onClick={handleClickProductMale}>
               Nam<i className="bi bi-chevron-down"></i>
             </a>
             <div className="dropdown_product">
               <ul className="shoplayout">
                 <li>
-                  <a href="\products" className="title_product">
+                  <a
+                    className="title_product"
+                    onClick={handleClickProductMaleLong}
+                  >
                     Tay dài
                   </a>
                 </li>
-                <li>
-                  <a href="\products">Áo thun không cổ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có cổ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun tanktop</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun in hình</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có chữ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun trơn</a>
-                </li>
-                <li>
-                  <a href="\products">Unisex</a>
-                </li>
+                {product_male.map((element, index) => {
+                  return (
+                    <li key={index}>
+                      <a
+                        onClick={() =>
+                          handleClickProductMaleLongDetails(element)
+                        }
+                      >
+                        {element.name}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
               <ul className="productlayout">
                 <li>
-                  <a href="\products" className="title_product">
+                  <a
+                    className="title_product"
+                    onClick={handleClickProductMaleShort}
+                  >
                     Tay ngắn
                   </a>
                 </li>
-                <li>
-                  <a href="\products">Áo thun không cổ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có cổ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun tanktop</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun in hình</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có chữ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun trơn</a>
-                </li>
-                <li>
-                  <a href="\products">Unisex</a>
-                </li>
+                {product_male.map((element, index) => {
+                  return (
+                    <li key={index}>
+                      <a
+                        onClick={() =>
+                          handleClickProductMaleShortDetails(element)
+                        }
+                      >
+                        {element.name}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </li>
           <li className="product_menu">
-            <a href="\products">
+            <a onClick={handleClickProductFeMale}>
               Nữ<i className="bi bi-chevron-down"></i>
             </a>
             <div className="dropdown_product">
               <ul className="shoplayout">
                 <li>
-                  <a href="\products" className="title_product">
+                  <a
+                    className="title_product"
+                    onClick={handleClickProductFeMaleLong}
+                  >
                     Tay dài
                   </a>
                 </li>
-                <li>
-                  <a href="\products">Áo thun cổ tròn</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun cổ xẻ/tim</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun croptop</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun in hình</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có chữ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun trơn</a>
-                </li>
-                <li>
-                  <a href="\products">Unisex</a>
-                </li>
+                {product_female.map((element, index) => {
+                  return (
+                    <li key={index}>
+                      <a
+                        onClick={() =>
+                          handleClickProductFeMaleLongDetail(element)
+                        }
+                      >
+                        {element.name}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
               <ul className="productlayout">
                 <li>
-                  <a href="\products" className="title_product">
+                  <a
+                    className="title_product"
+                    onClick={handleClickProductFeMaleShort}
+                  >
                     Tay ngắn
                   </a>
                 </li>
-                <li>
-                  <a href="\products">Áo thun cổ tròn</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun cổ xẻ/tim</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun croptop</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun in hình</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun có chữ</a>
-                </li>
-                <li>
-                  <a href="\products">Áo thun trơn</a>
-                </li>
-                <li>
-                  <a href="\products">Unisex</a>
-                </li>
+                {product_female.map((element, index) => {
+                  return (
+                    <li key={index}>
+                      <a
+                        onClick={() =>
+                          handleClickProductFeMaleShortDetail(element)
+                        }
+                      >
+                        {element.name}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </li>

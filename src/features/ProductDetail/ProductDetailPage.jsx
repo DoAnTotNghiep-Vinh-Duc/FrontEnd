@@ -126,18 +126,33 @@ function ProductDetailPage(props) {
                 </div>
               </div>
               <div className="product-details-content-product-infor-price">
-                <span className="product-details-content-product-infor-price-original">
-                  {new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </span>
-                <span className="product-details-content-product-infor-price-sale">
-                  {new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </span>
+                {product.discount.percentDiscount > 0 ? (
+                  <>
+                    <span className="product-details-content-product-infor-price-original">
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(product.price)}
+                    </span>
+                    <span className="product-details-content-product-infor-price-sale">
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(
+                        product.price * (1 - product.discount.percentDiscount)
+                      )}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="product-details-content-product-infor-price-sale">
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(product.price)}
+                    </span>
+                  </>
+                )}
               </div>
               <div className="product-details-content-product-infor-descripton">
                 {product.description}

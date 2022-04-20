@@ -13,7 +13,7 @@ function ListProduct(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await productAPI.getProducts();
+        const response = await productAPI.getNewProducts();
         setListProduct(response.data.data);
       } catch (error) {
         console.log(error);

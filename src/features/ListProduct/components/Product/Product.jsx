@@ -2,8 +2,7 @@ import Rating from "@material-ui/lab/Rating";
 import PropTypes from "prop-types";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import TheNewCouple_black from "../../../../assets/product/TheNewCouple-black.jpg";
-import TheNewCouple_white from "../../../../assets/product/TheNewCouple-white.jpg";
+import ListButton from "../../../../components/ListButton/ListButton";
 
 Product.propTypes = {
   product: PropTypes.object,
@@ -19,40 +18,47 @@ function Product(props) {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/products/${product.id}`);
+    history.push(`/products/${product._id}`);
   };
 
   return (
-    <div className="home-product" onClick={handleClick}>
+    <div className="home-product">
       <div className="home-product-image">
-        <img src={TheNewCouple_black} alt="" />
-        <img
-          src={TheNewCouple_white}
-          alt=""
-          className="home-product-img-hover"
-        />
+        <div className="home-product-image-container" onClick={handleClick}>
+          <img
+            src={
+              product.images[Math.floor(Math.random() * product.images.length)]
+            }
+            alt=""
+          />
+          <img
+            src={
+              product.images[Math.floor(Math.random() * product.images.length)]
+            }
+            alt=""
+            className="home-product-img-hover"
+          />
+        </div>
         <div className="home-product-group-fuction">
-          <div className="addtocart">
-            <i className="bi bi-handbag"></i>
-          </div>
-          <div className="addtolistwish">
-            <i className="bi bi-suit-heart"></i>
-          </div>
-          <div className="zoom">
-            <i className="bi bi-zoom-in"></i>
-          </div>
+          <ListButton product={product} />
         </div>
         <div className="home-products-addtocart">
           <i className="bi bi-handbag"></i>
           Thêm vào giỏ hàng
         </div>
-        <div className="home-products-promotion">Sale</div>
+        {product.discount.percentDiscount > 0 ? (
+          <>
+            <div className="home-products-promotion">Sale</div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
       <div className="home-product-infor">
         <div className="home-product-rating">
           <Rating
             name="half-rating-read"
-            defaultValue={5}
+            value={product.point ?? 0}
             precision={0.1}
             readOnly
             size="small"
@@ -60,18 +66,33 @@ function Product(props) {
         </div>
         <div className="home-product-name">{product.name}</div>
         <div className="home-product-price">
-          <p className="home-product-price-main">
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(product.salePrice)}
-          </p>
-          <p className="home-product-price-sub ">
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(product.originalPrice)}
-          </p>
+          {product.discount.percentDiscount > 0 ? (
+            <>
+              <p className="home-product-price-main">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(
+                  product.price * (1 - product.discount.percentDiscount)
+                )}
+              </p>
+              <p className="home-product-price-sub ">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(product.price)}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="home-product-price-main">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(product.price)}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
