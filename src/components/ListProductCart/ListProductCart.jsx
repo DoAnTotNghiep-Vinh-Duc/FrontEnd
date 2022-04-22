@@ -1,36 +1,35 @@
 import React, { Fragment } from "react";
-import product2 from "../../assets/product/product2.jpg";
-import useCart from "../../hooks/useCart";
+import { useSelector } from "react-redux";
 import "./ListProductCart.scss";
 
 ListProduct.propTypes = {};
 
 function ListProduct(props) {
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
+  const listProductCart = useSelector((state) => state.listProductCart);
 
-  const { cart } = useCart(account._id);
+  let totalOrder = 0;
 
   return (
     <Fragment>
-      {cart.listCartDetail?.map((element) => {
+      {listProductCart.listProductCart.map((element) => {
+        totalOrder += element.quantity * element.priceDiscount;
         return (
           <div
             className="cart-information-content-cart-product"
-            key={element.productDetail}
+            key={element.productDetail._id}
           >
             <div className="cart-information-content-cart-product-image">
-              <img src={product2} alt="" />
+              <img src={element.productDetail.image} alt="" />
             </div>
             <div className="cart-information-content-cart-product-information">
               <div className="cart-information-content-cart-product-information-name">
-                AIRism Cotton Áo Thun Chống UV Cổ Tròn Dài Tay
+                {element.productDetail.product.name}
               </div>
               <div className="cart-information-content-cart-product-information-color">
-                Màu sắc: Trắng
+                Màu sắc: {element.productDetail.color.name}
               </div>
               <div className="cart-information-content-cart-product-information-size">
-                Kích thước: M
+                Kích thước: {element.productDetail.size}
               </div>
             </div>
             <div className="cart-information-content-cart-product-quantity">
@@ -40,7 +39,7 @@ function ListProduct(props) {
               {new Intl.NumberFormat("vi-VN", {
                 style: "currency",
                 currency: "VND",
-              }).format(element.total)}
+              }).format(element.quantity * element.priceDiscount)}
             </div>
           </div>
         );
@@ -55,7 +54,7 @@ function ListProduct(props) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(cart.total)}
+            }).format(totalOrder)}
           </div>
         </div>
         <div className="cart-information-content-cart-payment-ship">
@@ -75,7 +74,7 @@ function ListProduct(props) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(cart.total + 30000)}
+            }).format(totalOrder + 30000)}
           </div>
         </div>
       </div>

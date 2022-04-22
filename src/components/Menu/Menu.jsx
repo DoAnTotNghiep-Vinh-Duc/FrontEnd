@@ -18,7 +18,7 @@ function Menu(props) {
 
   const [scroll, setScroll] = useState(false);
 
-  const { cart } = useCart(account._id);
+  const { cart } = useCart(account?._id);
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {
@@ -29,7 +29,11 @@ function Menu(props) {
   });
 
   const handleClickCart = () => {
-    History.push("/cart");
+    if (account) {
+      History.push("/cart");
+    } else {
+      History.push("/auth");
+    }
   };
 
   const handleClickProductMale = () => {
@@ -261,7 +265,7 @@ function Menu(props) {
         </div>
         <div className="menu-right-bag" onClick={handleClickCart}>
           <i className="bi bi-handbag"></i>
-          <span>{cart.listCartDetail?.length ?? 0}</span>
+          <span>{cart?.listCartDetail?.length ?? 0}</span>
         </div>
       </div>
     </div>

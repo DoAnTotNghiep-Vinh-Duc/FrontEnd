@@ -1,63 +1,39 @@
-import { Dialog, useMediaQuery, useTheme } from "@material-ui/core";
-import React, { useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
-import cartAPI from "../../api/cartAPI";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import useCart from "../../hooks/useCart";
-import RemoveItemFromCart from "../RemoveItemFromCart/RemoveItemFromCart";
 import "./css/CartPage.scss";
+import Product from "./Product/Product";
 
 CartPage.propTypes = {};
 
 function CartPage(props) {
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const History = useHistory();
   const match = useRouteMatch();
+
   const local = localStorage.getItem("account");
   const account = local && JSON.parse(local);
+
   let quantityTotal = 0;
+  let totalOrder = 0;
 
-  const [open, setOpen] = React.useState(false);
-  const [itemRemove, setItemRemove] = useState({});
+  const { cart } = useCart(account?._id);
 
-  const { cart } = useCart(account._id);
+  const listProductCart = useSelector((state) => state.listProductCart);
 
-  const handleIncreaseQuantity = (element) => {
-    (async () => {
-      try {
-        const response = await cartAPI.increaseQuantity({
-          accountId: account._id,
-          productDetailId: element.productDetail._id,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+  listProductCart.listProductCart.forEach((element) => {
+    quantityTotal += element.quantity;
+    totalOrder += element.quantity * element.priceDiscount;
+  });
+
+  const handleClickPayment = () => {
+    History.push(`${match.url}/information`);
   };
-
-  const handleDecreaseQuantity = (element) => {
-    (async () => {
-      try {
-        const response = await cartAPI.decreaseQuantity({
-          accountId: account._id,
-          productDetailId: element.productDetail._id,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  };
-
-  const handleClickOpen = (element) => {
-    setOpen(true);
-    setItemRemove(element);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const handleClickContinue = () => {
+    History.push("/");
   };
 
   return (
@@ -81,71 +57,28 @@ function CartPage(props) {
             <>
               <div className="cart-content-cart">
                 <div className="cart-content-cart-header">
-                  <span className="cart-content-cart-header-productname">
-                    Sản phẩm
-                  </span>
-                  <span className="cart-content-cart-header-price">
-                    Đơn giá
-                  </span>
-                  <span className="cart-content-cart-header-quantity">
-                    Số lượng
-                  </span>
-                  <span className="cart-content-cart-header-total">Tổng</span>
+                  <div className="cart-content-cart-header-check"></div>
+                  <div className="cart-content-cart-header-container">
+                    <span className="cart-content-cart-header-productname">
+                      Sản phẩm
+                    </span>
+                    <span className="cart-content-cart-header-price">
+                      Đơn giá
+                    </span>
+                    <span className="cart-content-cart-header-quantity">
+                      Số lượng
+                    </span>
+                    <span className="cart-content-cart-header-total">Tổng</span>
+                    <span className="cart-content-cart-header-delete"></span>
+                  </div>
                 </div>
 
                 {cart.listCartDetail?.map((element) => {
-                  quantityTotal += element.quantity;
                   return (
-                    <div
-                      className="cart-content-cart-product"
+                    <Product
+                      product={element}
                       key={element.productDetail._id}
-                    >
-                      <div className="cart-content-cart-product-image">
-                        <img src={element.productDetail.image} alt="" />
-                      </div>
-                      <div className="cart-content-cart-product-infor">
-                        <div className="cart-content-cart-product-infor-name">
-                          {element.productDetail.product.name}
-                        </div>
-                        <div className="cart-content-cart-product-infor-color">
-                          Màu sắc: {element.productDetail.color.name}
-                        </div>
-                        <div className="cart-content-cart-product-infor-size">
-                          Kích cỡ: {element.productDetail.size}
-                        </div>
-                      </div>
-                      <div className="cart-content-cart-product-price">
-                        {new Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(element.price)}
-                      </div>
-                      <div className="cart-content-cart-product-quantity">
-                        <i
-                          className="bi bi-dash-lg"
-                          onClick={() => handleDecreaseQuantity(element)}
-                        ></i>
-                        <div className="cart-content-cart-product-quantity-number">
-                          {element.quantity}
-                        </div>
-                        <i
-                          className="bi bi-plus-lg"
-                          onClick={() => handleIncreaseQuantity(element)}
-                        ></i>
-                      </div>
-                      <div className="cart-content-cart-product-total">
-                        {new Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(element.total)}
-                      </div>
-                      <div className="cart-content-cart-product-delete">
-                        <i
-                          className="fas fa-times"
-                          onClick={() => handleClickOpen(element)}
-                        ></i>
-                      </div>
-                    </div>
+                    />
                   );
                 })}
               </div>
@@ -162,7 +95,7 @@ function CartPage(props) {
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
-                      }).format(cart.total)}
+                      }).format(totalOrder)}
                     </div>
                   </div>
                   <div className="cart-content-payment-container-vattitle">
@@ -181,18 +114,40 @@ function CartPage(props) {
                       TỔNG ĐƠN ĐẶT HÀNG
                     </div>
                     <div className="cart-content-payment-container-total-price">
-                      {new Intl.NumberFormat("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                      }).format(cart.total + 30000)}
+                      {listProductCart.listProductCart.length ? (
+                        <>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(totalOrder + 30000)}
+                        </>
+                      ) : (
+                        <>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(0)}
+                        </>
+                      )}
                     </div>
                   </div>
-                  <div className="cart-content-payment-container-btnpayment">
-                    <Link to={`${match.url}/information`}>THANH TOÁN</Link>
-                  </div>
-                  <div className="cart-content-payment-container-btnshoppping">
-                    <Link to="/">Tiếp tục mua sắm</Link>
-                  </div>
+                  <button
+                    className={`${"cart-content-payment-container-btnpayment"} ${
+                      listProductCart.listProductCart.length ? "" : "empty"
+                    }`}
+                    disabled={
+                      listProductCart.listProductCart.length ? false : true
+                    }
+                    onClick={handleClickPayment}
+                  >
+                    THANH TOÁN
+                  </button>
+                  <button
+                    className="cart-content-payment-container-btnshoppping"
+                    onClick={handleClickContinue}
+                  >
+                    Tiếp tục mua sắm
+                  </button>
                 </div>
               </div>
             </>
@@ -204,18 +159,6 @@ function CartPage(props) {
         </div>
         <Footer />
       </div>
-
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <RemoveItemFromCart
-          closeRemoveItem={handleClose}
-          productDetail={itemRemove}
-        />
-      </Dialog>
     </>
   );
 }

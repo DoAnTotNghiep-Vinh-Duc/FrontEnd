@@ -238,7 +238,7 @@
                         text-align: center;
                     }
                     .home-product-name {
-                        font-size: 13px;
+                        font-size: 14px;
                         color: #1a0b5b;
                         font-weight: bold;
                         white-space: nowrap;
@@ -246,6 +246,7 @@
                         text-overflow: ellipsis;
                     }
                     .home-product-price {
+                        font-size: 14px;
                         display: flex;
                         margin-top: 10px;
                         align-items: center;
@@ -254,7 +255,7 @@
                             color: #fb2e86;
                         }
                         .home-product-price-sub {
-                            font-size: 11px;
+                            font-size: 13px;
                             color: rgba($color: gray, $alpha: 0.5);
                             text-decoration: line-through;
                         }

@@ -25,7 +25,7 @@ function RemoveItemFromCart({ closeRemoveItem, productDetail }) {
       try {
         const response = await cartAPI.removeItem({
           accountId: account._id,
-          productDetailId: productDetail.productDetail,
+          productDetailId: productDetail.productDetail._id,
         });
         if (response.status === 204) {
           toast.success("Xóa sản phẩm ra khỏi giỏ hàng thành công", {
