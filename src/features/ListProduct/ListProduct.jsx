@@ -37,7 +37,6 @@ function ListPage(props) {
           _page: filters._page,
           _limit: filters._limit,
         });
-        console.log(response);
         setProducts(response.data);
         setPagination(response.pagination);
       } catch (error) {
@@ -73,8 +72,9 @@ function ListPage(props) {
               <ProductFilters />
             </div>
             <div className="product-content-product">
-              <ProductList data={products} />
-
+              <div className="product-content-product-container">
+                <ProductList data={products} />
+              </div>
               <div className="product-content-pagination">
                 <Pagination
                   color="primary"

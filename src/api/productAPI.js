@@ -5,27 +5,30 @@ const productAPI = {
     const url = "/product/new-product";
     return axiosClient2.get(url);
   },
+
   getProductById(id) {
     const url = `/product/${id}`;
     return axiosClient2.get(url);
   },
+
   async getProductWithType(params) {
-    const newParams = { ...params };
-    newParams._start =
-      !params._page || params._page <= 1
-        ? 0
-        : (params._page - 1) * (params._limit || 1);
-
-    delete newParams._page;
-
     const url = `/product/types?listType=${JSON.stringify(params.listType)}`;
-    const productList = await axiosClient2.post(url, { params: newParams });
+    const url2 = `/product/types-with-limit-page?listType=${JSON.stringify(
+      params.listType
+    )}`;
+
+    const total = await axiosClient2.post(url, { params: params });
+    const productList = await axiosClient2.post(url2, {
+      params: params,
+      page: params._page,
+      limit: params._limit,
+    });
     return {
       data: productList.data.data,
       pagination: {
         page: params._page,
         limit: params._limit,
-        total: productList.data.data.length,
+        total: total.data.data.length,
       },
     };
   },
