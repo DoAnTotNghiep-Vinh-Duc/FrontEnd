@@ -2,6 +2,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Logout from "../../features/Logout/Logout";
 import "./style.scss";
 
@@ -64,10 +65,10 @@ function Header(props) {
                   <div
                     className={`${"account-function"} ${open ? "active" : ""}`}
                   >
-                    <div className="account-item">
+                    <Link className="account-item" to="/userInformation">
                       <i className="bi bi-card-checklist"></i>
                       <p>Thông tin cá nhân</p>
-                    </div>
+                    </Link>
                     <div className="account-item">
                       <i className="bi bi-key"></i>
                       <p>Đổi mật khẩu</p>

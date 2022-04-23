@@ -1,4 +1,7 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
 
 var header = {
   Accept: "application/json",
@@ -6,6 +9,7 @@ var header = {
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "*",
+  Authorization: token,
 };
 
 const axiosClient2 = axios.create({
@@ -15,6 +19,7 @@ const axiosClient2 = axios.create({
 
 axiosClient2.interceptors.request.use(
   function (config) {
+    config.headers.authorization = token;
     return config;
   },
   function (error) {
