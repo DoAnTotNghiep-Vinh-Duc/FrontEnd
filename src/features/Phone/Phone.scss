@@ -86,12 +86,19 @@
                             background-color: #eeeffb;
                             text-align: center;
                             color: #1a0b5b;
+                            letter-spacing: 3px;
                             &::placeholder {
                                 text-align: center;
                                 font-weight: bold;
                                 letter-spacing: 5px;
                             }
                         }
+                    }
+                    .error-verifyPhone {
+                        color: red;
+                        width: 80%;
+                        font-size: 12px;
+                        text-align: center;
                     }
                 }
                 .phone-container-footer {
@@ -112,6 +119,13 @@
                         background-color: #7e33e0;
                         &:hover {
                             background-color: #ff2aaa;
+                        }
+                    }
+                    .active {
+                        opacity: 0.65;
+                        cursor: not-allowed;
+                        &:hover {
+                            background-color: #7e33e0;
                         }
                     }
                 }

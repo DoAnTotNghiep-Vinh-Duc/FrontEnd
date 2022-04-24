@@ -1,15 +1,51 @@
-import React, { useState } from "react";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import userAPI from "../../api/userAPI";
 import "./VerifyPhone.scss";
 
-VerifyPhone.propTypes = {};
+toast.configure();
+VerifyPhone.propTypes = {
+  phoneReceive: PropTypes.string,
+};
 
-function VerifyPhone(props) {
+function VerifyPhone({ phoneReceive }) {
+  const History = useHistory();
+
   const [OTP, setOTP] = useState("");
+  const [phone, setPhone] = useState(phoneReceive);
+
+  useEffect(() => {
+    setPhone(phoneReceive);
+  }, [phoneReceive]);
 
   const handleChange = (value) => {
     setOTP(value);
   };
+
+  const handleVerifyOTP = () => {
+    (async () => {
+      try {
+        const response = await userAPI.verifyOTP({
+          phone: phone,
+          otp: OTP,
+        });
+        if (response.status === 201) {
+          toast.success("Xác thực thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push("/userInformation");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
   return (
     <div className="verifyPhone">
       <div className="verifyPhone-header">
@@ -30,7 +66,7 @@ function VerifyPhone(props) {
                 </p>
                 <p className="verifyPhone-header-right-container-otp-title-sub2">
                   Chúng tôi đã gửi mã OTP đến
-                  <b style={{ marginLeft: "5px" }}>0359806602</b>
+                  <b style={{ marginLeft: "5px" }}>{phone}</b>
                 </p>
               </div>
               <div className="verifyPhone-header-right-container-otp-input">
@@ -55,7 +91,7 @@ function VerifyPhone(props) {
               </div>
             </div>
             <div className="verifyPhone-header-right-button">
-              <button>XÁC THỰC</button>
+              <button onClick={handleVerifyOTP}>XÁC THỰC</button>
             </div>
           </div>
         </div>

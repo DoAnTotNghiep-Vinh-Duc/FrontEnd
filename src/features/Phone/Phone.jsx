@@ -1,11 +1,53 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import userAPI from "../../api/userAPI";
 import "./Phone.scss";
 
 Phone.propTypes = {};
 
 function Phone(props) {
   const location = useLocation();
+  const History = useHistory();
+
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
+  const [activeBtn, setActiveBtn] = useState(false);
+
+  const HandlePhone = (event) => {
+    const regex = /^(0)[0-9]{9}$/;
+    if (regex.test(event.target.value)) {
+      setPhone(event.target.value);
+      setError("");
+      setActiveBtn(true);
+    } else if (event.target.value === "") {
+      setError("Không được rỗng");
+      setActiveBtn(false);
+    } else {
+      setError(
+        "Số điện thoại phải bắt đầu bằng 0 và bao gồm 9 chữ số phía sau!"
+      );
+      setActiveBtn(false);
+    }
+  };
+
+  const handleButtonSend = () => {
+    if (activeBtn) {
+      (async () => {
+        try {
+          const response = await userAPI.sendOTP({
+            phone: phone,
+          });
+          if (response.status === 200) {
+            props.onSendPhoneToPage(phone);
+            History.push(`${location.pathname}/verifyPhone`);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  };
+
   return (
     <div className="phone">
       <div className="phone-header">
@@ -34,16 +76,25 @@ function Phone(props) {
                 thực số điện thoại.
               </div>
               <div className="phone-container-body-input">
-                <input type="email" name="" id="" placeholder="SỐ ĐIỆN THOẠI" />
+                <input
+                  type="tel"
+                  name=""
+                  id=""
+                  placeholder="SỐ ĐIỆN THOẠI"
+                  onChange={HandlePhone}
+                />
               </div>
+              <span className="error-verifyPhone">{error}</span>
             </div>
             <div className="phone-container-footer">
-              <Link
-                className="phone-container-footer-btnSend"
-                to={`${location.pathname}/verifyPhone`}
+              <button
+                className={`${"phone-container-footer-btnSend"} ${
+                  activeBtn ? "" : "active"
+                }`}
+                onClick={handleButtonSend}
               >
                 GỬI
-              </Link>
+              </button>
             </div>
           </div>
         </div>

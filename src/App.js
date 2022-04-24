@@ -10,11 +10,9 @@ import ChangePassword from "./features/ChangePassword/ChangePassword";
 import ForgotPassword from "./features/ForgotPassword/ForgotPassword";
 import Home from "./features/Home/Home";
 import ListProduct from "./features/ListProduct/index";
-import Phone from "./features/Phone/Phone";
 import SuccessVerify from "./features/SuccessVerify/SuccessVerify";
-import UserInformation from "./features/UserInformation/UserInformation";
+import InformationPage from "./features/UserInformation/index";
 import VerifyAccount from "./features/VerifyAccount/VerifyAccount";
-import VerifyPhone from "./features/VerifyPhone/VerifyPhone";
 import "./sass/index.scss";
 // const Customers_Admin = lazy(() =>
 //   import("./features/Admin/Customers/Customers")
@@ -67,17 +65,7 @@ function App() {
           exact
         ></Route>
 
-        <Route
-          path="/userInformation"
-          component={UserInformation}
-          exact
-        ></Route>
-        <Route path="/userInformation/phone" component={Phone} exact></Route>
-        <Route
-          path="/userInformation/phone/verifyPhone"
-          component={VerifyPhone}
-          exact
-        ></Route>
+        <Route path="/userInformation" component={InformationPage}></Route>
       </Switch>
     </div>
   );
