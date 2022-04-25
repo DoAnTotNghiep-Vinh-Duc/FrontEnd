@@ -1,14 +1,14 @@
-import axiosClient2 from "./axiosClient2";
+import axiosClient from "./axiosClient";
 
 const productAPI = {
   getNewProducts() {
     const url = "/product/new-product";
-    return axiosClient2.get(url);
+    return axiosClient.get(url);
   },
 
   getProductById(id) {
     const url = `/product/${id}`;
-    return axiosClient2.get(url);
+    return axiosClient.get(url);
   },
 
   async getProductWithType(params) {
@@ -17,9 +17,9 @@ const productAPI = {
       params._limit
     }?listType=${JSON.stringify(params.listType)}`;
 
-    const total = await axiosClient2.get(url, { params: params.listType });
+    const total = await axiosClient.get(url, { params: params.listType });
 
-    const productList = await axiosClient2.get(url2, {
+    const productList = await axiosClient.get(url2, {
       params: params.listType,
     });
     return {

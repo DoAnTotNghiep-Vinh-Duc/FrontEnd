@@ -1,36 +1,76 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+
+var header = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "*",
+  Authorization: token,
+};
 
 const axiosClient = axios.create({
-  baseURL: "https://api.ezfrontend.com/",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "http://localhost:5000/",
+  headers: header,
 });
 
-// Add a request interceptor
-axios.interceptors.request.use(
+axiosClient.refreshToken = async () => {
+  const refreshToken = Cookies.get("refreshToken");
+  return (
+    await axiosClient.post("/auth/verify-refresh-token", {
+      refreshToken: refreshToken,
+    })
+  ).data.data;
+};
+
+axiosClient.setLocalAccessToken = async (accessToken, refreshToken) => {
+  Cookies.set("token", accessToken);
+  Cookies.set("refreshToken", refreshToken);
+};
+
+axiosClient.interceptors.request.use(
   function (config) {
-    // Do something before request is sent
+    config.headers.authorization = token;
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
 
-// Add a response interceptor
-axios.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response;
+axiosClient.interceptors.response.use(
+  async function (reponse) {
+    return reponse;
   },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+  async function (error) {
+    // console.log(error.response);
+    const { config, status, data } = error.response;
+
+    if (config.url === "/auth/signin" && status === 403) {
+      const error = data.error;
+      return Promise.reject(error);
+    }
+    if (config.url === "/auth/signup" && status === 409) {
+      const error = data.error;
+      return Promise.reject(error);
+    }
+    if (status === 401) {
+      if (data.error.message === "jwt expired") {
+        console.log("Token hết hạn");
+
+        const { accessToken, refreshToken } = await axiosClient.refreshToken();
+
+        if (accessToken) {
+          config.headers["authorization"] = accessToken;
+          await axiosClient.setLocalAccessToken(accessToken, refreshToken);
+          return axiosClient(config);
+        }
+      }
+    }
     return Promise.reject(error);
   }
 );
-
 export default axiosClient;
