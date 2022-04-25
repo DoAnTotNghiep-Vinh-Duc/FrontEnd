@@ -4,6 +4,7 @@ const listCartSlice = createSlice({
   name: "cart",
   initialState: {
     listProductCart: [],
+    listIdProductCart: [],
   },
   reducers: {
     addToPayment(state, action) {
@@ -13,12 +14,16 @@ const listCartSlice = createSlice({
       );
       if (index < 0) {
         state.listProductCart.push(productDetail);
+        state.listIdProductCart.push(productDetail.productDetail._id);
       }
     },
     removeFromPayment(state, action) {
       const idNeedToRemove = action.payload.idNeedToRemove;
       state.listProductCart = state.listProductCart.filter(
         (x) => x.productDetail._id !== idNeedToRemove
+      );
+      state.listIdProductCart = state.listIdProductCart.filter(
+        (x) => x !== idNeedToRemove
       );
     },
   },

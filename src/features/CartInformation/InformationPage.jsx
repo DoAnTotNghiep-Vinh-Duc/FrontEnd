@@ -1,6 +1,8 @@
 import { TextField } from "@material-ui/core";
-import React from "react";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import userAPI from "../../api/userAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import ListProductCart from "../../components/ListProductCart/ListProductCart";
@@ -13,12 +15,59 @@ function InformationPage(props) {
   const match = useRouteMatch();
   const History = useHistory();
 
+  const userLogIn = useSelector((state) => state.user.currentUser);
+
+  const [userInformation, setUserInformation] = useState({});
+
   const handleBtnBack = () => {
     History.goBack();
   };
 
   const handleBtnContinue = () => {
+    props.sendUserShip(userInformation);
     History.push(`${match.url}/payment`);
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userAPI.getInformation();
+        setUserInformation(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [userLogIn._id]);
+
+  const handleName = (event) => {
+    setUserInformation({
+      ...userInformation,
+      name: event.target.value,
+    });
+  };
+  const handleCity = (event) => {
+    setUserInformation({
+      ...userInformation,
+      city: event.target.value,
+    });
+  };
+  const handleDistrict = (event) => {
+    setUserInformation({
+      ...userInformation,
+      district: event.target.value,
+    });
+  };
+  const handleWard = (event) => {
+    setUserInformation({
+      ...userInformation,
+      ward: event.target.value,
+    });
+  };
+  const handleStreet = (event) => {
+    setUserInformation({
+      ...userInformation,
+      street: event.target.value,
+    });
   };
 
   return (
@@ -43,11 +92,17 @@ function InformationPage(props) {
               Thông tin liên hệ
             </div>
             <TextField
-              id="standard-basic"
+              id="standard-read-only-input"
               label="Điện thoại"
               fullWidth
               size="small"
+              value={userInformation.phone}
+              focused
+              InputProps={{
+                readOnly: true,
+              }}
             />
+
             <div className="cart-information-content-information-address">
               Địa chỉ giao hàng
             </div>
@@ -57,6 +112,9 @@ function InformationPage(props) {
                 label="Họ và tên"
                 fullWidth
                 size="small"
+                value={userInformation.name}
+                focused
+                onChange={handleName}
               />
             </div>
             <div className="cart-information-content-information-address-city">
@@ -65,6 +123,9 @@ function InformationPage(props) {
                 label="Thành phố"
                 fullWidth
                 size="small"
+                value={userInformation.city}
+                focused
+                onChange={handleCity}
               />
             </div>
             <div className="cart-information-content-district-ward">
@@ -74,6 +135,9 @@ function InformationPage(props) {
                   label="Quận / Huyện"
                   fullWidth
                   size="small"
+                  value={userInformation.district}
+                  focused
+                  onChange={handleDistrict}
                 />
               </div>
               <div className="cart-information-content-ward">
@@ -82,6 +146,9 @@ function InformationPage(props) {
                   label="Phường / Xã"
                   fullWidth
                   size="small"
+                  value={userInformation.ward}
+                  focused
+                  onChange={handleWard}
                 />
               </div>
             </div>
@@ -90,6 +157,9 @@ function InformationPage(props) {
               label="Số nhà, đường"
               fullWidth
               size="small"
+              value={userInformation.street}
+              focused
+              onChange={handleStreet}
             />
           </div>
           <div className="payment-content-information-btn">

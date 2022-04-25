@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import queryString from "query-string";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import product_female from "../../data/product_female.json";
 import product_male from "../../data/product_male.json";
@@ -11,14 +12,15 @@ import "./menu.scss";
 Menu.propTypes = {};
 
 function Menu(props) {
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
+  // const local = localStorage.getItem("account");
+  // const account = local && JSON.parse(local);
+  const userLogIn = useSelector((state) => state.user.currentUser);
 
   const History = useHistory();
 
   const [scroll, setScroll] = useState(false);
 
-  const { cart } = useCart(account?._id);
+  const { cart } = useCart(userLogIn?._id);
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {
@@ -29,7 +31,7 @@ function Menu(props) {
   });
 
   const handleClickCart = () => {
-    if (account) {
+    if (userLogIn) {
       History.push("/cart");
     } else {
       History.push("/auth");

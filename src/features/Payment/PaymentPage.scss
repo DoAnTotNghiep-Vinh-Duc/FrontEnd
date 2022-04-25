@@ -198,12 +198,17 @@
                     }
                 }
             }
+            .error-payment {
+                margin-top: 20px;
+                color: red;
+                width: 100%;
+            }
             .payment-content-information-btn {
+                margin-top: 30px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 .payment-content-information-btnback {
-                    margin-top: 50px;
                     background-color: #fb2e86;
                     color: white;
                     width: 35%;
@@ -218,7 +223,6 @@
                     }
                 }
                 .payment-content-information-btnpayment {
-                    margin-top: 50px;
                     background-color: #19d16f;
                     color: white;
                     width: 35%;
@@ -230,6 +234,16 @@
                     cursor: pointer;
                     i {
                         margin-right: 10px;
+                    }
+                    &:hover {
+                        background-color: #00ff77;
+                    }
+                }
+                .active {
+                    opacity: 0.65;
+                    cursor: not-allowed;
+                    &:hover {
+                        background-color: #19d16f;
                     }
                 }
             }

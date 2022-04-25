@@ -1,5 +1,5 @@
 import { Radio, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
@@ -10,23 +10,66 @@ import Header from "../../components/Header/Header";
 import ListProductCart from "../../components/ListProductCart/ListProductCart";
 import Menu from "../../components/Menu/Menu";
 import useCard from "../../hooks/useCard";
+import PropTypes from "prop-types";
 import "./PaymentPage.scss";
+import cartAPI from "../../api/cartAPI";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-PaymentPage.propTypes = {};
+toast.configure();
+PaymentPage.propTypes = {
+  user: PropTypes.object,
+};
 
-function PaymentPage(props) {
+function PaymentPage({ user }) {
   const History = useHistory();
 
   const [selectedValue, setSelectedValue] = useState("");
+  const [userShip, setUserShip] = useState(user);
+  const [errorPayment, setErrorPayment] = useState(false);
 
-  const { handleChange, handleFocus, handleSubmit, values, error } = useCard();
+  // const { handleChange, handleFocus, handleSubmit, values, error } = useCard();
+  const { handleChange, handleFocus, values, error } = useCard();
+  const listProductCart = useSelector((state) => state.listProductCart);
 
   const handleClickRadio = (event) => {
     setSelectedValue(event.target.value);
+    setErrorPayment(true);
   };
 
   const handleBtnBack = () => {
     History.goBack();
+  };
+
+  useEffect(() => {
+    setUserShip(user);
+  }, [user]);
+
+  const handleSubmit = () => {
+    (async () => {
+      try {
+        const response = await cartAPI.payment({
+          listOrderDetail: listProductCart.listIdProductCart,
+          name: userShip.name,
+          city: userShip.city,
+          district: userShip.district,
+          ward: userShip.ward,
+          street: userShip.street,
+          phone: userShip.phone,
+        });
+
+        if (response.status === 201) {
+          toast.success("Đặt hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push(`${History.location.pathname}/notification`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
@@ -52,7 +95,7 @@ function PaymentPage(props) {
                 Khách hàng
               </div>
               <div className="payment-content-information-customer-name-name">
-                Đỗ Đạt Đức
+                {userShip.name}
               </div>
             </div>
             <div className="payment-content-information-customer-phone">
@@ -60,7 +103,7 @@ function PaymentPage(props) {
                 Số điện thoại
               </div>
               <div className="payment-content-information-customer-phone-phone">
-                0359806602
+                {userShip.phone}
               </div>
             </div>
             <div className="payment-content-information-customer-address">
@@ -68,7 +111,8 @@ function PaymentPage(props) {
                 Địa chỉ
               </div>
               <div className="payment-content-information-customer-address-address">
-                12 Nguyễn Văn Bảo, phường 15, quận Gò Vấp, Tp.HCM
+                {userShip.street} {userShip.ward} {userShip.district}{" "}
+                {userShip.city}
               </div>
             </div>
           </div>
@@ -181,6 +225,17 @@ function PaymentPage(props) {
               </div>
             </div>
           </div>
+
+          {errorPayment ? (
+            ""
+          ) : (
+            <>
+              <div className="error-payment">
+                Vui lòng chọn phương thức thanh toán!
+              </div>
+            </>
+          )}
+
           <div className="payment-content-information-btn">
             <button
               className="payment-content-information-btnback"
@@ -190,7 +245,10 @@ function PaymentPage(props) {
               Quay lại
             </button>
             <button
-              className="payment-content-information-btnpayment"
+              className={`${"payment-content-information-btnpayment"} ${
+                errorPayment ? "" : "active"
+              }`}
+              disabled={errorPayment ? false : true}
               type="submit"
               onClick={handleSubmit}
             >

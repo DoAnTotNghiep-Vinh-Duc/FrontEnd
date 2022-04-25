@@ -181,6 +181,9 @@
         .cart-content-payment {
             width: 30%;
             font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+            .error-payment {
+                color: red;
+            }
             .cart-content-payment-container {
                 margin-top: 30px;
                 padding: 20px 30px;
@@ -250,10 +253,16 @@
                     font-size: 18px;
                     font-weight: bold;
                     font-family: "Josefin Sans", sans-serif;
+                    &:hover {
+                        background-color: #00ff77;
+                    }
                 }
-                .empty {
+                .active {
                     cursor: not-allowed;
                     opacity: 0.65;
+                    &:hover {
+                        background-color: #19d16f;
+                    }
                 }
                 .cart-content-payment-container-btnshoppping {
                     margin-top: 10px;

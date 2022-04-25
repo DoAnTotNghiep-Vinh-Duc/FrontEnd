@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import check from "../../assets/images/check.png";
+import clock from "../../assets/images/clock 1.png";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
-import clock from "../../assets/images/clock 1.png";
-import check from "../../assets/images/check.png";
 import "./NotificationPage.scss";
 
 NotificationPage.propTypes = {};
@@ -45,9 +46,9 @@ function NotificationPage(props) {
             Bạn sẽ nhận được email thông báo khi đơn hàng của bạn đã được hoàn
             thành!
           </div>
-          <div className="notification-content-right-btnshopping">
+          <Link to="/" className="notification-content-right-btnshopping">
             Tiếp tục mua sắm
-          </div>
+          </Link>
         </div>
       </div>
       <Footer />

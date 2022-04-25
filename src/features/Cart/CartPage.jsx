@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import userAPI from "../../api/userAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
@@ -14,15 +15,15 @@ function CartPage(props) {
   const History = useHistory();
   const match = useRouteMatch();
 
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
+  const [userInformation, setUserInformation] = useState({});
 
   let quantityTotal = 0;
   let totalOrder = 0;
 
-  const { cart } = useCart(account?._id);
-
+  const userLogIn = useSelector((state) => state.user.currentUser);
   const listProductCart = useSelector((state) => state.listProductCart);
+
+  const { cart } = useCart(userLogIn?._id);
 
   listProductCart.listProductCart.forEach((element) => {
     quantityTotal += element.quantity;
@@ -35,6 +36,17 @@ function CartPage(props) {
   const handleClickContinue = () => {
     History.push("/");
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userAPI.getInformation();
+        setUserInformation(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [userLogIn._id]);
 
   return (
     <>
@@ -83,6 +95,21 @@ function CartPage(props) {
                 })}
               </div>
               <div className="cart-content-payment">
+                {userInformation.phone ? (
+                  ""
+                ) : (
+                  <>
+                    <span className="error-payment">
+                      Xác thực điện thoại để có thể đặt hàng!{" "}
+                      <b>
+                        <Link to="/userInformation/phone">
+                          <u>Xác thực</u>
+                        </Link>
+                      </b>
+                    </span>
+                  </>
+                )}
+
                 <div className="cart-content-payment-container">
                   <div className="cart-content-payment-container-title">
                     TỔNG ĐƠN HÀNG {quantityTotal} SẢN PHẨM
@@ -133,10 +160,16 @@ function CartPage(props) {
                   </div>
                   <button
                     className={`${"cart-content-payment-container-btnpayment"} ${
-                      listProductCart.listProductCart.length ? "" : "empty"
+                      listProductCart.listProductCart.length &&
+                      userInformation.phone
+                        ? ""
+                        : "active"
                     }`}
                     disabled={
-                      listProductCart.listProductCart.length ? false : true
+                      listProductCart.listProductCart.length &&
+                      userInformation.phone
+                        ? false
+                        : true
                     }
                     onClick={handleClickPayment}
                   >
