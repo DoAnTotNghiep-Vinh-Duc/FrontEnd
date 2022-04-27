@@ -1,40 +1,161 @@
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import React, { useState } from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import adminAPI from "../../../../../api/adminAPI";
+import typeRequest from "../../../../../data/typeRequest.json";
 import "./Card.scss";
 
 Card.propTypes = {};
 
 function Card(props) {
-  const [selectedDate, setSelectedDate] = useState(
-    new Date("2014-08-18T21:11:54")
-  );
+  const [beginDate, setBeginDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [isShowCalendar, setIsShowCalendar] = useState(false);
+  const [nameTypeRequest, setNameTypeRequest] = useState("Hôm nay");
+  const [totalOrder, setTotalOrder] = useState(0);
+  const [total, setTotal] = useState([]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  let totalCash = 0;
+  let totalQuantityProduct = 0;
+
+  const handleClickCalendar = () => {
+    setIsShowCalendar(!isShowCalendar);
   };
+  const handleExitCalendar = () => {
+    setIsShowCalendar(false);
+  };
+
+  const handleClickBeginDate = (date) => {
+    setBeginDate(date);
+  };
+  const handleClickEndDate = (date) => {
+    setEndDate(date);
+  };
+
+  //thống kê 4 card mặc định
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.statistical({
+          typeRequest: "TODAY",
+        });
+        if (response.status === 200) {
+          setTotalOrder(response.data.data.length);
+          setTotal(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  const handleClickTypeRequest = (item) => {
+    (async () => {
+      try {
+        const response = await adminAPI.statistical({
+          typeRequest: item.value,
+        });
+        if (response.status === 200) {
+          setTotalOrder(response.data.data.length);
+          setTotal(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+    setNameTypeRequest(item.name);
+    setIsShowCalendar(false);
+  };
+
+  const handleFinishCalendar = () => {
+    (async () => {
+      try {
+        const response = await adminAPI.statistical({
+          typeRequest: "TWODATE",
+          beginDate: moment(beginDate).format("YYYY-MM-DD"),
+          endDate: moment(endDate).format("YYYY-MM-DD"),
+        });
+        if (response.status === 200) {
+          setTotalOrder(response.data.data.length);
+          setTotal(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+    setNameTypeRequest(
+      `${moment(beginDate).format("DD-MM-YYYY")} đến ${moment(endDate).format(
+        "DD-MM-YYYY"
+      )}`
+    );
+    setIsShowCalendar(false);
+  };
+
+  total.forEach((element) => {
+    totalCash += element.totalPrice;
+    totalQuantityProduct += element.totalQuantity;
+  });
 
   return (
     <>
       <div className="admin-content-body-date">
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            size="small"
-            disableToolbar
-            variant="inline"
-            format="MM/dd/yyyy"
-            margin="normal"
-            id="date-picker-inline"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
-          />
-        </MuiPickersUtilsProvider>
+        <div className="date-container">
+          <p className="date-content">{nameTypeRequest}</p>
+          <i className="bi bi-calendar3" onClick={handleClickCalendar}></i>
+          {isShowCalendar ? (
+            <div className="calendar">
+              <div className="calendar-left">
+                {typeRequest.map((item, index) => {
+                  return (
+                    <p
+                      className="calendar-typeRequest"
+                      key={index}
+                      onClick={() => handleClickTypeRequest(item)}
+                    >
+                      {item.name}
+                    </p>
+                  );
+                })}
+              </div>
+              <div className="calendar-right">
+                <div className="calendar-calendar">
+                  <div className="calendar-beginDate">
+                    <Calendar
+                      onChange={handleClickBeginDate}
+                      value={beginDate}
+                      maxDate={new Date()}
+                    />
+                  </div>
+                  <div className="calendar-endDate">
+                    <Calendar
+                      onChange={handleClickEndDate}
+                      value={endDate}
+                      maxDate={new Date()}
+                      minDate={beginDate}
+                    />
+                  </div>
+                </div>
+                <div className="calendar-button">
+                  <button
+                    className="calendar-button-exit"
+                    onClick={handleExitCalendar}
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    className="calendar-button-finish"
+                    onClick={handleFinishCalendar}
+                  >
+                    Xong
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <div className="admin-content-body-total">
         <div className="admin-content-body-total-productsSold">
@@ -47,7 +168,7 @@ function Card(props) {
             </div>
           </div>
           <div className="admin-content-body-total-productsSold-numbers">
-            <span>56</span> cái
+            <span>{totalQuantityProduct}</span> cái
           </div>
         </div>
         <div className="admin-content-body-total-revenue">
@@ -60,7 +181,12 @@ function Card(props) {
             </div>
           </div>
           <div className="admin-content-body-total-revenue-numbers">
-            <span>3.456.789</span> vnđ
+            <span>
+              {new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(totalCash)}
+            </span>
           </div>
         </div>
         <div className="admin-content-body-total-orders">
@@ -69,11 +195,11 @@ function Card(props) {
               Số Hóa đơn
             </div>
             <div className="admin-content-body-total-orders-header-icon">
-              <i className="bi bi-cash"></i>
+              <i className="bi bi-receipt-cutoff"></i>
             </div>
           </div>
           <div className="admin-content-body-total-orders-numbers">
-            <span>12</span> đơn
+            <span>{totalOrder}</span> đơn
           </div>
         </div>
         <div className="admin-content-body-total-views">
@@ -82,7 +208,7 @@ function Card(props) {
               Lượt truy cập
             </div>
             <div className="admin-content-body-total-views-header-icon">
-              <i className="bi bi-cash"></i>
+              <i className="bi bi-eye"></i>
             </div>
           </div>
           <div className="admin-content-body-total-views-numbers">

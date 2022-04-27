@@ -1,0 +1,156 @@
+.favorite {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    .favorite-title {
+        width: 100%;
+        height: 120px;
+        background-image: url(../../assets/images/bgr_title.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        .title {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fb2e86;
+            font-size: 30px;
+            a {
+                color: white;
+            }
+            span {
+                margin-left: 10px;
+            }
+        }
+    }
+    .favorite-content {
+        width: 100%;
+        height: auto;
+        margin: 60px 0;
+        padding: 0 50px;
+        .favorite-header {
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #1d3178;
+            font-weight: bold;
+            font-size: 16px;
+            .favorite-header-product {
+                width: 40%;
+                height: 100%;
+            }
+            .favorite-header-price {
+                width: 15%;
+                height: 100%;
+            }
+            .favorite-header-stock {
+                width: 15%;
+                height: 100%;
+            }
+            .favorite-header-delete {
+                width: 5%;
+                height: 100%;
+            }
+            .favorite-header-add {
+                width: 25%;
+                height: 100%;
+            }
+        }
+        .favorite-body {
+            margin-top: 20px;
+            width: 100%;
+            height: auto;
+            .favorite-product {
+                width: 100%;
+                height: 150px;
+                display: flex;
+                margin-bottom: 20px;
+                .favorite-product-infor {
+                    width: 40%;
+                    height: 100%;
+                    display: flex;
+                    .favorite-product-infor-left {
+                        width: 120px;
+                        height: 100%;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 5px;
+                        }
+                    }
+                    .favorite-product-infor-right {
+                        width: calc(100% - 120px);
+                        height: 100%;
+                        padding: 5px 10px;
+                        .favorite-product-infor-right-name {
+                            color: #0d134e;
+                            font-weight: bold;
+                            font-size: 16px;
+                        }
+                        .favorite-product-infor-right-color {
+                            margin-top: 10px;
+                            color: #a1a8c1;
+                            font-size: 12px;
+                        }
+
+                        .favorite-product-infor-right-size {
+                            margin-top: 10px;
+                            color: #a1a8c1;
+                            font-size: 12px;
+                        }
+                    }
+                }
+                .favorite-product-price {
+                    width: 15%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    color: #15245e;
+                }
+                .favorite-product-stock {
+                    width: 15%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    color: #15245e;
+                }
+                .favorite-product-delete {
+                    width: 5%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #15245e;
+                    i {
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+                }
+                .favorite-product-add {
+                    width: 25%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    button {
+                        padding: 10px 20px;
+                        background-color: #15245e;
+                        color: white;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        &:hover {
+                            background-color: white;
+                            color: #15245e;
+                            border: 1px solid #15245e;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

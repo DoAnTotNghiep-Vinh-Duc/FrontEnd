@@ -6,6 +6,7 @@ import Cart from "./features/Cart/index";
 import ChangePassword from "./features/ChangePassword/ChangePassword";
 import ForgotPassword from "./features/ForgotPassword/ForgotPassword";
 import Home from "./features/Home/Home";
+import ListFavorite from "./features/ListFavorite/ListFavorite";
 import ListProduct from "./features/ListProduct/index";
 import SuccessVerify from "./features/SuccessVerify/SuccessVerify";
 import InformationPage from "./features/UserInformation/index";
@@ -24,6 +25,8 @@ function App() {
         <Route path="/products" component={ListProduct}></Route>
 
         <Route path="/cart" component={Cart}></Route>
+
+        <Route path="/favorites" component={ListFavorite}></Route>
 
         <Route path="/admin" component={AdminPage}></Route>
 

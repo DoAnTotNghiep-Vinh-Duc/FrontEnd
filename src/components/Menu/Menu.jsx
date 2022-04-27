@@ -38,6 +38,14 @@ function Menu(props) {
     }
   };
 
+  const handleClickFavorite = () => {
+    if (userLogIn) {
+      History.push("/favorites");
+    } else {
+      History.push("/auth");
+    }
+  };
+
   const handleClickProductMale = () => {
     History.push({
       pathname: "/products",
@@ -261,7 +269,7 @@ function Menu(props) {
           />
           <i className="fas fa-search"></i>
         </div>
-        <div className="menu-right-wishlist">
+        <div className="menu-right-wishlist" onClick={handleClickFavorite}>
           <i className="bi bi-suit-heart"></i>
           <span>3</span>
         </div>

@@ -48,5 +48,10 @@ const productAPI = {
       },
     };
   },
+
+  getBestSellerProduct() {
+    const url = "/order/top-sell-product/";
+    return axiosClient.get(url);
+  },
 };
 export default productAPI;

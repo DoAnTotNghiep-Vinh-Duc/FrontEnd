@@ -1,84 +1,60 @@
-import React from "react";
-import AiryWTS from "../../../../../assets/product/AiryWTS-black.jpg";
-import PhiHanhGia from "../../../../../assets/product/PhiHanhGia-blue.jpg";
-import TheNewCouple from "../../../../../assets/product/TheNewCouple-black.jpg";
+import React, { useEffect, useState } from "react";
+import productAPI from "../../../../../api/productAPI";
 import "./BestSeller.scss";
 
 BestSeller.propTypes = {};
 
 function BestSeller(props) {
+  const [bestSeller, setBestSeller] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await productAPI.getBestSellerProduct();
+        setBestSeller(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <div className="admin-content-body-topProducts">
       <div className="admin-content-body-topProducts-title">
         Sản phẩm bán chạy
       </div>
       <div className="admin-content-body-topProducts-products">
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={PhiHanhGia} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={AiryWTS} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={TheNewCouple} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={PhiHanhGia} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={PhiHanhGia} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
-        <div className="admin-content-body-topProducts-products-product">
-          <div className="admin-content-body-topProducts-products-product-image">
-            <img src={PhiHanhGia} alt="" />
-          </div>
-          <div className="admin-content-body-topProducts-products-product-name">
-            Áo Phi Hành Giaaaaaaaaaaaaaaaaaaaaaa
-          </div>
-          <div className="admin-content-body-topProducts-products-product-price">
-            259.000 vnđ
-          </div>
-        </div>
+        {bestSeller.slice(0, 6).map((product, index) => {
+          console.log(product);
+          return (
+            <div
+              className="admin-content-body-topProducts-products-product"
+              key={index}
+            >
+              <div className="admin-content-body-topProducts-products-product-image">
+                <img
+                  src={
+                    product.product[0].images[
+                      Math.floor(
+                        Math.random() * product.product[0].images.length
+                      )
+                    ]
+                  }
+                  alt=""
+                />
+              </div>
+              <div className="admin-content-body-topProducts-products-product-name">
+                {product.product[0].name}
+              </div>
+              <div className="admin-content-body-topProducts-products-product-price">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(product.product[0].price)}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,0 +1,26 @@
+[
+    {
+      "name": "Hôm nay",
+      "value": "TODAY"
+    },
+    {
+      "name": "Hôm qua",
+      "value": "YESTERDAY"
+    },
+    {
+      "name": "Tuần này",
+      "value": "THISWEEK"
+    },
+    {
+      "name": "Tuần vừa qua",
+      "value": "LASTWEEK"
+    },
+    {
+      "name": "Tháng này",
+      "value": "THISMONTH"
+    },
+    {
+      "name": "Tháng vừa qua",
+      "value": "LASTMONTH"
+    }
+]
