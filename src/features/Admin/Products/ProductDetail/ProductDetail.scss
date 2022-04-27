@@ -1,0 +1,180 @@
+.MuiInputLabel-outlined {
+    z-index: 0 !important;
+}
+.admin-orderDetail {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    .admin-orderDetail-content {
+        width: 88%;
+        height: 100%;
+        .admin-orderDetail-content-body {
+            width: 100%;
+            height: calc(100% - 50px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .admin-orderDetail-content-body-left {
+                width: 50%;
+                height: 100%;
+                padding: 15px;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                .admin-orderDetail-title {
+                    width: 100%;
+                    height: 5%;
+                    display: flex;
+                    align-items: center;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+                .admin-orderDetail-body {
+                    width: 100%;
+                    height: 85%;
+                    .admin-orderDetail-name {
+                        width: 100%;
+                        height: 15%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-orderDetail-description {
+                        width: 100%;
+                        height: 55%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-orderDetail-category {
+                        width: 100%;
+                        height: 15%;
+                        label {
+                            width: 100%;
+                            height: 15%;
+                            color: rgba(0, 0, 0, 0.54);
+                        }
+                        .admin-orderDetail-category-group {
+                            width: 100%;
+                            height: 85%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            .sort-select-gender {
+                                width: 32%;
+                            }
+                            .sort-select-long-short {
+                                width: 32%;
+                            }
+                            .sort-select-collar {
+                                width: 32%;
+                            }
+                        }
+                    }
+                    .admin-orderDetail-discount-price {
+                        width: 100%;
+                        height: 15%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        .admin-orderDetail-discount {
+                            width: 48%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                        }
+                        .admin-orderDetail-price {
+                            width: 48%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+                .admin-orderDetail-button {
+                    width: 100%;
+                    height: 10%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    button {
+                        width: 100%;
+                        padding: 20px;
+                        background-color: #4da9ff;
+                        color: white;
+                        cursor: pointer;
+                        font-size: 15px;
+                        font-weight: bold;
+                        letter-spacing: 2px;
+                        &:hover {
+                            background-color: white;
+                            color: #4da9ff;
+                            border: 1px solid #4da9ff;
+                        }
+                    }
+                }
+            }
+            .admin-orderDetail-content-body-right {
+                width: 50%;
+                height: 100%;
+                padding: 15px;
+                overflow-y: auto;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                .admin-productDetail-product {
+                    width: 100%;
+                    height: 200px;
+                    display: flex;
+                    margin-bottom: 20px;
+                    .admin-productDetail-product-image {
+                        width: 40%;
+                        height: 100%;
+                        .image-product {
+                            width: 100%;
+                            height: 80%;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                        button {
+                            width: 100%;
+                            height: 20%;
+                            background-color: #4da9ff;
+                            color: white;
+                            font-weight: bold;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: white;
+                                color: #4da9ff;
+                                border: 1px solid #4da9ff;
+                            }
+                        }
+                    }
+                    .admin-productDetail-product-infor {
+                        width: 60%;
+                        height: 100%;
+                        padding: 10px;
+                        .admin-productDetail-product-infor-color {
+                            width: 100%;
+                            height: 70px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        .admin-productDetail-product-infor-listSize {
+                            width: 100%;
+                            height: calc(100% - 70px);
+                            display: flex;
+                            justify-content: space-between;
+                            flex-wrap: wrap;
+                            .admin-productDetail-product-infor-size {
+                                width: 48%;
+                                height: 30%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

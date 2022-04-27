@@ -31,5 +31,22 @@ const productAPI = {
       },
     };
   },
+
+  async getAllProduct(params) {
+    const url = "/product";
+    const url2 = `/product/get-all/${params._page}/${params._limit}`;
+
+    const total = await axiosClient.get(url);
+    const listProduct = await axiosClient.get(url2);
+
+    return {
+      data: listProduct.data.data,
+      pagination: {
+        page: params._page,
+        limit: params._limit,
+        total: total.data.data.length,
+      },
+    };
+  },
 };
 export default productAPI;

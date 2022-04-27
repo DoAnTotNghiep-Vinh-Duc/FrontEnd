@@ -1,12 +1,46 @@
-import React from "react";
-import PhiHanhGia from "../../../assets/product/PhiHanhGia-blue.jpg";
+import Pagination from "@material-ui/lab/Pagination";
+import React, { useEffect, useState } from "react";
+import productAPI from "../../../api/productAPI";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
+import Product from "./Product/Product";
 import "./Products.scss";
 
 Products.propTypes = {};
 
 function Products(props) {
+  const [products, setProducts] = useState([]);
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 2,
+  });
+  const [pagination, setPagination] = useState({
+    limit: 2,
+    page: 1,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await productAPI.getAllProduct({
+          _page: filters._page,
+          _limit: filters._limit,
+        });
+        setProducts(response.data);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [filters]);
+
+  const handlePaginationChange = (event, page) => {
+    setFilters((prev) => ({
+      ...prev,
+      _page: page,
+    }));
+  };
+
   return (
     <div className="admin-products">
       <NavBars />
@@ -49,198 +83,28 @@ function Products(props) {
                   GIÁ
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-categogy">
-                  DANH MỤC
+                  GIẢM GIÁ
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-action"></div>
               </div>
               <div className="admin-products-content-body-listProducts-body-products">
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
-                <div className="admin-products-content-body-listProducts-body-products-product">
-                  <div className="admin-products-content-body-listProducts-body-products-product-seri">
-                    #64125
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-image">
-                    <img src={PhiHanhGia} alt="" />
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-name">
-                    Áo thun Phi Hành Gia Vũ Trụ
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-stock">
-                    12
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-price">
-                    350.000
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-category">
-                    Nam - Tay Ngắn - Cổ Tròn
-                  </div>
-                  <div className="admin-products-content-body-listProducts-body-products-product-action">
-                    <i className="bi bi-pencil"></i>
-                  </div>
-                </div>
+                {products.length ? (
+                  <>
+                    {products.map((product) => {
+                      return <Product product={product} key={product._id} />;
+                    })}
+                  </>
+                ) : (
+                  <p className="product-notfound">Không tìm thấy sản phẩm</p>
+                )}
               </div>
               <div className="admin-products-content-body-listProducts-body-footer">
-                pagination
+                <Pagination
+                  color="primary"
+                  count={Math.ceil(pagination.total / pagination.limit)}
+                  page={pagination.page}
+                  onChange={handlePaginationChange}
+                />
               </div>
             </div>
           </div>
