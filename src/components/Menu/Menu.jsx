@@ -14,13 +14,11 @@ Menu.propTypes = {};
 
 function Menu(props) {
   const userLogIn = useSelector((state) => state.user.currentUser);
-
   const History = useHistory();
 
   const [scroll, setScroll] = useState(false);
 
   const { cart } = useCart();
-
   const { listFavorite } = useFavorite();
 
   useScrollPosition(({ prevPos, currPos }) => {
@@ -272,7 +270,7 @@ function Menu(props) {
         </div>
         <div className="menu-right-wishlist" onClick={handleClickFavorite}>
           <i className="bi bi-suit-heart"></i>
-          <span>3</span>
+          <span>{listFavorite.length ?? 0}</span>
         </div>
         <div className="menu-right-bag" onClick={handleClickCart}>
           <i className="bi bi-handbag"></i>

@@ -89,10 +89,12 @@
                 height: 150px;
                 display: flex;
                 margin-bottom: 20px;
+                border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
                 .favorite-product-infor {
                     width: 40%;
                     height: 100%;
                     display: flex;
+
                     .favorite-product-infor-left {
                         width: 120px;
                         height: 100%;
@@ -106,22 +108,13 @@
                     .favorite-product-infor-right {
                         width: calc(100% - 120px);
                         height: 100%;
-                        padding: 5px 10px;
+                        padding: 7px 10px;
                         .favorite-product-infor-right-name {
                             color: #0d134e;
                             font-weight: bold;
                             font-size: 16px;
-                        }
-                        .favorite-product-infor-right-color {
-                            margin-top: 10px;
-                            color: #a1a8c1;
-                            font-size: 12px;
-                        }
-
-                        .favorite-product-infor-right-size {
-                            margin-top: 10px;
-                            color: #a1a8c1;
-                            font-size: 12px;
+                            height: 100%;
+                            width: 100%;
                         }
                     }
                 }

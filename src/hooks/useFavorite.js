@@ -8,8 +8,7 @@ export default function useFavorite() {
     (async () => {
       try {
         const response = await favoriteAPI.getAll();
-        // console.log(response);
-        setListFavorite(response.data.data);
+        setListFavorite(response.data.data.listProduct);
       } catch (error) {
         console.log(error);
       }

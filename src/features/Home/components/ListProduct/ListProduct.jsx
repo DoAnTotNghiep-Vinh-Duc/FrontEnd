@@ -20,7 +20,9 @@ function ListProduct(props) {
       (async () => {
         try {
           const response = await productAPI.getNewProducts();
+          console.log(response);
           setListProduct(response.data.data);
+          console.log("0");
         } catch (error) {
           console.log(error);
         }
@@ -30,7 +32,8 @@ function ListProduct(props) {
         try {
           const response = await productAPI.getBestSellerProduct();
           console.log(response);
-          setListProduct(response.data.data);
+          // setListProduct(response.data.data);
+          console.log("1");
         } catch (error) {
           console.log(error);
         }

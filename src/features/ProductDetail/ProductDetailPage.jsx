@@ -6,9 +6,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import cartAPI from "../../api/cartAPI";
+import favoriteAPI from "../../api/favoriteAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
+import useFavorite from "../../hooks/useFavorite";
 import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
 import "./css/ProductDetailPage.scss";
@@ -28,6 +30,9 @@ function ProductDetailPage(props) {
   } = useRouteMatch();
 
   const { product, loading, colorDetails } = useProductDetail(productId);
+  const { listFavorite } = useFavorite();
+
+  let index = listFavorite.findIndex((x) => x.listProduct._id === productId);
 
   if (loading) {
     return <div>Loading</div>;
@@ -84,6 +89,33 @@ function ProductDetailPage(props) {
         }
       })();
     }
+  };
+
+  const handleClickAddToFavorite = () => {
+    (async () => {
+      try {
+        const response = await favoriteAPI.addProductToFavorite({
+          productId: productId,
+        });
+        if (response.status === 200) {
+          toast.success("Thêm vào danh sách yêu thích thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
+  const handleClickAddedToFavorite = () => {
+    toast.warning("Sản phẩm đã tồn tại trong danh sách yêu thích", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: false,
+      theme: "colored",
+    });
   };
 
   return (
@@ -198,10 +230,6 @@ function ProductDetailPage(props) {
                   ) : (
                     <p>Vui lòng chọn màu trước</p>
                   )}
-
-                  {/* <span className="size size-none">
-                    M<div className="line"></div>
-                  </span> */}
                 </div>
               </div>
               <div className="product-details-content-product-infor-action">
@@ -225,7 +253,18 @@ function ProductDetailPage(props) {
                 </div>
 
                 <span className="product-details-content-product-infor-wishlist">
-                  <i className="bi bi-suit-heart"></i>
+                  {index >= 0 ? (
+                    <i
+                      className="bi bi-suit-heart-fill"
+                      onClick={handleClickAddedToFavorite}
+                      style={{ color: "#fb2e86" }}
+                    ></i>
+                  ) : (
+                    <i
+                      className="bi bi-suit-heart"
+                      onClick={handleClickAddToFavorite}
+                    ></i>
+                  )}
                 </span>
               </div>
             </div>
