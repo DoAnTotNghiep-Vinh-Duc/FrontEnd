@@ -35,7 +35,14 @@ function ListProduct(props) {
         }
       })();
     } else {
-      return;
+      (async () => {
+        try {
+          const response = await productAPI.getSaleProduct();
+          setListProduct(response.data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     }
   };
 

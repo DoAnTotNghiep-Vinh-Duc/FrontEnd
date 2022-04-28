@@ -31,5 +31,10 @@ const productAPI = {
     const url = "/product/top-sell";
     return axiosClient.get(url);
   },
+
+  getSaleProduct() {
+    const url = "/product/on-sell";
+    return axiosClient.get(url);
+  },
 };
 export default productAPI;
