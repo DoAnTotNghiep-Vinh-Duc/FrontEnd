@@ -25,7 +25,6 @@ function BestSeller(props) {
       </div>
       <div className="admin-content-body-topProducts-products">
         {bestSeller.slice(0, 6).map((product, index) => {
-          console.log(product);
           return (
             <div
               className="admin-content-body-topProducts-products-product"

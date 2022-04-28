@@ -1,25 +1,25 @@
 import axiosClient from "./axiosClient";
 
 const cartAPI = {
-  addItemToCart(accountId, productDetailId) {
+  addItemToCart(productDetailId) {
     const url = "/cart/add-item";
-    return axiosClient.put(url, accountId, productDetailId);
+    return axiosClient.put(url, productDetailId);
   },
   getCartByAccountId(accountId) {
     const url = `/cart/${accountId}`;
     return axiosClient.get(url);
   },
-  increaseQuantity(accountId, productDetailId) {
+  increaseQuantity(productDetailId) {
     const url = "/cart/increase-quantity";
-    return axiosClient.put(url, accountId, productDetailId);
+    return axiosClient.put(url, productDetailId);
   },
-  decreaseQuantity(accountId, productDetailId) {
+  decreaseQuantity(productDetailId) {
     const url = "/cart/decrease-quantity";
-    return axiosClient.put(url, accountId, productDetailId);
+    return axiosClient.put(url, productDetailId);
   },
-  removeItem(accountId, productDetailId) {
+  removeItem(productDetailId) {
     const url = "/cart/remove-item";
-    return axiosClient.put(url, accountId, productDetailId);
+    return axiosClient.put(url, productDetailId);
   },
   payment(value) {
     const url = "/order";

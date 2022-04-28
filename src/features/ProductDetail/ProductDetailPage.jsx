@@ -17,9 +17,6 @@ toast.configure();
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
-
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
@@ -72,7 +69,6 @@ function ProductDetailPage(props) {
       (async () => {
         try {
           const response = await cartAPI.addItemToCart({
-            accountId: account._id,
             productDetailId: productDetails._id,
             quantity: quantity,
           });

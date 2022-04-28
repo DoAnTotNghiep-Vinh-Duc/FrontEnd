@@ -13,9 +13,6 @@ Product.propTypes = {
 function Product({ product }) {
   const dispatch = useDispatch();
 
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -36,7 +33,6 @@ function Product({ product }) {
     (async () => {
       try {
         const response = await cartAPI.increaseQuantity({
-          accountId: account._id,
           productDetailId: element.productDetail._id,
         });
       } catch (error) {
@@ -49,7 +45,6 @@ function Product({ product }) {
     (async () => {
       try {
         const response = await cartAPI.decreaseQuantity({
-          accountId: account._id,
           productDetailId: element.productDetail._id,
         });
       } catch (error) {

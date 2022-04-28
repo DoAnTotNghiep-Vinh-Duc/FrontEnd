@@ -2,8 +2,11 @@ import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 import React, { useState } from "react";
 import QuickView from "../../features/QuickView/QuickView";
+import favoriteAPI from "../../api/favoriteAPI";
 import "./ListButton.scss";
+import { toast } from "react-toastify";
 
+toast.configure();
 ListButton.propTypes = {};
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -24,12 +27,31 @@ function ListButton(props) {
     setOpen(false);
   };
 
+  const handleClickFavorite = () => {
+    (async () => {
+      try {
+        const response = await favoriteAPI.addProductToFavorite({
+          productId: productSelected._id,
+        });
+        if (response.status === 200) {
+          toast.success("Thêm vào danh sách yêu thích thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
   return (
     <>
       <div className="addtocart">
         <i className="bi bi-handbag"></i>
       </div>
-      <div className="addtolistwish">
+      <div className="addtolistwish" onClick={handleClickFavorite}>
         <i className="bi bi-suit-heart"></i>
       </div>
       <div className="zoom" onClick={handleClickOpen}>

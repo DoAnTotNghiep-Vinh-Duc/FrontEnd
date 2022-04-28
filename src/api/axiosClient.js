@@ -1,15 +1,13 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
-
 var header = {
   Accept: "application/json",
   "Content-Type": "application/json",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "*",
-  Authorization: token,
+  Authorization: Cookies.get("token"),
 };
 
 const axiosClient = axios.create({
@@ -33,7 +31,7 @@ axiosClient.setLocalAccessToken = async (accessToken, refreshToken) => {
 
 axiosClient.interceptors.request.use(
   function (config) {
-    config.headers.authorization = token;
+    config.headers.authorization = Cookies.get("token");
     return config;
   },
   function (error) {

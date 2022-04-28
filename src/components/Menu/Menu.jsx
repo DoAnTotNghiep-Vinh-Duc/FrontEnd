@@ -7,20 +7,21 @@ import { useHistory } from "react-router-dom";
 import product_female from "../../data/product_female.json";
 import product_male from "../../data/product_male.json";
 import useCart from "../../hooks/useCart";
+import useFavorite from "../../hooks/useFavorite";
 import "./menu.scss";
 
 Menu.propTypes = {};
 
 function Menu(props) {
-  // const local = localStorage.getItem("account");
-  // const account = local && JSON.parse(local);
   const userLogIn = useSelector((state) => state.user.currentUser);
 
   const History = useHistory();
 
   const [scroll, setScroll] = useState(false);
 
-  const { cart } = useCart(userLogIn?._id);
+  const { cart } = useCart();
+
+  const { listFavorite } = useFavorite();
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {

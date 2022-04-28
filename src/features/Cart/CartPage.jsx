@@ -23,7 +23,7 @@ function CartPage(props) {
   const userLogIn = useSelector((state) => state.user.currentUser);
   const listProductCart = useSelector((state) => state.listProductCart);
 
-  const { cart } = useCart(userLogIn?._id);
+  const { cart } = useCart();
 
   listProductCart.listProductCart.forEach((element) => {
     quantityTotal += element.quantity;

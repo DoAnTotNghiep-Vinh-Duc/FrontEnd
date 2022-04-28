@@ -1,14 +1,44 @@
 import React, { useEffect, useState } from "react";
+import productAPI from "../../../../api/productAPI";
 import "./ListProduct.scss";
 import Product from "./Product/Product";
-import productAPI from "../../../../api/productAPI";
 
 ListProduct.propTypes = {};
 
 function ListProduct(props) {
+  const filters = [
+    { value: 0, label: "Mới nhất" },
+    { value: 1, label: "Bán chạy" },
+    { value: 2, label: "Giảm giá" },
+  ];
   const [filterSelected, setFilterSelected] = useState(0);
-
   const [listProduct, setListProduct] = useState([]);
+
+  const handleClickFilter = (item) => {
+    setFilterSelected(item.value);
+    if (item.value === 0) {
+      (async () => {
+        try {
+          const response = await productAPI.getNewProducts();
+          setListProduct(response.data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (item.value === 1) {
+      (async () => {
+        try {
+          const response = await productAPI.getBestSellerProduct();
+          console.log(response);
+          setListProduct(response.data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -21,12 +51,6 @@ function ListProduct(props) {
     })();
   }, []);
 
-  const filters = [
-    { value: 0, label: "Mới nhất" },
-    { value: 1, label: "Bán chạy" },
-    { value: 2, label: "Giảm giá" },
-  ];
-
   return (
     <div className="home-products">
       <div className="home-products-title">Sản phẩm</div>
@@ -38,7 +62,7 @@ function ListProduct(props) {
                 filterSelected === index ? "activeFilterItem" : ""
               }`}
               key={index}
-              onClick={() => setFilterSelected(item.value)}
+              onClick={() => handleClickFilter(item)}
             >
               {item.label}
               <div className="line"></div>

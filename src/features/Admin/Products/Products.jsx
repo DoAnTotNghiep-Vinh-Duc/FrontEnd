@@ -1,6 +1,6 @@
 import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
-import productAPI from "../../../api/productAPI";
+import adminAPI from "../../../api/adminAPI";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Product from "./Product/Product";
@@ -22,7 +22,7 @@ function Products(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await productAPI.getAllProduct({
+        const response = await adminAPI.getAllProduct({
           _page: filters._page,
           _limit: filters._limit,
         });

@@ -1,9 +1,43 @@
-import React from "react";
+import Pagination from "@material-ui/lab/Pagination";
+import React, { useEffect, useState } from "react";
+import adminAPI from "../../../../../api/adminAPI";
 import "./Customers.scss";
 
 Customers.propTypes = {};
 
 function Customers(props) {
+  const [customers, setCustomers] = useState([]);
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 1,
+  });
+  const [pagination, setPagination] = useState({
+    limit: 1,
+    page: 1,
+  });
+
+  const handlePaginationChange = (event, page) => {
+    setFilters((prev) => ({
+      ...prev,
+      _page: page,
+    }));
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.topCustomer({
+          _page: filters._page,
+          _limit: filters._limit,
+        });
+        setCustomers(response.data);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [filters]);
+
   return (
     <div className="admin-content-body-customers">
       <div className="admin-content-body-customers-header">Top khách hàng</div>
@@ -13,71 +47,41 @@ function Customers(props) {
             KHÁCH HÀNG
           </div>
           <div className="admin-content-body-customers-body-header-orders">
-            SỐ HÓA ĐƠN
+            SỐ SẢN PHẨM
           </div>
           <div className="admin-content-body-customers-body-header-cash">
             DOANH THU
           </div>
         </div>
         <div className="admin-content-body-customers-body-customers">
-          <div className="admin-content-body-customers-body-customers-customer">
-            <div className="admin-content-body-customers-body-customers-customer-name">
-              Đỗ Đạt Đức
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-orders">
-              12
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-cash">
-              6.785.000
-            </div>
-          </div>
-          <div className="admin-content-body-customers-body-customers-customer">
-            <div className="admin-content-body-customers-body-customers-customer-name">
-              Lê Nguyễn Thành Vinh
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-orders">
-              12
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-cash">
-              6.785.000
-            </div>
-          </div>
-          <div className="admin-content-body-customers-body-customers-customer">
-            <div className="admin-content-body-customers-body-customers-customer-name">
-              Đỗ Đạt Đức
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-orders">
-              12
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-cash">
-              6.785.000
-            </div>
-          </div>
-          <div className="admin-content-body-customers-body-customers-customer">
-            <div className="admin-content-body-customers-body-customers-customer-name">
-              Đỗ Đạt Đức
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-orders">
-              12
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-cash">
-              6.785.000
-            </div>
-          </div>
-          <div className="admin-content-body-customers-body-customers-customer">
-            <div className="admin-content-body-customers-body-customers-customer-name">
-              Đỗ Đạt Đức
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-orders">
-              12
-            </div>
-            <div className="admin-content-body-customers-body-customers-customer-cash">
-              6.785.000
-            </div>
-          </div>
+          {customers.map((customer) => {
+            return (
+              <div
+                className="admin-content-body-customers-body-customers-customer"
+                key={customer._id}
+              >
+                <div className="admin-content-body-customers-body-customers-customer-name">
+                  {customer.information.name}
+                </div>
+                <div className="admin-content-body-customers-body-customers-customer-orders">
+                  {customer.totalQuantity}
+                </div>
+                <div className="admin-content-body-customers-body-customers-customer-cash">
+                  {customer.totalPrice}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className="admin-content-body-customers-footer">pagination</div>
+      <div className="admin-content-body-customers-footer">
+        <Pagination
+          color="primary"
+          count={Math.ceil(pagination.total / pagination.limit)}
+          page={pagination.page}
+          onChange={handlePaginationChange}
+        />
+      </div>
     </div>
   );
 }

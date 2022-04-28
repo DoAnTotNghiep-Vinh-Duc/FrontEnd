@@ -13,34 +13,12 @@ const productAPI = {
 
   async getProductWithType(params) {
     const url = `/product/types?listType=${JSON.stringify(params.listType)}`;
-    const url2 = `/product/types-with-limit-page/${params._page}/${
-      params._limit
-    }?listType=${JSON.stringify(params.listType)}`;
-
     const total = await axiosClient.get(url, { params: params.listType });
 
-    const productList = await axiosClient.get(url2, {
-      params: params.listType,
-    });
+    const start = params._page * params._limit - params._limit;
+    const end = params._page * params._limit - 1;
     return {
-      data: productList.data.data,
-      pagination: {
-        page: params._page,
-        limit: params._limit,
-        total: total.data.data.length,
-      },
-    };
-  },
-
-  async getAllProduct(params) {
-    const url = "/product";
-    const url2 = `/product/get-all/${params._page}/${params._limit}`;
-
-    const total = await axiosClient.get(url);
-    const listProduct = await axiosClient.get(url2);
-
-    return {
-      data: listProduct.data.data,
+      data: total.data.data.slice(start, end + 1),
       pagination: {
         page: params._page,
         limit: params._limit,
@@ -50,7 +28,7 @@ const productAPI = {
   },
 
   getBestSellerProduct() {
-    const url = "/order/top-sell-product/";
+    const url = "/order/all-top-sell-product";
     return axiosClient.get(url);
   },
 };
