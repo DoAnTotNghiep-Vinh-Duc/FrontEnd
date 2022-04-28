@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import userAPI from "../../api/userAPI";
 import "./UserInformation.scss";
@@ -11,11 +11,16 @@ UserInformation.propTypes = {};
 
 function UserInformation(props) {
   const location = useLocation();
+  const History = useHistory();
 
   const pathname = location.pathname;
   const userLogIn = useSelector((state) => state.user.currentUser);
 
   const [userInformation, setUserInformation] = useState({});
+
+  const handleClickBack = () => {
+    History.goBack();
+  };
 
   useEffect(() => {
     (async () => {
@@ -79,21 +84,28 @@ function UserInformation(props) {
   return (
     <div className="userInformation">
       <div className="userInformation-container">
-        <div className="userInformation-infor">
-          <div className="infor-name">{userInformation.name}</div>
-          <div className="infor-image">
-            <div className="infor-image-circle">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
-                alt=""
-              />
+        <div className="userInformation-infor-back">
+          <div className="userInformation-infor">
+            <div className="infor-name">{userInformation.name}</div>
+            <div className="infor-image">
+              <div className="infor-image-circle">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="infor-button">
+              <button>Tải hình mới lên</button>
+            </div>
+            <div className="infor-time">
+              Tham gia <b>{moment(userLogIn.createdAt).format("L")}</b>
             </div>
           </div>
-          <div className="infor-button">
-            <button>Tải hình mới lên</button>
-          </div>
-          <div className="infor-time">
-            Tham gia <b>{moment(userLogIn.createdAt).format("L")}</b>
+          <div className="userInformation-back">
+            <button onClick={handleClickBack}>
+              <i className="bi bi-arrow-return-left"></i>Quay trở lại
+            </button>
           </div>
         </div>
         <div className="userInformation-edit">
