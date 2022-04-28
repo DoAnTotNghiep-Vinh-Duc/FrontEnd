@@ -20,9 +20,7 @@ function ListProduct(props) {
       (async () => {
         try {
           const response = await productAPI.getNewProducts();
-          console.log(response);
           setListProduct(response.data.data);
-          console.log("0");
         } catch (error) {
           console.log(error);
         }
@@ -31,9 +29,7 @@ function ListProduct(props) {
       (async () => {
         try {
           const response = await productAPI.getBestSellerProduct();
-          console.log(response);
-          // setListProduct(response.data.data);
-          console.log("1");
+          setListProduct(response.data.data);
         } catch (error) {
           console.log(error);
         }
@@ -74,7 +70,7 @@ function ListProduct(props) {
         })}
       </div>
       <div className="home-products-list">
-        {listProduct.map((data) => {
+        {listProduct.slice(0, 8).map((data) => {
           return <Product product={data} key={data._id} />;
         })}
       </div>
