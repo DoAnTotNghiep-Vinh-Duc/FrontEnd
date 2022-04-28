@@ -26,10 +26,5 @@ const productAPI = {
       },
     };
   },
-
-  getBestSellerProduct() {
-    const url = "/order/all-top-sell-product";
-    return axiosClient.get(url);
-  },
 };
 export default productAPI;

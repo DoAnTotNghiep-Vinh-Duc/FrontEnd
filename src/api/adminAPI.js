@@ -22,6 +22,11 @@ const adminAPI = {
     };
   },
 
+  getBestSellerProduct() {
+    const url = "/order/all-top-sell-product";
+    return axiosClient.get(url);
+  },
+
   async topCustomer(params) {
     const url = "/order/all-top-customer";
     const listCustomer = await axiosClient.get(url);

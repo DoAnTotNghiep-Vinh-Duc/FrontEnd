@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import productAPI from "../../../../../api/productAPI";
+import adminAPI from "../../../../../api/adminAPI";
 import "./BestSeller.scss";
 
 BestSeller.propTypes = {};
@@ -10,7 +10,7 @@ function BestSeller(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await productAPI.getBestSellerProduct();
+        const response = await adminAPI.getBestSellerProduct();
         setBestSeller(response.data.data);
       } catch (error) {
         console.log(error);
