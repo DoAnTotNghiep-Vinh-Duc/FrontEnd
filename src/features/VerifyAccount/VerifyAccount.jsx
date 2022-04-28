@@ -1,9 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./VerifyAccount.scss";
 
 VerifyAccount.propTypes = {};
 
-function VerifyAccount(props) {
+function VerifyAccount({ email }) {
+  const History = useHistory();
+
+  const handleClickSignin = () => {
+    History.push("/auth");
+  };
   return (
     <div className="verify">
       <div className="verify-container">
@@ -19,7 +25,7 @@ function VerifyAccount(props) {
           <div className="verify-title">Xác thực tài khoản</div>
           <div className="verify-text">
             Một yêu cầu xác thực email đã được gửi đến <br />
-            <b> 12345ddduc@gmail.com</b>
+            <b> {email}</b>
           </div>
           <div className="verify-text">
             Vui lòng kiểm tra email và xác nhận tài khoản của bạn bằng cách nhấn
@@ -36,11 +42,16 @@ function VerifyAccount(props) {
             </a>
             .
           </div>
-          <div className="verify-button">GỬI LẠI EMAIL</div>
+          <div className="verify-button">
+            <button className="verify-button-resend">GỬI LẠI EMAIL</button>
+            <button
+              className="verify-button-signin"
+              onClick={handleClickSignin}
+            >
+              ĐĂNG NHẬP
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="verify-signin">
-        <a href="/auth">Đăng nhập</a>
       </div>
     </div>
   );

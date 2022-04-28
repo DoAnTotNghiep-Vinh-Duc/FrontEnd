@@ -16,6 +16,10 @@ function SignIn_SignUp(props) {
     setOpen(!open);
   };
 
+  const receiveEmailHandle = (email) => {
+    props.sendEmailToVerify(email);
+  };
+
   if (!account) {
     return (
       <Fragment>
@@ -32,7 +36,7 @@ function SignIn_SignUp(props) {
               id="container"
             >
               <div className="form-container sign-up-container">
-                <SignUp />
+                <SignUp sendEmailToVerify={receiveEmailHandle} />
               </div>
               <div className="form-container sign-in-container">
                 <SignIn />

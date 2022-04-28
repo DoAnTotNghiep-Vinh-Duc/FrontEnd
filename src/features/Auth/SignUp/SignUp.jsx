@@ -10,6 +10,7 @@ import PasswordField from "../../../form-control/PasswordField";
 
 toast.configure();
 SignUp.propTypes = {};
+
 function SignUp(props) {
   const History = useHistory();
   const location = useLocation();
@@ -51,6 +52,7 @@ function SignUp(props) {
         });
 
         if (res.status === 201) {
+          props.sendEmailToVerify(value.email);
           toast.success("Đăng kí thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
