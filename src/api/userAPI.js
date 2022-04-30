@@ -9,6 +9,10 @@ const userAPI = {
     const url = "/auth/signup";
     return axiosClient.post(url, name, email, password);
   },
+  logout(refreshToken) {
+    const url = "/auth/logout";
+    return axiosClient.post(url, refreshToken);
+  },
 
   getInformation() {
     const url = "/information";
