@@ -1,6 +1,6 @@
 [
-    {"name": "Áo thun không cổ", "value":"cổ tròn"},
-    {"name": "Áo thun có cổ", "value":"cổ vuông"},
+    {"name": "Áo thun cổ tròn", "value":"cổ tròn"},
+    {"name": "Áo thun cổ vuông", "value":"cổ vuông"},
     {"name": "Áo thun tanktop", "value":"tanktop"},
     {"name": "Áo thun in hình", "value":"không cổ"},
     {"name": "Áo thun có chữ", "value":"không cổ"},

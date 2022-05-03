@@ -1,5 +1,6 @@
 import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import adminAPI from "../../../api/adminAPI";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
@@ -9,6 +10,8 @@ import "./Products.scss";
 Products.propTypes = {};
 
 function Products(props) {
+  const History = useHistory();
+
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
@@ -41,6 +44,10 @@ function Products(props) {
     }));
   };
 
+  const handleClickAddProduct = () => {
+    History.push("/admin/addproduct");
+  };
+
   return (
     <div className="admin-products">
       <NavBars />
@@ -48,7 +55,10 @@ function Products(props) {
         <Header />
         <div className="admin-products-content-body">
           <div className="admin-products-content-body-addProduct">
-            <div className="admin-products-content-body-addProduct-container">
+            <div
+              className="admin-products-content-body-addProduct-container"
+              onClick={handleClickAddProduct}
+            >
               <i className="bi bi-plus-square"></i>
               <span>Thêm sản phẩm</span>
             </div>

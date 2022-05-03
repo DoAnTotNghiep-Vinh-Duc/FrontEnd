@@ -59,6 +59,14 @@ const adminAPI = {
       },
     };
   },
+
+  addProduct(value) {
+    const url = "/product";
+    return axiosClient.post(url, {
+      product: value.product,
+      productDetails: value.productDetails,
+    });
+  },
 };
 
 export default adminAPI;

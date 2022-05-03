@@ -1,7 +1,11 @@
 import TextField from "@material-ui/core/TextField";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import Select from "react-select";
+import collar_female from "../../../../data/collar_female.json";
+import collar_male from "../../../../data/collar_male.json";
+import gender from "../../../../data/gender.json";
+import typeProduct from "../../../../data/short_long.json";
 import useProductDetail from "../../../../hooks/useProductDetail";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
@@ -13,42 +17,82 @@ function ProductDetail(props) {
   const {
     params: { productId },
   } = useRouteMatch();
-  const gender = [
-    {
-      value: "Nam",
-      label: "Nam",
-    },
-    {
-      value: "Nữ",
-      label: "Nữ",
-    },
-  ];
-  const category = [
-    {
-      value: "Tay Ngắn",
-      label: "Tay Ngắn",
-    },
-    {
-      value: "Tay Dài",
-      label: "Tay Dài",
-    },
-  ];
-  const collar = [
-    {
-      value: "Cổ Tròn",
-      label: "Cổ Tròn",
-    },
-    {
-      value: "Cổ Vuông",
-      label: "Cổ Vuông",
-    },
-  ];
+  const [genderProduct, setGenderProduct] = useState({
+    _id: "62296d1b2ce44107de398a91",
+    value: "nam",
+    label: "Nam",
+  });
+  const [type, setType] = useState({
+    _id: "62296d1b2ce44107de398a93",
+    value: "tay ngắn",
+    label: "Tay ngắn",
+  });
+  const [collarProduct, setCollarProduct] = useState({
+    _id: "62296d1b2ce44107de398a95",
+    value: "cổ tròn",
+    label: "Cổ tròn",
+  });
 
   const { product, loading, colorDetails } = useProductDetail(productId);
+  const [productEdit, setProductEdit] = useState(product);
+
+  useEffect(() => {
+    setProductEdit(product);
+  }, [product]);
+
+  useEffect(() => {
+    productEdit.typeProducts?.forEach((x) => {
+      gender.forEach((y) => {
+        if (x === y._id) {
+          setGenderProduct(y);
+        }
+      });
+      typeProduct.forEach((y) => {
+        if (x === y._id) {
+          setType(y);
+        }
+      });
+      if (gender.value === "nam") {
+        collar_male.forEach((y) => {
+          if (x === y._id) {
+            setCollarProduct(y);
+          }
+        });
+      } else {
+        collar_female.forEach((y) => {
+          if (x === y._id) {
+            setCollarProduct(y);
+          }
+        });
+      }
+    });
+  }, [productEdit.typeProducts]);
 
   if (loading) {
     return <div>Loading</div>;
   }
+
+  const handleChangeNameProduct = (event) => {
+    setProductEdit({
+      ...productEdit,
+      name: event.target.value,
+    });
+  };
+  const handleChangeDescriptionProduct = (event) => {
+    setProductEdit({
+      ...productEdit,
+      description: event.target.value,
+    });
+  };
+  const handleSelectGenderProduct = (newValue) => {
+    setGenderProduct(newValue);
+  };
+  const handleSelectTypeProduct = (newValue) => {
+    setType(newValue);
+  };
+  const handleSelectCollarProduct = (newValue) => {
+    setCollarProduct(newValue);
+  };
 
   return (
     <div className="admin-orderDetail">
@@ -68,18 +112,8 @@ function ProductDetail(props) {
                   size="small"
                   fullWidth
                   label="Tên Sản Phẩm"
-                  value={product.name}
-                />
-              </div>
-              <div className="admin-orderDetail-description">
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Mô Tả"
-                  multiline
-                  rows={11}
-                  fullWidth
-                  variant="outlined"
-                  value={product.description}
+                  value={productEdit.name}
+                  onChange={handleChangeNameProduct}
                 />
               </div>
               <div className="admin-orderDetail-category">
@@ -89,30 +123,28 @@ function ProductDetail(props) {
                     <Select
                       fullWidth
                       options={gender}
-                      defaultValue={{
-                        value: "Nam",
-                        label: "Nam",
-                      }}
+                      defaultValue={genderProduct}
+                      onChange={handleSelectGenderProduct}
                     />
                   </div>
                   <div className="sort-select-long-short">
                     <Select
                       fullWidth
-                      options={category}
-                      defaultValue={{
-                        value: "Tay Ngắn",
-                        label: "Tay Ngắn",
-                      }}
+                      options={typeProduct}
+                      defaultValue={type}
+                      onChange={handleSelectTypeProduct}
                     />
                   </div>
                   <div className="sort-select-collar">
                     <Select
                       fullWidth
-                      options={collar}
-                      defaultValue={{
-                        value: "Cổ Tròn",
-                        label: "Cổ Tròn",
-                      }}
+                      options={
+                        genderProduct.value === "nam"
+                          ? collar_male
+                          : collar_female
+                      }
+                      defaultValue={collarProduct}
+                      onChange={handleSelectCollarProduct}
                     />
                   </div>
                 </div>
@@ -138,6 +170,18 @@ function ProductDetail(props) {
                     value={product.price}
                   />
                 </div>
+              </div>
+              <div className="admin-orderDetail-description">
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Mô Tả"
+                  multiline
+                  rows={11}
+                  fullWidth
+                  variant="outlined"
+                  value={productEdit.description}
+                  onChange={handleChangeDescriptionProduct}
+                />
               </div>
             </div>
             <div className="admin-orderDetail-button">

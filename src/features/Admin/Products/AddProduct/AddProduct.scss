@@ -1,0 +1,242 @@
+.admin-addproduct {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    .admin-addproduct-content {
+        width: 88%;
+        height: 100%;
+        .admin-addproduct-content-body {
+            width: 100%;
+            height: calc(100% - 50px);
+            display: flex;
+            .admin-addproduct-content-body-left {
+                width: 50%;
+                height: 100%;
+                padding: 5px 10px;
+                border-top: 1px solid rgba($color: gray, $alpha: 0.3);
+                overflow-y: hidden;
+                .admin-addproduct-title {
+                    width: 100%;
+                    height: 5%;
+                    font-weight: bold;
+                    font-size: 16px;
+                    display: flex;
+                    align-items: center;
+                }
+                .admin-addproduct-body {
+                    width: 100%;
+                    height: 95%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    .admin-addproduct-name {
+                        width: 100%;
+                        height: 10%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-addproduct-description {
+                        width: 100%;
+                        height: 30%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .admin-addproduct-category {
+                        width: 100%;
+                        height: 15%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        .admin-addproduct-category-group {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            .sort-select {
+                                width: 30%;
+                                height: 100%;
+                            }
+                        }
+                    }
+                    .admin-addproduct-discount-price {
+                        width: 100%;
+                        height: 10%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        .admin-addproduct-discount {
+                            width: 48%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            align-items: flex-start;
+                            .admin-addproduct-discount-select {
+                                width: 100%;
+                            }
+                        }
+                        .admin-addproduct-price {
+                            width: 48%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: flex-end;
+                        }
+                    }
+                    .admin-addproduct-supplier {
+                        width: 100%;
+                        height: 10%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+                    .admin-product-button {
+                        width: 100%;
+                        height: 7%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        .admin-product-button-addProduct {
+                            width: 30%;
+                            height: 100%;
+                            background-color: white;
+                            border: 1px solid blueviolet;
+                            color: blueviolet;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: blueviolet;
+                                color: white;
+                            }
+                        }
+                        .isActive {
+                            cursor: not-allowed;
+                            opacity: 0.65;
+                            &:hover {
+                                background-color: white;
+                                color: blueviolet;
+                            }
+                        }
+                        .admin-product-button-addColor {
+                            width: 30%;
+                            height: 100%;
+                            background-color: white;
+                            border: 1px solid blueviolet;
+                            color: blueviolet;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            &:hover {
+                                background-color: blueviolet;
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
+            .admin-addproduct-content-body-right {
+                width: 50%;
+                height: 100%;
+                border-left: 1px solid rgba($color: gray, $alpha: 0.3);
+                border-top: 1px solid rgba($color: gray, $alpha: 0.3);
+                overflow-y: auto;
+                .admin-addproduct-color {
+                    width: 100%;
+                    height: auto;
+                    padding: 7px;
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                    .admin-addproduct-color-left {
+                        width: 30%;
+                        height: 200px;
+                        .admin-addproduct-color-left-image {
+                            width: 100%;
+                            height: 85%;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                        button {
+                            width: 100%;
+                            height: 15%;
+                            border: 1px solid #8a2be2;
+                            color: #8a2be2;
+                            cursor: pointer;
+                            position: relative;
+                            &:hover {
+                                background-color: #8a2be2;
+                                color: white;
+                            }
+                            input {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                height: 100%;
+                                width: 100%;
+                                font-size: 1px;
+                                text-align: right;
+                                opacity: 0;
+                                outline: none;
+                                cursor: inherit;
+                                display: block;
+                            }
+                        }
+                    }
+                    .admin-addproduct-color-right {
+                        width: 70%;
+                        height: auto;
+                        padding: 0 10px;
+                        .admin-addproduct-color-right-color-button {
+                            width: 100%;
+                            height: 50px;
+                            display: flex;
+                            margin-bottom: 10px;
+                            .admin-addproduct-color-right-color {
+                                width: 50%;
+                                height: 100%;
+                            }
+                            .admin-addproduct-color-right-button {
+                                width: 50%;
+                                height: 100%;
+                                display: flex;
+                                align-items: flex-end;
+                                justify-content: flex-end;
+                                button {
+                                    width: 50%;
+                                    height: 70%;
+                                    border: 1px solid #8a2be2;
+                                    color: #8a2be2;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    &:hover {
+                                        background-color: #8a2be2;
+                                        color: white;
+                                    }
+                                }
+                            }
+                        }
+                        .admin-addproduct-color-right-size {
+                            width: 100%;
+                            height: 50px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            .admin-addproduct-color-right-size-select {
+                                width: 50%;
+                            }
+                            .admin-addproduct-color-right-size-quantity {
+                                width: 25%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
