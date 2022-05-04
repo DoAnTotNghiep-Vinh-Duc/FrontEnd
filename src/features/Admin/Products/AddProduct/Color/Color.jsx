@@ -94,6 +94,11 @@ function Color(props) {
         details: listSizeQuantityProduct,
       },
       image: { image: image, color: colorProduct._id },
+      details: {
+        image: image,
+        color: colorProduct._id,
+        details: listSizeQuantityProduct,
+      },
     });
   }, [colorProduct, image, listSizeQuantityProduct, props]);
 

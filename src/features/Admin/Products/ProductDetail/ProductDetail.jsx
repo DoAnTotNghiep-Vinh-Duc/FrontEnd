@@ -34,9 +34,9 @@ function ProductDetail(props) {
     label: "Nam",
   });
   const [type, setType] = useState({
-    _id: "62296d1b2ce44107de398a94",
-    value: "tay dài",
-    label: "Tay dài",
+    _id: "62296d1b2ce44107de398a93",
+    value: "tay ngắn",
+    label: "Tay ngắn",
   });
   const [collarProduct, setCollarProduct] = useState({
     _id: "62296d1b2ce44107de398a95",
@@ -76,46 +76,32 @@ function ProductDetail(props) {
   });
 
   useEffect(() => {
-    typeProduct.forEach((x) => {
-      productEdit.typeProducts?.forEach((y) => {
-        if (x._id === y) {
-          setType({
-            _id: x._id,
-            value: x.value,
-            label: x.label,
-          });
+    productEdit.typeProducts?.forEach((x) => {
+      gender.forEach((y) => {
+        if (x === y._id) {
+          setGenderProduct(y);
         }
       });
+      typeProduct.forEach((y) => {
+        if (x === y._id) {
+          setType(y);
+        }
+      });
+      if (gender.value === "nam") {
+        collar_male.forEach((y) => {
+          if (x === y._id) {
+            setCollarProduct(y);
+          }
+        });
+      } else {
+        collar_female.forEach((y) => {
+          if (x === y._id) {
+            setCollarProduct(y);
+          }
+        });
+      }
     });
   }, [productEdit.typeProducts]);
-
-  // useEffect(() => {
-  //   productEdit.typeProducts?.forEach((x) => {
-  //     gender.forEach((y) => {
-  //       if (x === y._id) {
-  //         setGenderProduct(y);
-  //       }
-  //     });
-  //     typeProduct.forEach((y) => {
-  //       if (x === y._id) {
-  //         setType(y);
-  //       }
-  //     });
-  //     if (gender.value === "nam") {
-  //       collar_male.forEach((y) => {
-  //         if (x === y._id) {
-  //           setCollarProduct(y);
-  //         }
-  //       });
-  //     } else {
-  //       collar_female.forEach((y) => {
-  //         if (x === y._id) {
-  //           setCollarProduct(y);
-  //         }
-  //       });
-  //     }
-  //   });
-  // }, [productEdit.typeProducts]);
 
   if (loading) {
     return <div>Loading</div>;
@@ -127,15 +113,26 @@ function ProductDetail(props) {
       name: event.target.value,
     });
   };
-
   const handleSelectGenderProduct = (newValue) => {
     setGenderProduct(newValue);
+    setProductEdit({
+      ...productEdit,
+      typeProducts: [newValue._id, type._id, collarProduct._id],
+    });
   };
   const handleSelectTypeProduct = (newValue) => {
     setType(newValue);
+    setProductEdit({
+      ...productEdit,
+      typeProducts: [genderProduct._id, newValue._id, collarProduct._id],
+    });
   };
   const handleSelectCollarProduct = (newValue) => {
     setCollarProduct(newValue);
+    setProductEdit({
+      ...productEdit,
+      typeProducts: [genderProduct._id, type._id, newValue._id],
+    });
   };
   const handleSelectDiscount = (newValue) => {
     setDiscountProduct(newValue);

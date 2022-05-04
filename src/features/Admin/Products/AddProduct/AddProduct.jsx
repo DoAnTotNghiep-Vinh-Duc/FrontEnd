@@ -144,9 +144,11 @@ function AddProduct(props) {
   const handleReceiveColorAndSize = (value) => {
     setListColorDetails([...listColorDetails, value.colorDetails]);
     setListImage([...listImage, value.image]);
+    setListColor([...listColor, value.details]);
   };
   console.log(listColorDetails);
   console.log(listImage);
+  console.log(listColor);
 
   // const handleReceiveColorAndSize = (value) => {
   //   setListColor([...listColor, value]);
