@@ -138,9 +138,19 @@ function AddProduct(props) {
     setPrice(event.target.value);
   };
 
+  const [listColorDetails, setListColorDetails] = useState([]);
+  const [listImage, setListImage] = useState([]);
+
   const handleReceiveColorAndSize = (value) => {
-    setListColor([...listColor, value]);
+    setListColorDetails([...listColorDetails, value.colorDetails]);
+    setListImage([...listImage, value.image]);
   };
+  console.log(listColorDetails);
+  console.log(listImage);
+
+  // const handleReceiveColorAndSize = (value) => {
+  //   setListColor([...listColor, value]);
+  // };
 
   useEffect(() => {
     if (
@@ -170,35 +180,72 @@ function AddProduct(props) {
     typeProduct,
   ]);
 
-  const handleClickAddProduct = () => {
-    listColor.forEach((x) => {
-      x.details.forEach((y) =>
-        listProductDetail.push({
-          image: x.image,
-          color: x.color,
-          size: y.size,
-          quantity: Number(y.quantity),
-        })
-      );
-    });
+  // const handleClickAddProduct = () => {
+  //   listColor.forEach((x) => {
+  //     x.details.forEach((y) =>
+  //       listProductDetail.push({
+  //         image: x.image,
+  //         color: x.color,
+  //         size: y.size,
+  //         quantity: Number(y.quantity),
+  //       })
+  //     );
+  //   });
 
-    (async () => {
+  //   (async () => {
+  //     try {
+  //       const response = await adminAPI.addProduct({
+  //         product: {
+  //           supplier: supplier._id,
+  //           discount: discount._id,
+  //           name: name,
+  //           description: description,
+  //           typeProduct: [
+  //             genderProduct._id,
+  //             typeProduct._id,
+  //             collarProduct._id,
+  //           ],
+  //           price: Number(price),
+  //         },
+  //         productDetails: listProductDetail,
+  //       });
+
+  //       if (response.status === 201) {
+  //         toast.success("Thêm sản phẩm mới thành công", {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 2000,
+  //           theme: "dark",
+  //         });
+  //         History.push("/admin/products");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // };
+
+  const handleClickAddProduct = () => {
+    const fd = new FormData();
+
+    fd.append(
+      "product",
+      JSON.stringify({
+        supplier: supplier._id,
+        discount: discount._id,
+        name: name,
+        description: description,
+        typeProduct: [genderProduct._id, typeProduct._id, collarProduct._id],
+        price: Number(price),
+      })
+    );
+
+    fd.append("productDetails", JSON.stringify(listColor));
+
+    listImage.forEach((element) => {
+      fd.append(element.color, element.image);
+    })(async () => {
       try {
-        const response = await adminAPI.addProduct({
-          product: {
-            supplier: supplier._id,
-            discount: discount._id,
-            name: name,
-            description: description,
-            typeProduct: [
-              genderProduct._id,
-              typeProduct._id,
-              collarProduct._id,
-            ],
-            price: Number(price),
-          },
-          productDetails: listProductDetail,
-        });
+        const response = await adminAPI.addProduct(fd);
 
         if (response.status === 201) {
           toast.success("Thêm sản phẩm mới thành công", {

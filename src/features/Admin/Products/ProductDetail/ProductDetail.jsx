@@ -10,6 +10,7 @@ import typeProduct from "../../../../data/short_long.json";
 import useProductDetail from "../../../../hooks/useProductDetail";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
+import Color from "./Color/Color";
 import "./ProductDetail.scss";
 
 ProductDetail.propTypes = {};
@@ -18,27 +19,40 @@ function ProductDetail(props) {
   const {
     params: { productId },
   } = useRouteMatch();
+
+  const [discount_temp, setDiscount_temp] = useState([]);
+  let listDiscount = [];
+
+  const { product, loading, colorDetails } = useProductDetail(productId);
+  const [productEdit, setProductEdit] = useState(() => {
+    const product_temp = product;
+    return product_temp;
+  });
   const [genderProduct, setGenderProduct] = useState({
     _id: "62296d1b2ce44107de398a91",
     value: "nam",
     label: "Nam",
   });
   const [type, setType] = useState({
-    _id: "62296d1b2ce44107de398a93",
-    value: "tay ngắn",
-    label: "Tay ngắn",
+    _id: "62296d1b2ce44107de398a94",
+    value: "tay dài",
+    label: "Tay dài",
   });
   const [collarProduct, setCollarProduct] = useState({
     _id: "62296d1b2ce44107de398a95",
     value: "cổ tròn",
     label: "Cổ tròn",
   });
-  const [discount_temp, setDiscount_temp] = useState([]);
 
-  const { product, loading, colorDetails } = useProductDetail(productId);
-  const [productEdit, setProductEdit] = useState(product);
+  const [discountProduct, setDiscountProduct] = useState({
+    _id: productEdit.discount?._id,
+    value: productEdit.discount?.percentDiscount,
+    label: productEdit.discount?.nameDiscount,
+  });
 
-  let listDiscount = [];
+  useEffect(() => {
+    setProductEdit(product);
+  }, [product]);
 
   useEffect(() => {
     (async () => {
@@ -62,36 +76,46 @@ function ProductDetail(props) {
   });
 
   useEffect(() => {
-    setProductEdit(product);
-  }, [product]);
-
-  useEffect(() => {
-    productEdit.typeProducts?.forEach((x) => {
-      gender.forEach((y) => {
-        if (x === y._id) {
-          setGenderProduct(y);
+    typeProduct.forEach((x) => {
+      productEdit.typeProducts?.forEach((y) => {
+        if (x._id === y) {
+          setType({
+            _id: x._id,
+            value: x.value,
+            label: x.label,
+          });
         }
       });
-      typeProduct.forEach((y) => {
-        if (x === y._id) {
-          setType(y);
-        }
-      });
-      if (gender.value === "nam") {
-        collar_male.forEach((y) => {
-          if (x === y._id) {
-            setCollarProduct(y);
-          }
-        });
-      } else {
-        collar_female.forEach((y) => {
-          if (x === y._id) {
-            setCollarProduct(y);
-          }
-        });
-      }
     });
   }, [productEdit.typeProducts]);
+
+  // useEffect(() => {
+  //   productEdit.typeProducts?.forEach((x) => {
+  //     gender.forEach((y) => {
+  //       if (x === y._id) {
+  //         setGenderProduct(y);
+  //       }
+  //     });
+  //     typeProduct.forEach((y) => {
+  //       if (x === y._id) {
+  //         setType(y);
+  //       }
+  //     });
+  //     if (gender.value === "nam") {
+  //       collar_male.forEach((y) => {
+  //         if (x === y._id) {
+  //           setCollarProduct(y);
+  //         }
+  //       });
+  //     } else {
+  //       collar_female.forEach((y) => {
+  //         if (x === y._id) {
+  //           setCollarProduct(y);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }, [productEdit.typeProducts]);
 
   if (loading) {
     return <div>Loading</div>;
@@ -103,12 +127,7 @@ function ProductDetail(props) {
       name: event.target.value,
     });
   };
-  const handleChangeDescriptionProduct = (event) => {
-    setProductEdit({
-      ...productEdit,
-      description: event.target.value,
-    });
-  };
+
   const handleSelectGenderProduct = (newValue) => {
     setGenderProduct(newValue);
   };
@@ -118,6 +137,23 @@ function ProductDetail(props) {
   const handleSelectCollarProduct = (newValue) => {
     setCollarProduct(newValue);
   };
+  const handleSelectDiscount = (newValue) => {
+    setDiscountProduct(newValue);
+  };
+  const handleChangePriceProduct = (event) => {
+    setProductEdit({
+      ...productEdit,
+      price: event.target.value,
+    });
+  };
+  const handleChangeDescriptionProduct = (event) => {
+    setProductEdit({
+      ...productEdit,
+      description: event.target.value,
+    });
+  };
+
+  console.log(productEdit);
 
   return (
     <div className="admin-orderDetail">
@@ -176,14 +212,15 @@ function ProductDetail(props) {
               </div>
               <div className="admin-orderDetail-discount-price">
                 <div className="admin-orderDetail-discount">
-                  <TextField
-                    id="outlined-basic"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    label="Giảm Giá"
-                    value={`${product.discount.percentDiscount * 100}%`}
-                  />
+                  <label htmlFor="">Giảm giá</label>
+                  <div className="admin-orderDetail-discount-select">
+                    <Select
+                      fullWidth
+                      options={listDiscount}
+                      defaultValue={discountProduct}
+                      onChange={handleSelectDiscount}
+                    />
+                  </div>
                 </div>
                 <div className="admin-orderDetail-price">
                   <TextField
@@ -192,7 +229,8 @@ function ProductDetail(props) {
                     size="small"
                     fullWidth
                     label="Giá sản phẩm"
-                    value={product.price}
+                    value={productEdit.price}
+                    onChange={handleChangePriceProduct}
                   />
                 </div>
               </div>
@@ -215,47 +253,7 @@ function ProductDetail(props) {
           </div>
           <div className="admin-orderDetail-content-body-right">
             {colorDetails.map((item, index) => {
-              return (
-                <div className="admin-productDetail-product" key={index}>
-                  <div className="admin-productDetail-product-image">
-                    <div className="image-product">
-                      <img src={Object.values(item)[0][0].image} alt="" />
-                    </div>
-                    <button>THAY ĐỔI HÌNH ẢNH</button>
-                  </div>
-                  <div className="admin-productDetail-product-infor">
-                    <div className="admin-productDetail-product-infor-color">
-                      <TextField
-                        id="outlined-basic"
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                        label="Màu Sắc"
-                        value={Object.values(item)[0][0].color.name}
-                      />
-                    </div>
-                    <div className="admin-productDetail-product-infor-listSize">
-                      {Object.values(item)[0].map((item, index) => {
-                        return (
-                          <div
-                            className="admin-productDetail-product-infor-size"
-                            key={index}
-                          >
-                            <TextField
-                              id="outlined-basic"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              label={`${"Size "} ${item.size}`}
-                              value={item.quantity}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              );
+              return <Color key={index} color={item} />;
             })}
           </div>
         </div>

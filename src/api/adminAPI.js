@@ -60,12 +60,16 @@ const adminAPI = {
     };
   },
 
-  addProduct(value) {
+  // addProduct(value) {
+  //   const url = "/product";
+  //   return axiosClient.post(url, {
+  //     product: value.product,
+  //     productDetails: value.productDetails,
+  //   });
+  // },
+  addProduct(product, productDetails) {
     const url = "/product";
-    return axiosClient.post(url, {
-      product: value.product,
-      productDetails: value.productDetails,
-    });
+    return axiosClient.post(url, { product, productDetails });
   },
 
   testImage(image) {
