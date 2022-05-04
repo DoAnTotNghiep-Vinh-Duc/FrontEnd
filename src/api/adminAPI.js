@@ -67,6 +67,11 @@ const adminAPI = {
       productDetails: value.productDetails,
     });
   },
+
+  testImage(image) {
+    const url = "/rate/upload-image";
+    return axiosClient.post(url, image);
+  },
 };
 
 export default adminAPI;

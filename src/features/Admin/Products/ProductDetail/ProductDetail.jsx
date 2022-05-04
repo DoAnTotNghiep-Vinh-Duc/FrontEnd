@@ -2,6 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import Select from "react-select";
+import discountAPI from "../../../../api/discountAPI";
 import collar_female from "../../../../data/collar_female.json";
 import collar_male from "../../../../data/collar_male.json";
 import gender from "../../../../data/gender.json";
@@ -32,9 +33,33 @@ function ProductDetail(props) {
     value: "cổ tròn",
     label: "Cổ tròn",
   });
+  const [discount_temp, setDiscount_temp] = useState([]);
 
   const { product, loading, colorDetails } = useProductDetail(productId);
   const [productEdit, setProductEdit] = useState(product);
+
+  let listDiscount = [];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await discountAPI.getAll();
+        if (response.status === 200) {
+          setDiscount_temp(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  discount_temp.forEach((element) => {
+    listDiscount.push({
+      _id: element._id,
+      value: element.percentDiscount,
+      label: element.nameDiscount,
+    });
+  });
 
   useEffect(() => {
     setProductEdit(product);
@@ -166,7 +191,7 @@ function ProductDetail(props) {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    label="Giá"
+                    label="Giá sản phẩm"
                     value={product.price}
                   />
                 </div>
