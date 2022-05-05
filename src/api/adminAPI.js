@@ -60,16 +60,14 @@ const adminAPI = {
     };
   },
 
-  // addProduct(value) {
-  //   const url = "/product";
-  //   return axiosClient.post(url, {
-  //     product: value.product,
-  //     productDetails: value.productDetails,
-  //   });
-  // },
-  addProduct(product, productDetails) {
+  addProduct(value) {
     const url = "/product";
-    return axiosClient.post(url, { product, productDetails });
+    return axiosClient.post(url, value);
+  },
+
+  updateProduct(value) {
+    const url = `/product/${value.id}`;
+    return axiosClient.put(url, value.fd);
   },
 
   testImage(image) {

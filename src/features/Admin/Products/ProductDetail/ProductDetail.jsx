@@ -2,6 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import Select from "react-select";
+import adminAPI from "../../../../api/adminAPI";
 import discountAPI from "../../../../api/discountAPI";
 import collar_female from "../../../../data/collar_female.json";
 import collar_male from "../../../../data/collar_male.json";
@@ -20,8 +21,10 @@ function ProductDetail(props) {
     params: { productId },
   } = useRouteMatch();
 
+  const [send, setSend] = useState(false);
   const [discount_temp, setDiscount_temp] = useState([]);
   let listDiscount = [];
+  let listColorDetail = [];
 
   const { product, loading, colorDetails } = useProductDetail(productId);
   const [productEdit, setProductEdit] = useState(() => {
@@ -45,9 +48,17 @@ function ProductDetail(props) {
   });
 
   const [discountProduct, setDiscountProduct] = useState({
-    _id: productEdit.discount?._id,
-    value: productEdit.discount?.percentDiscount,
-    label: productEdit.discount?.nameDiscount,
+    element: {
+      createdAt: "2021-09-02T16:29:38.000Z",
+      description: "Mặc định",
+      endDate: "2122-05-22T17:44:24.000Z",
+      nameDiscount: "Mặc định",
+      percentDiscount: 0,
+      startDate: "1990-03-20T09:19:34.000Z",
+      _id: "62599849f8f6be052f0a901d",
+    },
+    label: "Mặc định",
+    value: "62599849f8f6be052f0a901d",
   });
 
   useEffect(() => {
@@ -69,11 +80,19 @@ function ProductDetail(props) {
 
   discount_temp.forEach((element) => {
     listDiscount.push({
-      _id: element._id,
-      value: element.percentDiscount,
+      element,
       label: element.nameDiscount,
+      value: element._id,
     });
   });
+
+  useEffect(() => {
+    listDiscount.forEach((element) => {
+      if (productEdit.discount?._id === element.value) {
+        setDiscountProduct(element);
+      }
+    });
+  }, [productEdit.discount?._id]);
 
   useEffect(() => {
     productEdit.typeProducts?.forEach((x) => {
@@ -136,6 +155,10 @@ function ProductDetail(props) {
   };
   const handleSelectDiscount = (newValue) => {
     setDiscountProduct(newValue);
+    setProductEdit({
+      ...productEdit,
+      discount: newValue.element,
+    });
   };
   const handleChangePriceProduct = (event) => {
     setProductEdit({
@@ -150,7 +173,41 @@ function ProductDetail(props) {
     });
   };
 
-  console.log(productEdit);
+  const handleReceiveColorAndProductDetails = (value) => {
+    if (listColorDetail.length < 1) {
+      listColorDetail.push(value);
+    } else {
+      const index = listColorDetail.findIndex((x) => x.color === value.color);
+      if (index > -1) {
+        listColorDetail.splice(index, 1);
+        listColorDetail.push(value);
+      } else {
+        listColorDetail.push(value);
+      }
+    }
+  };
+
+  const handleUpdateProduct = () => {
+    (async () => {
+      const fd = new FormData();
+
+      fd.append("productDetails", JSON.stringify(listColorDetail));
+      fd.append("product", JSON.stringify(productEdit));
+      listColorDetail.forEach((element) => {
+        fd.append(element.color, element.image);
+      });
+
+      try {
+        const response = await adminAPI.updateProduct({
+          id: productEdit._id,
+          fd,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
 
   return (
     <div className="admin-orderDetail">
@@ -245,12 +302,22 @@ function ProductDetail(props) {
               </div>
             </div>
             <div className="admin-orderDetail-button">
-              <button>LƯU THÔNG TIN SẢN PHẨM</button>
+              <button onClick={handleUpdateProduct}>
+                LƯU THÔNG TIN SẢN PHẨM
+              </button>
             </div>
           </div>
           <div className="admin-orderDetail-content-body-right">
             {colorDetails.map((item, index) => {
-              return <Color key={index} color={item} />;
+              return (
+                <Color
+                  key={index}
+                  color={item}
+                  sendColorAndProductDetails={
+                    handleReceiveColorAndProductDetails
+                  }
+                />
+              );
             })}
           </div>
         </div>

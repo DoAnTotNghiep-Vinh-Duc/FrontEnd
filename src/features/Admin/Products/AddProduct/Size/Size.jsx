@@ -19,7 +19,7 @@ function Size(props) {
   useEffect(() => {
     props.sendSizeAndQuantity({
       size: sizeProduct,
-      quantity: quantityProduct,
+      quantity: Number(quantityProduct),
     });
   }, [props, quantityProduct, sizeProduct]);
 

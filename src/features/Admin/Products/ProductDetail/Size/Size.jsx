@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import listSize from "../../../../../data/size.json";
 
@@ -12,13 +12,32 @@ function Size(props) {
   const { size } = props;
 
   const [sizeProduct, setsizeProduct] = useState({
-    value: size.size,
+    _id: size._id,
     label: size.size,
+    value: size.size,
+    quantity: size.quantity,
+    status: size.status,
+    color: size.color._id,
   });
 
   const handleSelectSizeProduct = (newValue) => {
-    setsizeProduct(newValue);
+    setsizeProduct({
+      ...sizeProduct,
+      value: newValue.value,
+      label: newValue.label,
+    });
   };
+
+  const handleChangeQuantityProduct = (event) => {
+    setsizeProduct({
+      ...sizeProduct,
+      quantity: Number(event.target.value),
+    });
+  };
+
+  useEffect(() => {
+    props.sendSizeAndQuantity(sizeProduct);
+  }, [props, sizeProduct]);
 
   return (
     <div className="admin-productDetail-product-infor-size-quantity">
@@ -36,8 +55,10 @@ function Size(props) {
           variant="outlined"
           size="small"
           fullWidth
+          type="number"
           label="Số Lượng"
-          value={size.quantity}
+          value={sizeProduct.quantity}
+          onChange={handleChangeQuantityProduct}
         />
       </div>
       <div className="admin-productDetail-product-infor-size-delete">
