@@ -11,6 +11,7 @@ import typeProduct from "../../../../data/short_long.json";
 import useProductDetail from "../../../../hooks/useProductDetail";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
+import AddColor from "./AddColor/AddColor";
 import Color from "./Color/Color";
 import "./ProductDetail.scss";
 
@@ -21,11 +22,13 @@ function ProductDetail(props) {
     params: { productId },
   } = useRouteMatch();
 
+  const [listColor_add, setListColor_add] = useState([]);
   const [discount_temp, setDiscount_temp] = useState([]);
   let listDiscount = [];
   let listColorDetail = [];
-
+  const [listColorDetailAdd, setListColorDetailAdd] = useState([]);
   const { product, loading, colorDetails } = useProductDetail(productId);
+  const [colorDetails_temp, setColorDetails_temp] = useState([]);
   const [productEdit, setProductEdit] = useState(() => {
     const product_temp = product;
     return product_temp;
@@ -63,6 +66,10 @@ function ProductDetail(props) {
   useEffect(() => {
     setProductEdit(product);
   }, [product]);
+
+  useEffect(() => {
+    setColorDetails_temp(colorDetails);
+  }, [colorDetails]);
 
   useEffect(() => {
     (async () => {
@@ -172,6 +179,21 @@ function ProductDetail(props) {
     });
   };
 
+  const handleAddColor = () => {
+    setListColor_add(
+      listColor_add.concat(
+        <AddColor
+          key={listColor_add.length}
+          id={Math.floor(Math.random() * 1000 + 1)}
+          sendColorAndProductDetails={
+            handleReceiveColorAndProductDetailsByAddColor
+          }
+          sendColorWantDelete={handleReceiveColorWantDeleteByAddColor}
+        />
+      )
+    );
+  };
+
   const handleReceiveColorAndProductDetails = (value) => {
     if (listColorDetail.length < 1) {
       listColorDetail.push(value);
@@ -186,27 +208,68 @@ function ProductDetail(props) {
     }
   };
 
+  const handleReceiveColorAndProductDetailsByAddColor = (value) => {
+    if (listColorDetailAdd.length < 1) {
+      setListColorDetailAdd([value]);
+    } else {
+      const index = listColorDetailAdd.findIndex(
+        (x) => x.color === value.color
+      );
+      if (index > -1) {
+        setListColorDetailAdd([listColorDetailAdd.splice(index, 1)]);
+        setListColorDetailAdd([...listColorDetailAdd, value]);
+      } else {
+        setListColorDetailAdd([...listColorDetailAdd, value]);
+      }
+    }
+  };
+
+  const handleReceiveColorWantDelete = (value) => {
+    var result = colorDetails_temp.map((element) =>
+      Object.keys(element)[0] === Object.keys(value)[0]
+        ? {
+            deleted: Object.values(element)[0].map((el) =>
+              el.color.color === Object.keys(value)[0]
+                ? { ...el, status: "DELETE" }
+                : el
+            ),
+          }
+        : element
+    );
+    setColorDetails_temp(result);
+  };
+
+  const handleReceiveColorWantDeleteByAddColor = ({ colorProduct, id }) => {
+    const index = listColor_add.findIndex((x) => x.props.id === id);
+    setListColor_add(listColor_add.splice(index, 1));
+
+    const index2 = listColorDetailAdd.findIndex(
+      (x) => x.color === colorProduct._id
+    );
+    setListColorDetailAdd(listColorDetailAdd.splice(index2, 1));
+  };
+
   const handleUpdateProduct = () => {
-    console.log(listColorDetail);
-    // (async () => {
-    //   const fd = new FormData();
+    const arr = [...listColorDetail, ...listColorDetailAdd];
+    (async () => {
+      const fd = new FormData();
 
-    //   fd.append("productDetails", JSON.stringify(listColorDetail));
-    //   fd.append("product", JSON.stringify(productEdit));
-    //   listColorDetail.forEach((element) => {
-    //     fd.append(element.color, element.image);
-    //   });
+      fd.append("productDetails", JSON.stringify(arr));
+      fd.append("product", JSON.stringify(productEdit));
+      arr.forEach((element) => {
+        fd.append(element.color, element.image);
+      });
 
-    //   try {
-    //     const response = await adminAPI.updateProduct({
-    //       id: productEdit._id,
-    //       fd,
-    //     });
-    //     console.log(response);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })();
+      try {
+        const response = await adminAPI.updateProduct({
+          id: productEdit._id,
+          fd,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
@@ -310,14 +373,14 @@ function ProductDetail(props) {
               </button>
               <button
                 className="admin-orderDetail-button-btnAddColor"
-                onClick={handleUpdateProduct}
+                onClick={handleAddColor}
               >
                 THÊM MÀU
               </button>
             </div>
           </div>
           <div className="admin-orderDetail-content-body-right">
-            {colorDetails.map((item, index) => {
+            {colorDetails_temp.map((item, index) => {
               return (
                 <Color
                   key={index}
@@ -325,9 +388,11 @@ function ProductDetail(props) {
                   sendColorAndProductDetails={
                     handleReceiveColorAndProductDetails
                   }
+                  sendColorWantDelete={handleReceiveColorWantDelete}
                 />
               );
             })}
+            {listColor_add}
           </div>
         </div>
       </div>

@@ -83,11 +83,6 @@ function Color(props) {
   };
 
   useEffect(() => {
-    // props.sendColorAndSize({
-    //   image: image,
-    //   color: colorProduct._id,
-    //   details: listSizeQuantityProduct,
-    // });
     props.sendColorAndSize({
       colorDetails: {
         color: colorProduct._id,

@@ -11,9 +11,10 @@ Color.propTypes = {
 function Color(props) {
   const { color } = props;
 
-  let listProductDetail = [];
   let a = [];
+  let listProductDetail = [];
   const [listProductDetail_add, setListProductDetail_add] = useState([]);
+  const [listDeleteColor, setListDeleteColor] = useState();
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
   const [listSize, setListSize] = useState(Object.values(color)[0]);
@@ -110,7 +111,20 @@ function Color(props) {
     setListSize(result);
   };
 
+  const handleDeleteColor = () => {
+    setSend(true);
+    var result = listProductDetail.map((el) => ({ ...el, status: "DELETE" }));
+    setListDeleteColor(result);
+    props.sendColorWantDelete(color);
+  };
+
   useEffect(() => {
+    if (listDeleteColor) {
+      listProductDetail.splice(0, listProductDetail.length);
+      listDeleteColor.forEach((element) => {
+        listProductDetail.push(element);
+      });
+    }
     const arr = [...listProductDetail, ...listProductDetail_add];
 
     arr.forEach((element) => {
@@ -136,10 +150,23 @@ function Color(props) {
       });
       setSend(false);
     }
-  }, [a, color, image, listProductDetail, listProductDetail_add, props, send]);
+  }, [
+    a,
+    color,
+    image,
+    listDeleteColor,
+    listProductDetail,
+    listProductDetail_add,
+    props,
+    send,
+  ]);
 
   return (
-    <div className="admin-productDetail-product">
+    <div
+      className={`${"admin-productDetail-product"} ${
+        Object.keys(color)[0] === "deleted" ? "hidden-color" : ""
+      }`}
+    >
       <div className="admin-productDetail-product-image">
         <div className="image-product">
           <img src={imagePreview ?? Object.values(color)[0][0].image} alt="" />
@@ -180,7 +207,7 @@ function Color(props) {
         </div>
       </div>
       <div className="admin-productDetail-product-button">
-        <button>XÓA</button>
+        <button onClick={handleDeleteColor}>XÓA</button>
       </div>
     </div>
   );
