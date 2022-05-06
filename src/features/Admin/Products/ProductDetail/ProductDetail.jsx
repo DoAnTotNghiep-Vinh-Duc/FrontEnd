@@ -2,6 +2,7 @@ import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
 import discountAPI from "../../../../api/discountAPI";
 import collar_female from "../../../../data/collar_female.json";
@@ -15,6 +16,7 @@ import AddColor from "./AddColor/AddColor";
 import Color from "./Color/Color";
 import "./ProductDetail.scss";
 
+toast.configure();
 ProductDetail.propTypes = {};
 
 function ProductDetail(props) {
@@ -33,35 +35,10 @@ function ProductDetail(props) {
     const product_temp = product;
     return product_temp;
   });
-  const [genderProduct, setGenderProduct] = useState({
-    _id: "62296d1b2ce44107de398a91",
-    value: "nam",
-    label: "Nam",
-  });
-  const [type, setType] = useState({
-    _id: "62296d1b2ce44107de398a93",
-    value: "tay ngắn",
-    label: "Tay ngắn",
-  });
-  const [collarProduct, setCollarProduct] = useState({
-    _id: "62296d1b2ce44107de398a95",
-    value: "cổ tròn",
-    label: "Cổ tròn",
-  });
-
-  const [discountProduct, setDiscountProduct] = useState({
-    element: {
-      createdAt: "2021-09-02T16:29:38.000Z",
-      description: "Mặc định",
-      endDate: "2122-05-22T17:44:24.000Z",
-      nameDiscount: "Mặc định",
-      percentDiscount: 0,
-      startDate: "1990-03-20T09:19:34.000Z",
-      _id: "62599849f8f6be052f0a901d",
-    },
-    label: "Mặc định",
-    value: "62599849f8f6be052f0a901d",
-  });
+  const [genderProduct, setGenderProduct] = useState({});
+  const [type, setType] = useState({});
+  const [collarProduct, setCollarProduct] = useState({});
+  const [discountProduct, setDiscountProduct] = useState({});
 
   useEffect(() => {
     setProductEdit(product);
@@ -87,7 +64,7 @@ function ProductDetail(props) {
   discount_temp.forEach((element) => {
     listDiscount.push({
       element,
-      label: element.nameDiscount,
+      label: `${element.nameDiscount} - ${element.percentDiscount * 100}%`,
       value: element._id,
     });
   });
@@ -265,7 +242,13 @@ function ProductDetail(props) {
           id: productEdit._id,
           fd,
         });
-        console.log(response);
+        if (response.status === 204) {
+          toast.success("Cập nhập sản phẩm thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "colored",
+          });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -301,7 +284,7 @@ function ProductDetail(props) {
                     <Select
                       fullWidth
                       options={gender}
-                      defaultValue={genderProduct}
+                      value={genderProduct}
                       onChange={handleSelectGenderProduct}
                     />
                   </div>
@@ -309,7 +292,7 @@ function ProductDetail(props) {
                     <Select
                       fullWidth
                       options={typeProduct}
-                      defaultValue={type}
+                      value={type}
                       onChange={handleSelectTypeProduct}
                     />
                   </div>
@@ -321,7 +304,7 @@ function ProductDetail(props) {
                           ? collar_male
                           : collar_female
                       }
-                      defaultValue={collarProduct}
+                      value={collarProduct}
                       onChange={handleSelectCollarProduct}
                     />
                   </div>
@@ -334,7 +317,7 @@ function ProductDetail(props) {
                     <Select
                       fullWidth
                       options={listDiscount}
-                      defaultValue={discountProduct}
+                      value={discountProduct}
                       onChange={handleSelectDiscount}
                     />
                   </div>
