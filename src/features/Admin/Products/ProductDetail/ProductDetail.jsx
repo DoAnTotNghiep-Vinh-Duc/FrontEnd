@@ -21,7 +21,6 @@ function ProductDetail(props) {
     params: { productId },
   } = useRouteMatch();
 
-  const [send, setSend] = useState(false);
   const [discount_temp, setDiscount_temp] = useState([]);
   let listDiscount = [];
   let listColorDetail = [];
@@ -188,25 +187,26 @@ function ProductDetail(props) {
   };
 
   const handleUpdateProduct = () => {
-    (async () => {
-      const fd = new FormData();
+    console.log(listColorDetail);
+    // (async () => {
+    //   const fd = new FormData();
 
-      fd.append("productDetails", JSON.stringify(listColorDetail));
-      fd.append("product", JSON.stringify(productEdit));
-      listColorDetail.forEach((element) => {
-        fd.append(element.color, element.image);
-      });
+    //   fd.append("productDetails", JSON.stringify(listColorDetail));
+    //   fd.append("product", JSON.stringify(productEdit));
+    //   listColorDetail.forEach((element) => {
+    //     fd.append(element.color, element.image);
+    //   });
 
-      try {
-        const response = await adminAPI.updateProduct({
-          id: productEdit._id,
-          fd,
-        });
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    //   try {
+    //     const response = await adminAPI.updateProduct({
+    //       id: productEdit._id,
+    //       fd,
+    //     });
+    //     console.log(response);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })();
   };
 
   return (
@@ -302,8 +302,17 @@ function ProductDetail(props) {
               </div>
             </div>
             <div className="admin-orderDetail-button">
-              <button onClick={handleUpdateProduct}>
+              <button
+                className="admin-orderDetail-button-btnUpdate"
+                onClick={handleUpdateProduct}
+              >
                 LƯU THÔNG TIN SẢN PHẨM
+              </button>
+              <button
+                className="admin-orderDetail-button-btnAddColor"
+                onClick={handleUpdateProduct}
+              >
+                THÊM MÀU
               </button>
             </div>
           </div>

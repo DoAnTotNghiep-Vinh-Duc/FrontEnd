@@ -1,6 +1,7 @@
 import TextField from "@material-ui/core/TextField";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import AddSize from "../AddSize/AddSize";
 import Size from "../Size/Size";
 
 Color.propTypes = {
@@ -12,9 +13,30 @@ function Color(props) {
 
   let listProductDetail = [];
   let a = [];
+  const [listProductDetail_add, setListProductDetail_add] = useState([]);
   const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState();
+  const [listSize, setListSize] = useState(Object.values(color)[0]);
+  const [listSize_temp, setListSize_temp] = useState([]);
   const [send, setSend] = useState(false);
+
+  useEffect(() => {
+    setListSize(Object.values(color)[0]);
+  }, [color]);
+
+  const handleAddSize = () => {
+    setListSize_temp(
+      listSize_temp.concat(
+        <AddSize
+          key={listSize_temp.length}
+          color={Object.values(color)[0][0].color._id}
+          gen={Math.floor(Math.random() * 1000 + 1)}
+          sendSizeAndQuantity={handleReceiveSizeAndQuantityByAddSize}
+          sendSizeDelete={handleReceiveSizeWantToDeleteByAddSize}
+        />
+      )
+    );
+  };
 
   const handleReceiveSizeAndQuantity = (value) => {
     setSend(true);
@@ -27,6 +49,23 @@ function Color(props) {
         listProductDetail.push(value);
       } else {
         listProductDetail.push(value);
+      }
+    }
+  };
+
+  const handleReceiveSizeAndQuantityByAddSize = (value) => {
+    setSend(true);
+    if (listProductDetail_add.length < 1) {
+      setListProductDetail_add([value]);
+    } else {
+      const index = listProductDetail_add.findIndex(
+        (x) => x.value === value.value
+      );
+      if (index > -1) {
+        setListProductDetail_add([listProductDetail_add.splice(index, 1)]);
+        setListProductDetail_add([...listProductDetail_add, value]);
+      } else {
+        setListProductDetail_add([...listProductDetail_add, value]);
       }
     }
   };
@@ -54,8 +93,27 @@ function Color(props) {
     }
   }, [image]);
 
+  const handleReceiveSizeWantToDeleteByAddSize = (value) => {
+    const index = listSize_temp.findIndex((x) => x.props.gen === value.gen);
+    setListSize_temp(listSize_temp.splice(index, 1));
+
+    const index2 = listProductDetail_add.findIndex(
+      (x) => x.value === value.value
+    );
+    setListProductDetail_add(listProductDetail_add.splice(index2, 1));
+  };
+
+  const handleReceiveSizeWantDelete = (value) => {
+    var result = listSize.map((el) =>
+      el._id === value._id ? { ...el, status: "DELETE" } : el
+    );
+    setListSize(result);
+  };
+
   useEffect(() => {
-    listProductDetail.forEach((element) => {
+    const arr = [...listProductDetail, ...listProductDetail_add];
+
+    arr.forEach((element) => {
       a.push({
         _id: element._id,
         size: element.value,
@@ -65,20 +123,20 @@ function Color(props) {
     });
     if (image) {
       props.sendColorAndProductDetails({
-        color: listProductDetail[0].color,
+        color: arr[0].color,
         listProductDetail: a,
         image: image,
       });
       setSend(false);
     } else {
       props.sendColorAndProductDetails({
-        color: listProductDetail[0].color,
+        color: arr[0].color,
         listProductDetail: a,
         image: Object.values(color)[0][0].image,
       });
       setSend(false);
     }
-  }, [a, color, image, listProductDetail, props]);
+  }, [a, color, image, listProductDetail, listProductDetail_add, props, send]);
 
   return (
     <div className="admin-productDetail-product">
@@ -104,19 +162,21 @@ function Color(props) {
             />
           </div>
           <div className="admin-productDetail-product-infor-btn">
-            <button>Thêm size</button>
+            <button onClick={handleAddSize}>Thêm size</button>
           </div>
         </div>
         <div className="admin-productDetail-product-infor-listSize">
-          {Object.values(color)[0].map((item, index) => {
+          {listSize.map((item, index) => {
             return (
               <Size
                 key={index}
                 size={item}
                 sendSizeAndQuantity={handleReceiveSizeAndQuantity}
+                sendSizeWantDelete={handleReceiveSizeWantDelete}
               />
             );
           })}
+          {listSize_temp}
         </div>
       </div>
       <div className="admin-productDetail-product-button">

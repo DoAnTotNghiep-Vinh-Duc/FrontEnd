@@ -1,67 +1,57 @@
 import TextField from "@material-ui/core/TextField";
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import listSize from "../../../../../data/size.json";
+import PropTypes from "prop-types";
 
-Size.propTypes = {
-  size: PropTypes.object,
+AddSize.propTypes = {
+  color: PropTypes.string,
+  gen: PropTypes.number,
 };
 
-function Size(props) {
-  const { size } = props;
+function AddSize(props) {
+  const { color, gen } = props;
 
-  const [sizeProduct, setsizeProduct] = useState({});
-
-  useEffect(() => {
-    setsizeProduct({
-      _id: size._id,
-      label: size.size,
-      value: size.size,
-      quantity: size.quantity,
-      status: size.status,
-      color: size.color._id,
-    });
-  }, [size._id, size.color._id, size.quantity, size.size, size.status]);
+  const [sizeProduct, setSizeProduct] = useState({
+    _id: undefined,
+    label: "S",
+    value: "S",
+    quantity: 0,
+    status: "ACTIVE",
+    color: color,
+    gen: gen,
+  });
 
   const handleSelectSizeProduct = (newValue) => {
-    setsizeProduct({
+    setSizeProduct({
       ...sizeProduct,
-      value: newValue.value,
       label: newValue.label,
+      value: newValue.value,
     });
   };
 
   const handleChangeQuantityProduct = (event) => {
-    setsizeProduct({
+    setSizeProduct({
       ...sizeProduct,
       quantity: Number(event.target.value),
     });
-  };
-
-  const handleDeleteSize = () => {
-    setsizeProduct({
-      ...sizeProduct,
-      status: "DELETE",
-    });
-    props.sendSizeWantDelete(sizeProduct);
   };
 
   useEffect(() => {
     props.sendSizeAndQuantity(sizeProduct);
   }, [props, sizeProduct]);
 
+  const handleDeleteSize = () => {
+    props.sendSizeDelete(sizeProduct);
+  };
+
   return (
-    <div
-      className={`${"admin-productDetail-product-infor-size-quantity"} ${
-        sizeProduct.status === "DELETE" ? "hidden" : ""
-      }`}
-    >
+    <div className="admin-productDetail-product-infor-size-quantity">
       <div className="admin-productDetail-product-infor-size">
         <Select
           fullWidth
           options={listSize}
-          value={sizeProduct}
+          defaultValue={sizeProduct}
           onChange={handleSelectSizeProduct}
         />
       </div>
@@ -84,4 +74,4 @@ function Size(props) {
   );
 }
 
-export default Size;
+export default AddSize;
