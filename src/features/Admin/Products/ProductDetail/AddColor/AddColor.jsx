@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import colorAPI from "../../../../../api/colorAPI";
 import AddSize from "../AddSize/AddSize";
-import PropTypes from "prop-types";
 
 AddColor.propTypes = {
   id: PropTypes.number,

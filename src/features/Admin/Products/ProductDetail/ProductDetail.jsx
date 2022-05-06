@@ -250,8 +250,8 @@ function ProductDetail(props) {
   };
 
   const handleUpdateProduct = () => {
-    const arr = [...listColorDetail, ...listColorDetailAdd];
     (async () => {
+      const arr = [...listColorDetail, ...listColorDetailAdd];
       const fd = new FormData();
 
       fd.append("productDetails", JSON.stringify(arr));

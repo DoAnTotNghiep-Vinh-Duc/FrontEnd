@@ -67,7 +67,7 @@ const adminAPI = {
 
   updateProduct(value) {
     const url = `/product/${value.id}`;
-    return axiosClient.put(url, { fd: value.fd });
+    return axiosClient.put(url, value.fd);
   },
 
   testImage(image) {
