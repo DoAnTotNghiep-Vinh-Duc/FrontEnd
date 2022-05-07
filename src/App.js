@@ -28,7 +28,7 @@ function App() {
 
         <Route path="/admin" component={AdminPage}></Route>
 
-        <Route path="/successVerify" component={SuccessVerify} exact></Route>
+        <Route path="/verifyAccount" component={SuccessVerify}></Route>
 
         <Route path="/forgotPassword" component={ForgotPassword} exact></Route>
         <Route

@@ -44,7 +44,7 @@ function AddProduct(props) {
     label: "Cổ tròn",
   });
   const [discount, setDiscount] = useState({
-    label: "Mặc định",
+    label: "Mặc định - 0%",
     value: 0,
     _id: "62599849f8f6be052f0a901d",
   });
@@ -58,7 +58,6 @@ function AddProduct(props) {
 
   let listSupplier = [];
   let listDiscount = [];
-  let listProductDetail = [];
 
   useEffect(() => {
     (async () => {
@@ -98,7 +97,7 @@ function AddProduct(props) {
     listDiscount.push({
       _id: element._id,
       value: element.percentDiscount,
-      label: element.nameDiscount,
+      label: `${element.nameDiscount} - ${element.percentDiscount * 100}%`,
     });
   });
 
@@ -202,7 +201,6 @@ function AddProduct(props) {
           fd.append(element.color, element.image);
         });
 
-        console.log(fd);
         const response = await adminAPI.addProduct(fd);
 
         if (response.status === 201) {

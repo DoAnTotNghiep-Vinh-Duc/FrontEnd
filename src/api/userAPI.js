@@ -14,6 +14,11 @@ const userAPI = {
     return axiosClient.post(url, refreshToken);
   },
 
+  verifyAccountWeb(verifyCode) {
+    const url = "/auth/verify-account-web";
+    return axiosClient.post(url, verifyCode);
+  },
+
   getInformation() {
     const url = "/information";
     return axiosClient.get(url);
