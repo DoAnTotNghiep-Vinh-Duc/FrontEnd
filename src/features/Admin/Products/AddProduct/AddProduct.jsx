@@ -4,16 +4,16 @@ import { useHistory } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
-import supplierAPI from "../../../../api/supplierAPI";
 import discountAPI from "../../../../api/discountAPI";
+import supplierAPI from "../../../../api/supplierAPI";
 import collar_female from "../../../../data/collar_female.json";
 import collar_male from "../../../../data/collar_male.json";
 import gender from "../../../../data/gender.json";
 import short_long from "../../../../data/short_long.json";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
+import AddColor from "./AddColor/AddColor";
 import "./AddProduct.scss";
-import Color from "./Color/Color";
 
 toast.configure();
 AddProduct.propTypes = {};
@@ -49,8 +49,7 @@ function AddProduct(props) {
     _id: "62599849f8f6be052f0a901d",
   });
   const [price, setPrice] = useState(0);
-  const [listColor, setListColor] = useState([]);
-
+  const [listColorDetailAdd, setListColorDetailAdd] = useState([]);
   const [colorComponent, setColorComponent] = useState([]);
   const [listSupplier_temp, setListSupplier_temp] = useState([]);
   const [listDiscount_temp, setListDiscount_temp] = useState([]);
@@ -104,9 +103,13 @@ function AddProduct(props) {
   const handleClickAddColor = (event) => {
     setColorComponent(
       colorComponent.concat(
-        <Color
+        <AddColor
           key={colorComponent.length}
-          sendColorAndSize={handleReceiveColorAndSize}
+          id={Math.floor(Math.random() * 1000 + 1)}
+          sendColorAndProductDetails={
+            handleReceiveColorAndProductDetailsByAddColor
+          }
+          sendColorWantDelete={handleReceiveColorWantDeleteByAddColor}
         />
       )
     );
@@ -137,11 +140,29 @@ function AddProduct(props) {
     setPrice(event.target.value);
   };
 
-  const [listImage, setListImage] = useState([]);
+  const handleReceiveColorAndProductDetailsByAddColor = (value) => {
+    if (listColorDetailAdd.length < 1) {
+      setListColorDetailAdd([value]);
+    } else {
+      const index = listColorDetailAdd.findIndex(
+        (x) => x.color === value.color
+      );
+      if (index > -1) {
+        setListColorDetailAdd([listColorDetailAdd.splice(index, 1)]);
+        setListColorDetailAdd([...listColorDetailAdd, value]);
+      } else {
+        setListColorDetailAdd([...listColorDetailAdd, value]);
+      }
+    }
+  };
+  const handleReceiveColorWantDeleteByAddColor = ({ colorProduct, id }) => {
+    const index = colorComponent.findIndex((x) => x.props.id === id);
+    setColorComponent(colorComponent.splice(index, 1));
 
-  const handleReceiveColorAndSize = (value) => {
-    setListImage([...listImage, value.image]);
-    setListColor([...listColor, value.details]);
+    const index2 = listColorDetailAdd.findIndex(
+      (x) => x.color === colorProduct._id
+    );
+    setListColorDetailAdd(listColorDetailAdd.splice(index2, 1));
   };
 
   useEffect(() => {
@@ -154,7 +175,7 @@ function AddProduct(props) {
       !collarProduct ||
       !discount ||
       !price ||
-      !listColor.length
+      !listColorDetailAdd.length
     ) {
       setBtnAddProduct(false);
     } else {
@@ -165,7 +186,7 @@ function AddProduct(props) {
     description,
     discount,
     genderProduct,
-    listColor.length,
+    listColorDetailAdd.length,
     name,
     price,
     supplier,
@@ -173,47 +194,41 @@ function AddProduct(props) {
   ]);
 
   const handleClickAddProduct = () => {
-    console.log(listColor);
-    // (async () => {
-    //   try {
-    //     const fd = new FormData();
-
-    //     fd.append(
-    //       "product",
-    //       JSON.stringify({
-    //         supplier: supplier._id,
-    //         discount: discount._id,
-    //         name: name,
-    //         description: description,
-    //         typeProducts: [
-    //           genderProduct._id,
-    //           typeProduct._id,
-    //           collarProduct._id,
-    //         ],
-    //         price: Number(price),
-    //       })
-    //     );
-
-    //     fd.append("productDetails", JSON.stringify(listColor));
-
-    //     listImage.forEach((element) => {
-    //       fd.append(element.color, element.image);
-    //     });
-
-    //     const response = await adminAPI.addProduct(fd);
-
-    //     if (response.status === 201) {
-    //       toast.success("Thêm sản phẩm mới thành công", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //         autoClose: 2000,
-    //         theme: "dark",
-    //       });
-    //       History.push("/admin/products");
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })();
+    (async () => {
+      try {
+        const fd = new FormData();
+        fd.append(
+          "product",
+          JSON.stringify({
+            supplier: supplier._id,
+            discount: discount._id,
+            name: name,
+            description: description,
+            typeProducts: [
+              genderProduct._id,
+              typeProduct._id,
+              collarProduct._id,
+            ],
+            price: Number(price),
+          })
+        );
+        fd.append("productDetails", JSON.stringify(listColorDetailAdd));
+        listColorDetailAdd.forEach((element) => {
+          fd.append(element.color, element.image);
+        });
+        const response = await adminAPI.addProduct(fd);
+        if (response.status === 201) {
+          toast.success("Thêm sản phẩm mới thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push("/admin/products");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
