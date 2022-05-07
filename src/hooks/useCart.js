@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import cartAPI from "../api/cartAPI";
 
@@ -7,8 +8,10 @@ export default function useCart() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await cartAPI.getCartByAccountId();
-        setCart(response.data.data);
+        if (Cookies.get("token")) {
+          const response = await cartAPI.getCartByAccountId();
+          setCart(response.data.data);
+        }
       } catch (error) {
         console.log(error);
       }

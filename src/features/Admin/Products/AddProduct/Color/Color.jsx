@@ -79,23 +79,34 @@ function Color(props) {
   }, [image]);
 
   const handleReceiveSizeAndQuantity = (value) => {
+    // console.log(value);
     setListSizeQuantityProduct([...listSizeQuantityProduct, value]);
+    // setSend(true);
+    // if (listSizeQuantityProduct.length < 1) {
+    //   setListSizeQuantityProduct([value]);
+    // } else {
+    //   const index = listSizeQuantityProduct.findIndex(
+    //     (x) => x.value === value.value
+    //   );
+    //   if (index > -1) {
+    //     setListSizeQuantityProduct([listSizeQuantityProduct.splice(index, 1)]);
+    //     setListSizeQuantityProduct([...listSizeQuantityProduct, value]);
+    //   } else {
+    //     setListSizeQuantityProduct([...listSizeQuantityProduct, value]);
+    //   }
+    // }
   };
 
   useEffect(() => {
     props.sendColorAndSize({
-      colorDetails: {
-        color: colorProduct._id,
-        details: listSizeQuantityProduct,
-      },
       image: { image: image, color: colorProduct._id },
       details: {
         image: image,
         color: colorProduct._id,
-        details: listSizeQuantityProduct,
+        listProductDetail: listSizeQuantityProduct,
       },
     });
-  }, [colorProduct, image, listSizeQuantityProduct, props]);
+  }, [colorProduct._id, image, listSizeQuantityProduct, props]);
 
   return (
     <div className="admin-addproduct-color">
