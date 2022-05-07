@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import adminAPI from "../../../api/adminAPI";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
+import Customer from "./Customer/Customer";
 import "./Customers.scss";
+import Pagination from "@material-ui/lab/Pagination";
 
 Customers.propTypes = {};
 
 function Customers(props) {
+  const [customers, setCustomers] = useState([]);
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 10,
+  });
+  const [pagination, setPagination] = useState({
+    limit: 10,
+    page: 1,
+  });
+
+  const handlePaginationChange = (event, page) => {
+    setFilters((prev) => ({
+      ...prev,
+      _page: page,
+    }));
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.getAllCustomer({
+          _page: filters._page,
+          _limit: filters._limit,
+        });
+        setCustomers(response.data);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [filters]);
+
   return (
     <div className="admin-customers">
       <NavBars />
@@ -44,220 +79,18 @@ function Customers(props) {
                 <div className="admin-customers-content-body-container-body-header-action"></div>
               </div>
               <div className="admin-customers-content-body-container-body-customers">
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
-                <div className="admin-customers-content-body-container-body-customers-customer">
-                  <div className="admin-customers-content-body-container-body-customers-customer-seri">
-                    #32641
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-customer">
-                    Đỗ Đạt Đức
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-phone">
-                    0359806602
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-quantityOrder">
-                    15
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-address">
-                    Số nhà 25, Khu phố 3A, Phường Thới Hòa, Thị Xã Bến Cát, Tỉnh
-                    Bình Dương
-                  </div>
-                  <div className="admin-customers-content-body-container-body-customers-customer-action">
-                    <i className="bi bi-eye"></i>
-                  </div>
-                </div>
+                {customers.map((customer, index) => {
+                  return <Customer key={index} customer={customer} />;
+                })}
               </div>
             </div>
             <div className="admin-customers-content-body-container-footer">
-              pagination
+              <Pagination
+                color="primary"
+                count={Math.ceil(pagination.total / pagination.limit)}
+                page={pagination.page}
+                onChange={handlePaginationChange}
+              />
             </div>
           </div>
         </div>

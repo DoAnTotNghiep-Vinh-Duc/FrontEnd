@@ -70,7 +70,7 @@ function SignUp(props) {
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
       <h1>Tạo tài khoản</h1>
-      <InputField name="fullname" label="Họ Tên" form={form} />
+      <InputField name="fullname" label="Tên hiển thị" form={form} />
       <InputField name="email" label="Email" form={form} />
       <PasswordField name="password" label="Mật khẩu" form={form} />
       <PasswordField

@@ -1,7 +1,6 @@
+import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
 import adminAPI from "../../../../../api/adminAPI";
-import PhiHanhGia from "../../../../../assets/product/PhiHanhGia-blue.jpg";
-import Pagination from "@material-ui/lab/Pagination";
 import "./Products.scss";
 
 Products.propTypes = {};
@@ -10,10 +9,10 @@ function Products(props) {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
-    _limit: 2,
+    _limit: 5,
   });
   const [pagination, setPagination] = useState({
-    limit: 1,
+    limit: 5,
     page: 2,
   });
 

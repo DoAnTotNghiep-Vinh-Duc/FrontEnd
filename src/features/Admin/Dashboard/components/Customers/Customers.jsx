@@ -9,10 +9,10 @@ function Customers(props) {
   const [customers, setCustomers] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
-    _limit: 1,
+    _limit: 5,
   });
   const [pagination, setPagination] = useState({
-    limit: 1,
+    limit: 5,
     page: 1,
   });
 

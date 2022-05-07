@@ -15,10 +15,10 @@ function Products(props) {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
-    _limit: 2,
+    _limit: 5,
   });
   const [pagination, setPagination] = useState({
-    limit: 2,
+    limit: 5,
     page: 1,
   });
 

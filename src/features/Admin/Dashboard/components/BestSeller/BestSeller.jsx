@@ -24,6 +24,7 @@ function BestSeller(props) {
         Sản phẩm bán chạy
       </div>
       <div className="admin-content-body-topProducts-products">
+        {/* {bestSeller.length ? "" : ""} */}
         {bestSeller.slice(0, 6).map((product, index) => {
           return (
             <div

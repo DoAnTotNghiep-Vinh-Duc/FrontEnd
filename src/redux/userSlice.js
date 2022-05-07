@@ -4,6 +4,7 @@ import userAPI from "../api/userAPI";
 
 export const signIn = createAsyncThunk("auth/signin", async (payload) => {
   const response = await userAPI.signInWithWebAccount(payload);
+  console.log(response);
 
   localStorage.setItem("account", JSON.stringify(response.data.account));
   Cookies.set("token", response.data.accessToken);

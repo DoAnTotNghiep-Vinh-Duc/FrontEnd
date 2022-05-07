@@ -19,7 +19,7 @@ function UserInformation(props) {
   const [userInformation, setUserInformation] = useState({});
 
   const handleClickBack = () => {
-    History.goBack();
+    History.push("/");
   };
 
   useEffect(() => {
