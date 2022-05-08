@@ -109,6 +109,10 @@ const adminAPI = {
       },
     };
   },
+  getOrderById(orderId) {
+    const url = `/order/${orderId}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default adminAPI;

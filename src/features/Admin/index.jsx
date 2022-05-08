@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Customers from "./Customers/Customers";
 import Dashboard from "./Dashboard/Dashboard";
+import OrderDetail from "./Orders/OrderDetail/OrderDetail";
 import Orders from "./Orders/Orders";
 import AddProduct from "./Products/AddProduct/AddProduct";
 import ProductDetail from "./Products/ProductDetail/ProductDetail";
@@ -26,6 +27,9 @@ function AdminPage(props) {
         </Route>
         <Route path={`${match.url}/orders`} exact>
           <Orders />
+        </Route>
+        <Route path={`${match.url}/orders/:orderId`}>
+          <OrderDetail />
         </Route>
         <Route path={`${match.url}/customers`} exact>
           <Customers />

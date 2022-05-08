@@ -1,12 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 Order.propTypes = {
   order: PropTypes.object,
 };
 
 function Order({ order }) {
+  const history = useHistory();
+
+  const handleClickViewDetail = () => {
+    history.push(`${history.location.pathname}/${order._id}`);
+  };
+
   return (
     <div className="admin-orders-content-body-container-body-orders-order">
       <div className="admin-orders-content-body-container-body-orders-order-seri">
@@ -42,7 +49,7 @@ function Order({ order }) {
         </div>
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-action">
-        <i className="bi bi-eye"></i>
+        <i className="bi bi-eye" onClick={handleClickViewDetail}></i>
       </div>
     </div>
   );
