@@ -54,6 +54,8 @@ function AddProduct(props) {
   const [listSupplier_temp, setListSupplier_temp] = useState([]);
   const [listDiscount_temp, setListDiscount_temp] = useState([]);
   const [btnAddProduct, setBtnAddProduct] = useState(false);
+  const [sameSize, setSameSize] = useState(true);
+  const [error, setError] = useState("");
 
   let listSupplier = [];
   let listDiscount = [];
@@ -144,9 +146,7 @@ function AddProduct(props) {
     if (listColorDetailAdd.length < 1) {
       setListColorDetailAdd([value]);
     } else {
-      const index = listColorDetailAdd.findIndex(
-        (x) => x.color === value.color
-      );
+      const index = listColorDetailAdd.findIndex((x) => x.gen === value.gen);
       if (index > -1) {
         setListColorDetailAdd([listColorDetailAdd.splice(index, 1)]);
         setListColorDetailAdd([...listColorDetailAdd, value]);
@@ -155,6 +155,7 @@ function AddProduct(props) {
       }
     }
   };
+
   const handleReceiveColorWantDeleteByAddColor = ({ colorProduct, id }) => {
     const index = colorComponent.findIndex((x) => x.props.id === id);
     setColorComponent(colorComponent.splice(index, 1));
@@ -175,7 +176,8 @@ function AddProduct(props) {
       !collarProduct ||
       !discount ||
       !price ||
-      !listColorDetailAdd.length
+      !listColorDetailAdd.length ||
+      !sameSize
     ) {
       setBtnAddProduct(false);
     } else {
@@ -189,9 +191,31 @@ function AddProduct(props) {
     listColorDetailAdd.length,
     name,
     price,
+    sameSize,
     supplier,
     typeProduct,
   ]);
+
+  useEffect(() => {
+    let result = [];
+    let count = 0;
+
+    for (let i = 0; i < listColorDetailAdd.length - 1; ++i) {
+      for (let j = i + 1; j < listColorDetailAdd.length; ++j) {
+        if (listColorDetailAdd[i].color === listColorDetailAdd[j].color) {
+          result.push(listColorDetailAdd[i]);
+          ++count;
+        }
+      }
+    }
+    if (result.length > 0) {
+      setSameSize(false);
+      setError("Trùng màu!");
+    } else {
+      setSameSize(true);
+      setError("");
+    }
+  }, [listColorDetailAdd]);
 
   const handleClickAddProduct = () => {
     (async () => {
@@ -238,7 +262,14 @@ function AddProduct(props) {
         <Header />
         <div className="admin-addproduct-content-body">
           <div className="admin-addproduct-content-body-left">
-            <div className="admin-addproduct-title">THÊM SẢN PHẨM</div>
+            <div className="admin-addproduct-title">
+              THÊM SẢN PHẨM
+              {!sameSize && (
+                <>
+                  <span>{error}</span>
+                </>
+              )}
+            </div>
             <div className="admin-addproduct-body">
               <div className="admin-addproduct-name">
                 <TextField

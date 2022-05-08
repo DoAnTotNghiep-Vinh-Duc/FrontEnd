@@ -125,14 +125,15 @@ function AddColor(props) {
 
     if (listProductDetail_add.length) {
       props.sendColorAndProductDetails({
-        color: listProductDetail_add[0].color,
+        gen: id,
+        color: colorProduct._id,
         listProductDetail: a,
         image:
           image ??
           "https://media.istockphoto.com/vectors/default-image-icon-vector-missing-picture-page-for-website-design-or-vector-id1357365823?k=20&m=1357365823&s=612x612&w=0&h=ZH0MQpeUoSHM3G2AWzc8KkGYRg4uP_kuu0Za8GFxdFc=",
       });
     }
-  }, [a, image, listProductDetail_add, props, send]);
+  }, [a, colorProduct._id, id, image, listProductDetail_add, props]);
 
   return (
     <div className="admin-addproduct-product">
