@@ -42,9 +42,7 @@ function ListFavorite(props) {
             </div>
             <div className="favorite-body">
               {listFavorite.map((product, index) => {
-                return (
-                  <ProductFavorite product={product.listProduct} key={index} />
-                );
+                return <ProductFavorite product={product} key={index} />;
               })}
             </div>
           </>

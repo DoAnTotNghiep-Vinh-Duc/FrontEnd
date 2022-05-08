@@ -32,7 +32,7 @@ function ProductDetailPage(props) {
   const { product, loading, colorDetails } = useProductDetail(productId);
   const { listFavorite } = useFavorite();
 
-  let index = listFavorite.findIndex((x) => x.listProduct._id === productId);
+  let index = listFavorite.findIndex((x) => x._id === productId);
 
   if (loading) {
     return <div>Loading</div>;

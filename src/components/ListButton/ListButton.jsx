@@ -20,9 +20,7 @@ function ListButton(props) {
   const [productSelected, setProductSelected] = useState(product);
 
   const { listFavorite } = useFavorite();
-  let index = listFavorite.findIndex(
-    (x) => x.listProduct._id === productSelected._id
-  );
+  let index = listFavorite.findIndex((x) => x._id === productSelected._id);
 
   const handleClickOpen = () => {
     setProductSelected(product);
