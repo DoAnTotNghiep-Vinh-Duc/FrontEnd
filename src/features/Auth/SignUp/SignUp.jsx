@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import * as yup from "yup";
 import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
+import ReCAPTCHA from "react-google-recaptcha";
 
 toast.configure();
 SignUp.propTypes = {};
@@ -15,7 +16,9 @@ function SignUp(props) {
   const History = useHistory();
   const location = useLocation();
   const [error, setError] = useState("");
-
+  const [token, setToken] = useState("");
+  const reCaptcha = useRef();
+  
   const schema = yup.object().shape({
     fullname: yup.string().required("Vui lòng nhập Họ tên"),
     email: yup
@@ -45,10 +48,16 @@ function SignUp(props) {
   const handleSubmit = (value) => {
     (async () => {
       try {
+        if (!token) {
+          setError("Yoou must verify the captcha");
+          return;
+        }
+        setError("");
         const res = await userAPI.signUpWithWebAccount({
           name: value.fullname,
           email: value.email,
           password: value.password,
+          token,
         });
 
         if (res.status === 201) {
@@ -82,6 +91,14 @@ function SignUp(props) {
       <button className="btn-signin" type="submit">
         Đăng kí
       </button>
+      <div className="form-group">
+                                    <ReCAPTCHA
+                                        ref={reCaptcha}
+                                        sitekey={"6Leq9tcfAAAAAOXGY1PngSBAoQzdtk194DhWzp7A"}
+                                        onChange={token => setToken(token)}
+                                        onExpired={e => setToken("")}
+                                    />
+                                </div>
     </form>
   );
 }
