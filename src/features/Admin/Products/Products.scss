@@ -218,6 +218,81 @@
                                     }
                                 }
                             }
+                            .stop-container {
+                                width: 0;
+                                height: 0;
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                            .stop-continue {
+                                width: 0;
+                                height: 0;
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                        }
+                        .stop {
+                            background-color: #f0f0f0;
+                            position: relative;
+                            overflow: hidden;
+                            .stop-container {
+                                position: absolute;
+                                top: 20%;
+                                left: -3%;
+                                width: 150px;
+                                height: 30px;
+                                background-color: red;
+                                transform: rotate(-40deg);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                opacity: 1;
+                                visibility: visible;
+                            }
+                            .stop-continue {
+                                position: absolute;
+                                top: 50%;
+                                right: 5px;
+                                width: 100px;
+                                height: 30px;
+                                background-color: #4da9ff;
+                                border: 1px solid #4da9ff;
+                                transform: translateY(-50%);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                opacity: 1;
+                                visibility: visible;
+                                &:hover {
+                                    background-color: white;
+                                    color: #4da9ff;
+                                }
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-seri {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-image {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-name {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-stock {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-price {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-category {
+                                opacity: 0.65;
+                            }
+                            .admin-products-content-body-listProducts-body-products-product-action {
+                                opacity: 0.65;
+                            }
                         }
                         .product-notfound {
                             display: flex;

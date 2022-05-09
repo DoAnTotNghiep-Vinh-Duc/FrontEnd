@@ -4,6 +4,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import ContinueProduct from "../ContinueProduct/ContinueProduct";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 
 Product.propTypes = {
@@ -16,13 +17,20 @@ function Product({ product }) {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [openDelete, setOpenDelete] = useState(false);
+  const [openContinue, setOpenContinue] = useState(false);
 
   const handleClickDelete = () => {
     setOpenDelete(true);
   };
-
   const handleCloseDelete = () => {
     setOpenDelete(false);
+  };
+
+  const handleClickContinue = () => {
+    setOpenContinue(true);
+  };
+  const handleCloseContinue = () => {
+    setOpenContinue(false);
   };
 
   const handleClickViewDetail = () => {
@@ -31,7 +39,9 @@ function Product({ product }) {
 
   return (
     <>
-      <div className="admin-products-content-body-listProducts-body-products-product">
+      <div
+        className={`${"admin-products-content-body-listProducts-body-products-product"} ${""}`}
+      >
         <div className="admin-products-content-body-listProducts-body-products-product-seri">
           #{product._id.substring(product._id.length - 5, product._id.length)}
         </div>
@@ -63,7 +73,11 @@ function Product({ product }) {
         </div>
         <div className="admin-products-content-body-listProducts-body-products-product-action">
           <i className="bi bi-eye" onClick={handleClickViewDetail}></i>
-          <i className="bi bi-trash" onClick={handleClickDelete}></i>
+          <i className="bi bi-x-octagon" onClick={handleClickDelete}></i>
+        </div>
+        <div className="stop-container">Dừng bán</div>
+        <div className="stop-continue" onClick={handleClickContinue}>
+          Bán lại
         </div>
       </div>
 
@@ -75,6 +89,18 @@ function Product({ product }) {
       >
         <DeleteProduct
           closeDelete={handleCloseDelete}
+          productId={product._id}
+        />
+      </Dialog>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={openContinue}
+        onClose={handleCloseContinue}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <ContinueProduct
+          closeContinue={handleCloseContinue}
           productId={product._id}
         />
       </Dialog>

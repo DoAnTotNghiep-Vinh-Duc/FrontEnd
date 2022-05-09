@@ -50,7 +50,7 @@ function Customers(props) {
             SỐ SẢN PHẨM
           </div>
           <div className="admin-content-body-customers-body-header-cash">
-            DOANH THU
+            TỔNG
           </div>
         </div>
         <div className="admin-content-body-customers-body-customers">
@@ -67,7 +67,10 @@ function Customers(props) {
                   {customer.totalQuantity}
                 </div>
                 <div className="admin-content-body-customers-body-customers-customer-cash">
-                  {customer.totalPrice}
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(customer.totalPrice)}
                 </div>
               </div>
             );

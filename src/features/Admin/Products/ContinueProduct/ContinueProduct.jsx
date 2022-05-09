@@ -4,14 +4,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import PropTypes from "prop-types";
 import React from "react";
 import { toast } from "react-toastify";
-import adminAPI from "../../../../api/adminAPI";
 
 toast.configure();
-DeleteProduct.propTypes = {
+ContinueProduct.propTypes = {
   productId: PropTypes.string,
 };
 
@@ -21,41 +19,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function DeleteProduct(props) {
+function ContinueProduct(props) {
   const { productId } = props;
   const classes = useStyles();
 
   const handleClose = () => {
-    props.closeDelete(false);
+    props.closeContinue(false);
   };
 
-  const handleDeleteProduct = () => {
-    // (async () => {
-    //   try {
-    //     const response = await adminAPI.deleteProduct(productId);
-    //     if (response.status === 200) {
-    //       toast.success("Xóa sản phẩm thành công", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //         autoClose: 2000,
-    //         theme: "dark",
-    //       });
-    //       props.closeDelete(false);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })();
+  const handleContinueSellProduct = () => {
+    console.log(productId);
+    props.closeContinue(false);
   };
 
   return (
     <>
       <DialogTitle id="responsive-dialog-title">
-        {"Ngưng bán sản phẩm?"}
+        {"Bán lại sản phẩm?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Bạn có muốn chắc chắn ngưng bán sản phẩm này không? Bạn sẽ không thể
-          chỉnh sửa hoặc bán nó tiếp tục nữa một khi bạn ngưng bán!
+          Sản phẩm này hiện tại đang ngừng bán. Bạn có muốn chắc chắn sẽ bán lại
+          sản phẩm này không?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -64,10 +49,9 @@ function DeleteProduct(props) {
         </Button>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           className={classes.button}
-          startIcon={<HighlightOffIcon />}
-          onClick={handleDeleteProduct}
+          onClick={handleContinueSellProduct}
         >
           Xác nhận
         </Button>
@@ -76,4 +60,4 @@ function DeleteProduct(props) {
   );
 }
 
-export default DeleteProduct;
+export default ContinueProduct;
