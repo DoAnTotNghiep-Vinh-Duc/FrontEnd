@@ -20,7 +20,9 @@ function Order({ order }) {
         #{order._id.substring(order._id.length - 5, order._id.length)}
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-customer">
-        {order.name}
+        {order.account.information.name === ""
+          ? order.account.nameDisplay
+          : order.account.information.name}
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-cash">
         {new Intl.NumberFormat("vi-VN", {

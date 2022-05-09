@@ -110,8 +110,16 @@ const adminAPI = {
     };
   },
   getOrderById(orderId) {
-    const url = `/order/${orderId}`;
+    const url = `/order/get-order-by-id/${orderId}`;
     return axiosClient.get(url);
+  },
+  nextStatus(orderId) {
+    const url = `/order/next-status-order/${orderId}`;
+    return axiosClient.put(url);
+  },
+  cancelOrder(orderId) {
+    const url = `/order/cancel-order/${orderId}`;
+    return axiosClient.put(url);
   },
 };
 

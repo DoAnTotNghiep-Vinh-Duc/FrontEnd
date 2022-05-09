@@ -125,12 +125,14 @@
                 .admin-orderDetail-status-body {
                     width: 100%;
                     height: 80%;
+                    overflow: hidden;
                     .admin-orderDetail-status-body-card {
                         width: 100%;
                         height: 80%;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        position: relative;
                         .admin-orderDetail-status-body-card-confirm {
                             width: 8%;
                             height: 80px;
@@ -198,6 +200,51 @@
                                 font-size: 40px;
                             }
                         }
+                        .admin-orderDetail-status-body-card-cancel {
+                            position: absolute;
+                            top: 20%;
+                            left: -4%;
+                            width: 200px;
+                            height: 40px;
+                            background-color: red;
+                            transform: rotate(-40deg);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            opacity: 0;
+                        }
+                    }
+                    .shipping {
+                        .line-handling {
+                            border-top: 3px solid #88aaf3;
+                        }
+                        .admin-orderDetail-status-body-card-shipping {
+                            background-color: #88aaf3;
+                            i {
+                                color: white;
+                            }
+                        }
+                    }
+                    .done {
+                        .line-handling {
+                            border-top: 3px solid #88aaf3;
+                        }
+                        .admin-orderDetail-status-body-card-shipping {
+                            background-color: #88aaf3;
+                            i {
+                                color: white;
+                            }
+                        }
+                        .line-shipping {
+                            border-top: 3px solid #88aaf3;
+                        }
+                        .admin-orderDetail-status-body-card-done {
+                            background-color: #88aaf3;
+                            i {
+                                color: white;
+                            }
+                        }
                     }
                     .admin-orderDetail-status-body-text {
                         width: 100%;
@@ -250,6 +297,13 @@
                         }
                     }
                 }
+                .cancel {
+                    .admin-orderDetail-status-body-card {
+                        .admin-orderDetail-status-body-card-cancel {
+                            opacity: 1;
+                        }
+                    }
+                }
             }
             .admin-orderDetail-table-title {
                 margin-top: 30px;
@@ -273,6 +327,10 @@
                         height: 100%;
                         object-fit: contain;
                     }
+                }
+                .admin-orderDetail-table-size {
+                    font-size: 11px;
+                    color: #56606e;
                 }
             }
             .admin-orderDetail-table-footer {

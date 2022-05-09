@@ -1,6 +1,13 @@
 import Button from "@material-ui/core/Button";
+import { green } from "@material-ui/core/colors";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import moment from "moment";
+import {
+  createTheme,
+  makeStyles,
+  ThemeProvider,
+  withStyles,
+} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,15 +15,19 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import CancelIcon from "@material-ui/icons/Cancel";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import React, { useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import adminAPI from "../../../../api/adminAPI";
-import a from "../../../../assets/product/PhiHanhGia-blue.jpg";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import "./OrderDetail.scss";
+import { toast } from "react-toastify";
+import "moment/locale/vi";
 
+moment.locale("vi");
+toast.configure();
 OrderDetail.propTypes = {};
 
 const StyledTableCell = withStyles((theme) => ({
@@ -37,17 +48,11 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+const theme = createTheme({
+  palette: {
+    primary: green,
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -60,21 +65,77 @@ const useStyles = makeStyles((theme) => ({
 
 function OrderDetail(props) {
   const classes = useStyles();
+  const History = useHistory();
 
   const {
     params: { orderId },
   } = useRouteMatch();
+  const [orderDetail, setOrderDetail] = useState({});
 
   useEffect(() => {
     (async () => {
       try {
         const response = await adminAPI.getOrderById(orderId);
-        console.log(response);
+        setOrderDetail(response.data.data[0]);
       } catch (error) {
         console.log(error);
       }
     })();
   }, [orderId]);
+
+  const handleAcceptOrder = () => {
+    (async () => {
+      try {
+        const response = await adminAPI.nextStatus(orderId);
+        if (response.status === 204) {
+          toast.success("Nhận đơn hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push("/admin/orders");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
+  const handleDoneOrder = () => {
+    (async () => {
+      try {
+        const response = await adminAPI.nextStatus(orderId);
+        if (response.status === 204) {
+          toast.success("Đơn hàng giao hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push("/admin/orders");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
+  const handleCancelOrder = () => {
+    (async () => {
+      try {
+        const response = await adminAPI.cancelOrder(orderId);
+        if (response.status === 204) {
+          toast.success("Hủy đơn hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          History.push("/admin/orders");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
 
   return (
     <div className="admin-orderDetail">
@@ -96,7 +157,14 @@ function OrderDetail(props) {
           </div>
           <div className="admin-orderDetail-infor">
             <div className="admin-orderDetail-infor-top">
-              Mã đơn hàng:<span>#95461</span>
+              Mã đơn hàng:
+              <span>
+                #
+                {orderDetail._id?.substring(
+                  orderDetail._id?.length - 5,
+                  orderDetail._id?.length
+                )}
+              </span>
             </div>
             <div className="admin-orderDetail-infor-bot">
               <div className="admin-orderDetail-infor-card">
@@ -105,14 +173,15 @@ function OrderDetail(props) {
                 </div>
                 <div className="admin-orderDetail-infor-card-content">
                   <p className="admin-orderDetail-infor-card-content-text">
-                    Đỗ Đạt Đức
+                    {orderDetail.account?.information.name === ""
+                      ? orderDetail.account?.nameDisplay
+                      : orderDetail.account?.information.name}
                   </p>
                   <p className="admin-orderDetail-infor-card-content-text">
-                    25 Khu Phố 3A, Phường Thới Hòa, huyện Bến Cát, tỉnh Bình
-                    Dương
+                    {orderDetail.account?.email}
                   </p>
                   <p className="admin-orderDetail-infor-card-content-text">
-                    0359806602
+                    {orderDetail.account?.information.phone}
                   </p>
                 </div>
               </div>
@@ -122,11 +191,11 @@ function OrderDetail(props) {
                 </div>
                 <div className="admin-orderDetail-infor-card-content">
                   <p className="admin-orderDetail-infor-card-content-text">
-                    Đỗ Đạt Đức
+                    {orderDetail.name}
                   </p>
                   <p className="admin-orderDetail-infor-card-content-text">
-                    25 Khu Phố 3A, Phường Thới Hòa, huyện Bến Cát, tỉnh Bình
-                    Dương
+                    {orderDetail.street}, {orderDetail.ward},{" "}
+                    {orderDetail.district}, {orderDetail.city}
                   </p>
                 </div>
               </div>
@@ -136,7 +205,9 @@ function OrderDetail(props) {
                 </div>
                 <div className="admin-orderDetail-infor-card-content">
                   <p className="admin-orderDetail-infor-card-content-text">
-                    Thanh toán khi nhận hàng
+                    {orderDetail.typePayment === "CASH"
+                      ? "Thanh toán khi nhận hàng"
+                      : "Thanh toán bằng thẻ VISA"}
                   </p>
                 </div>
               </div>
@@ -146,7 +217,7 @@ function OrderDetail(props) {
                 </div>
                 <div className="admin-orderDetail-infor-card-content">
                   <p className="admin-orderDetail-infor-card-content-text">
-                    6:10PM, Chủ nhật, 08/05/2022
+                    {moment(orderDetail.createdAt).format("LLLL")}
                   </p>
                 </div>
               </div>
@@ -156,8 +227,20 @@ function OrderDetail(props) {
             <div className="admin-orderDetail-status-title">
               TÌNH TRẠNG ĐƠN HÀNG
             </div>
-            <div className="admin-orderDetail-status-body">
-              <div className="admin-orderDetail-status-body-card">
+            <div
+              className={`${"admin-orderDetail-status-body"} ${
+                orderDetail.status === "CANCELED" ? "cancel" : ""
+              }`}
+            >
+              <div
+                className={`${"admin-orderDetail-status-body-card"} ${
+                  orderDetail.status === "DELIVERING"
+                    ? "shipping"
+                    : orderDetail.status === "DONE"
+                    ? "done"
+                    : ""
+                }`}
+              >
                 <div className="admin-orderDetail-status-body-card-confirm">
                   <i className="bi bi-cart-check-fill"></i>
                 </div>
@@ -172,6 +255,9 @@ function OrderDetail(props) {
                 <div className="line-shipping"></div>
                 <div className="admin-orderDetail-status-body-card-done">
                   <i className="bi bi-check-circle"></i>
+                </div>
+                <div className="admin-orderDetail-status-body-card-cancel">
+                  ĐÃ BỊ HỦY
                 </div>
               </div>
               <div className="admin-orderDetail-status-body-text">
@@ -205,20 +291,40 @@ function OrderDetail(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
-                    <StyledTableRow key={row.name}>
-                      <StyledTableCell>1</StyledTableCell>
-                      <StyledTableCell>
-                        <div className="admin-orderDetail-table-image">
-                          <img src={a} alt="" />
-                        </div>
-                      </StyledTableCell>
-                      <StyledTableCell>Áo thun biểu cảm vui vẻ</StyledTableCell>
-                      <StyledTableCell>369.000 đ</StyledTableCell>
-                      <StyledTableCell>5</StyledTableCell>
-                      <StyledTableCell>1.265.000 đ</StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                  {orderDetail.listOrderDetail?.map((product, index) => {
+                    return (
+                      <StyledTableRow key={index}>
+                        <StyledTableCell>{index + 1}</StyledTableCell>
+                        <StyledTableCell>
+                          <div className="admin-orderDetail-table-image">
+                            <img src={product.productDetail.image} alt="" />
+                          </div>
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {product.productDetail.product.name}
+                          <p className="admin-orderDetail-table-size">
+                            Size: {product.productDetail.size}
+                          </p>
+                          <p className="admin-orderDetail-table-size">
+                            Màu: {product.productDetail.color.name}
+                          </p>
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price)}
+                        </StyledTableCell>
+                        <StyledTableCell>{product.quantity}</StyledTableCell>
+                        <StyledTableCell>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price * product.quantity)}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -229,7 +335,10 @@ function OrderDetail(props) {
                 THÀNH TIỀN
               </div>
               <div className="admin-orderDetail-table-footer-subtotal-cost">
-                1.054.000 đ
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(orderDetail.subTotal)}
               </div>
             </div>
             <div className="admin-orderDetail-table-footer-subtotal">
@@ -237,7 +346,10 @@ function OrderDetail(props) {
                 PHÍ VẬN CHUYỂN
               </div>
               <div className="admin-orderDetail-table-footer-subtotal-cost">
-                30.000 đ
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(30000)}
               </div>
             </div>
             <div className="admin-orderDetail-table-footer-total">
@@ -245,35 +357,69 @@ function OrderDetail(props) {
                 TỔNG
               </div>
               <div className="admin-orderDetail-table-footer-total-cost">
-                1.954.000 đ
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(orderDetail.total)}
               </div>
             </div>
           </div>
 
-          <div className="admin-orderDetail-btn">
-            <div className="admin-orderDetail-btn-cancel">
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                className={classes.button}
-                startIcon={<CancelIcon />}
-              >
-                HỦY ĐƠN
-              </Button>
-            </div>
-            <div className="admin-orderDetail-btn-shipping">
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<LocalShippingIcon />}
-              >
-                CHẤP NHẬN
-              </Button>
-            </div>
-          </div>
+          {orderDetail.status === "CANCELED" ? (
+            ""
+          ) : orderDetail.status === "DONE" ? (
+            ""
+          ) : (
+            <>
+              <div className="admin-orderDetail-btn">
+                <div className="admin-orderDetail-btn-cancel">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<CancelIcon />}
+                    onClick={handleCancelOrder}
+                  >
+                    HỦY ĐƠN
+                  </Button>
+                </div>
+                <div className="admin-orderDetail-btn-shipping">
+                  {orderDetail.status === "HANDLING" ? (
+                    <>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        className={classes.button}
+                        startIcon={<LocalShippingIcon />}
+                        onClick={handleAcceptOrder}
+                      >
+                        CHẤP NHẬN
+                      </Button>
+                    </>
+                  ) : orderDetail.status === "DELIVERING" ? (
+                    <>
+                      <ThemeProvider theme={theme}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="large"
+                          className={classes.margin}
+                          startIcon={<CheckCircleOutlineIcon />}
+                          onClick={handleDoneOrder}
+                        >
+                          HOÀN THÀNH
+                        </Button>
+                      </ThemeProvider>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
