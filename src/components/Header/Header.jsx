@@ -69,10 +69,6 @@ function Header(props) {
                       <i className="bi bi-card-checklist"></i>
                       <p>Thông tin cá nhân</p>
                     </Link>
-                    <div className="account-item">
-                      <i className="bi bi-key"></i>
-                      <p>Đổi mật khẩu</p>
-                    </div>
                     <div
                       className="account-item"
                       onClick={handleClickOpenFormLogout}

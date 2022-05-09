@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import MyOrder from "../MyOrder/MyOrder";
 import Phone from "../Phone/Phone";
 import VerifyPhone from "../VerifyPhone/VerifyPhone";
 import UserInformation from "./UserInformation";
@@ -26,6 +27,10 @@ function InformationPage(props) {
         </Route>
         <Route path={`${match.url}/phone/verifyPhone`} exact>
           <VerifyPhone phoneReceive={phone} />
+        </Route>
+        <Route path={`${match.url}/changePassword`} exact></Route>
+        <Route path={`${match.url}/myOrders`} exact>
+          <MyOrder />
         </Route>
       </Switch>
     </div>

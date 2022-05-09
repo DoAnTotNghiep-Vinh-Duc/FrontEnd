@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import userAPI from "../../api/userAPI";
+import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import "./Phone.scss";
 
 Phone.propTypes = {};

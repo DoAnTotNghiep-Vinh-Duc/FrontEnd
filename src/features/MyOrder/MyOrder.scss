@@ -1,0 +1,88 @@
+.myOrder {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    font-family: "Josefin Sans", sans-serif;
+    .myOrder-container {
+        width: 85%;
+        height: 100%;
+        .myOrder-title {
+            width: 100%;
+            height: 50px;
+            background-color: #f7f7f7;
+            display: flex;
+            padding: 0 20px;
+            .myOrder-title-left {
+                width: 50%;
+                display: flex;
+                align-items: center;
+                p {
+                    font-size: 25px;
+                    font-weight: bold;
+                    color: #56606e;
+                }
+            }
+            .myOrder-title-right {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                i {
+                    margin: 0 15px;
+                }
+                .myOrder-title-right-order {
+                    color: #4da9ff;
+                }
+            }
+        }
+        .myOrder-search {
+            margin-top: 20px;
+            padding: 0 20px;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            input {
+                width: 300px;
+                height: 100%;
+                background-color: #f7f7f7;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                padding: 0 10px;
+                letter-spacing: 2px;
+                &::placeholder {
+                    letter-spacing: 2px;
+                }
+            }
+            .myOrder-search-icon {
+                height: 100%;
+                background-color: #f7f7f7;
+                display: flex;
+                align-items: center;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                padding-right: 15px;
+                i {
+                    &:hover {
+                        cursor: pointer;
+                        color: #4da9ff;
+                    }
+                }
+            }
+        }
+        .myOrder-listOrder {
+            width: 100%;
+            height: calc(100% - 50px - 20px - 40px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            .myOrder-listOrder-table {
+                width: 95%;
+                height: 100%;
+            }
+        }
+    }
+}

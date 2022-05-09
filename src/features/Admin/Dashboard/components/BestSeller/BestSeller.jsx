@@ -24,7 +24,6 @@ function BestSeller(props) {
         Sản phẩm bán chạy
       </div>
       <div className="admin-content-body-topProducts-products">
-        {/* {bestSeller.length ? "" : ""} */}
         {bestSeller.slice(0, 6).map((product, index) => {
           return (
             <div
@@ -34,23 +33,21 @@ function BestSeller(props) {
               <div className="admin-content-body-topProducts-products-product-image">
                 <img
                   src={
-                    product.product[0].images[
-                      Math.floor(
-                        Math.random() * product.product[0].images.length
-                      )
+                    product.images[
+                      Math.floor(Math.random() * product.images.length)
                     ]
                   }
                   alt=""
                 />
               </div>
               <div className="admin-content-body-topProducts-products-product-name">
-                {product.product[0].name}
+                {product.name}
               </div>
               <div className="admin-content-body-topProducts-products-product-price">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                }).format(product.product[0].price)}
+                }).format(product.price)}
               </div>
             </div>
           );

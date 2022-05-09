@@ -2,13 +2,13 @@ import axiosClient from "./axiosClient";
 
 const adminAPI = {
   statistical(typeRequest, beginDate, endDate) {
-    const url = "/order/by-date";
+    const url = "/admin/order/by-date";
     return axiosClient.post(url, typeRequest, beginDate, endDate);
   },
 
   // product
   async getAllProduct(params) {
-    const url = "/product";
+    const url = "/admin/product";
     const total = await axiosClient.get(url);
 
     const start = params._page * params._limit - params._limit;
@@ -23,11 +23,11 @@ const adminAPI = {
     };
   },
   getBestSellerProduct() {
-    const url = "/order/all-top-sell-product";
+    const url = "/admin/product/top-sell";
     return axiosClient.get(url);
   },
   async topProductLowQuantity(params) {
-    const url = "/product/low-quantity";
+    const url = "/admin/product/low-quantity";
     const listProduct = await axiosClient.get(url);
 
     const start = params._page * params._limit - params._limit;
@@ -43,16 +43,12 @@ const adminAPI = {
     };
   },
   addProduct(value) {
-    const url = "/product";
+    const url = "/admin/product";
     return axiosClient.post(url, value);
   },
   updateProduct(value) {
-    const url = `/product/${value.id}`;
+    const url = `/admin/product/${value.id}`;
     return axiosClient.put(url, value.fd);
-  },
-  deleteProduct(productId) {
-    const url = `/product/${productId}`;
-    return axiosClient.delete(url);
   },
 
   testImage(image) {
@@ -62,7 +58,7 @@ const adminAPI = {
 
   // customer
   async topCustomer(params) {
-    const url = "/order/all-top-customer";
+    const url = "/admin/order/all-top-customer";
     const listCustomer = await axiosClient.get(url);
 
     const start = params._page * params._limit - params._limit;
@@ -77,7 +73,7 @@ const adminAPI = {
     };
   },
   async getAllCustomer(params) {
-    const url = "/account";
+    const url = "/admin/account";
     const listCustomer = await axiosClient.get(url);
 
     const start = params._page * params._limit - params._limit;
@@ -94,7 +90,7 @@ const adminAPI = {
 
   // order
   async getAllOrder(params) {
-    const url = "/order/all-order-with-user";
+    const url = "/admin/order/all-order-with-user";
     const listOrder = await axiosClient.get(url);
 
     const start = params._page * params._limit - params._limit;
@@ -110,7 +106,7 @@ const adminAPI = {
     };
   },
   getOrderById(orderId) {
-    const url = `/order/get-order-by-id/${orderId}`;
+    const url = `/admin/order/get-order-by-id/${orderId}`;
     return axiosClient.get(url);
   },
   nextStatus(orderId) {

@@ -86,20 +86,24 @@
                     .account-function {
                         position: absolute;
                         left: 0;
-                        bottom: -750%;
+                        bottom: -10px;
+                        transform: translateY(100%);
                         background-color: white;
                         color: black;
                         width: 150px;
-                        height: 100px;
+                        height: 70px;
                         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
                         opacity: 0;
                         visibility: hidden;
                         border-radius: 5px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
                         .account-item {
                             color: #1a0b5b;
                             display: flex;
                             align-items: center;
-                            height: calc(100% / 3);
+                            height: calc(100% / 2);
                             border-bottom: 1px solid gray;
                             &:hover {
                                 background-color: #7e33e0;
