@@ -1,6 +1,5 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import userAPI from "../../api/userAPI";
@@ -12,9 +11,7 @@ UserInformation.propTypes = {};
 
 function UserInformation(props) {
   const location = useLocation();
-
   const pathname = location.pathname;
-  const userLogIn = useSelector((state) => state.user.currentUser);
 
   const [userInformation, setUserInformation] = useState({});
 
@@ -27,7 +24,7 @@ function UserInformation(props) {
         console.log(error);
       }
     })();
-  }, [userLogIn._id]);
+  }, []);
 
   const handleName = (event) => {
     setUserInformation({
@@ -96,7 +93,7 @@ function UserInformation(props) {
               <button>Tải hình mới lên</button>
             </div>
             <div className="infor-time">
-              Tham gia <b>{moment(userLogIn.createdAt).format("L")}</b>
+              Tham gia <b>{moment(userInformation.createdAt).format("L")}</b>
             </div>
           </div>
         </div>

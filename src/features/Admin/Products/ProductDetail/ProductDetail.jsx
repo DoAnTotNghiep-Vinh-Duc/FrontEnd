@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
@@ -20,6 +20,7 @@ toast.configure();
 ProductDetail.propTypes = {};
 
 function ProductDetail(props) {
+  const History = useHistory();
   const {
     params: { productId },
   } = useRouteMatch();
@@ -68,6 +69,7 @@ function ProductDetail(props) {
       value: element._id,
     });
   });
+  console.log(listDiscount);
 
   useEffect(() => {
     listDiscount.forEach((element) => {
@@ -248,12 +250,15 @@ function ProductDetail(props) {
             autoClose: 2000,
             theme: "colored",
           });
+          History.push("/admin/products");
         }
       } catch (error) {
         console.log(error);
       }
     })();
   };
+
+  console.log(discountProduct);
 
   return (
     <div className="admin-orderDetail">
