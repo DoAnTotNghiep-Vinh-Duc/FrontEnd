@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import cartAPI from "../../../api/cartAPI";
 import RemoveItemFromCart from "../../RemoveItemFromCart/RemoveItemFromCart";
-import { addToPayment, removeFromPayment } from "../../../redux/cartSlice";
+import {
+  addToPayment,
+  removeFromPayment,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../../../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 Product.propTypes = {
@@ -12,9 +17,13 @@ Product.propTypes = {
 
 function Product({ product }) {
   const dispatch = useDispatch();
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [productDetail, setProductDetail] = useState(() => {
+    const producttemp = product;
+    return producttemp;
+  });
 
   const [open, setOpen] = useState(false);
   const [itemRemove, setItemRemove] = useState({});
@@ -24,7 +33,6 @@ function Product({ product }) {
     setOpen(true);
     setItemRemove(element);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -35,6 +43,16 @@ function Product({ product }) {
         const response = await cartAPI.increaseQuantity({
           productDetailId: element.productDetail._id,
         });
+        if (response.status === 204) {
+          setProductDetail({
+            ...productDetail,
+            quantity: productDetail.quantity + 1,
+          });
+          const action = increaseQuantity({
+            idProduct: element.productDetail._id,
+          });
+          dispatch(action);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -47,6 +65,16 @@ function Product({ product }) {
         const response = await cartAPI.decreaseQuantity({
           productDetailId: element.productDetail._id,
         });
+        if (response.status === 204) {
+          setProductDetail({
+            ...productDetail,
+            quantity: productDetail.quantity - 1,
+          });
+          const action = decreaseQuantity({
+            idProduct: element.productDetail._id,
+          });
+          dispatch(action);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -127,7 +155,7 @@ function Product({ product }) {
               onClick={() => handleDecreaseQuantity(product)}
             ></i>
             <div className="cart-content-cart-product-quantity-number">
-              {product.quantity}
+              {productDetail.quantity}
             </div>
             <i
               className="bi bi-plus-lg"
@@ -138,7 +166,7 @@ function Product({ product }) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(product.quantity * product.priceDiscount)}
+            }).format(productDetail.quantity * productDetail.priceDiscount)}
           </div>
           <div className="cart-content-cart-product-delete">
             <i

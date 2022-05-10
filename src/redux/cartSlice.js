@@ -26,9 +26,30 @@ const listCartSlice = createSlice({
         (x) => x !== idNeedToRemove
       );
     },
+    increaseQuantity(state, action) {
+      const idProduct = action.payload.idProduct;
+      const index = state.listProductCart.findIndex(
+        (x) => x.productDetail._id === idProduct
+      );
+      state.listProductCart[index].quantity =
+        state.listProductCart[index].quantity + 1;
+    },
+    decreaseQuantity(state, action) {
+      const idProduct = action.payload.idProduct;
+      const index = state.listProductCart.findIndex(
+        (x) => x.productDetail._id === idProduct
+      );
+      state.listProductCart[index].quantity =
+        state.listProductCart[index].quantity - 1;
+    },
   },
 });
 
 const { actions, reducer } = listCartSlice;
-export const { addToPayment, removeFromPayment } = actions;
+export const {
+  addToPayment,
+  removeFromPayment,
+  increaseQuantity,
+  decreaseQuantity,
+} = actions;
 export default reducer;
