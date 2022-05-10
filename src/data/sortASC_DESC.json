@@ -1,0 +1,12 @@
+[
+    {
+        "id":1,
+        "value": "ASC",
+        "label": "Giảm dần"
+    },
+    {
+        "id":2,
+        "value": "DESC",
+        "label": "Tăng dần"
+    }
+]
