@@ -54,6 +54,14 @@ const adminAPI = {
     const url = `/admin/product/${id}`;
     return axiosClient.get(url);
   },
+  stopSellProduct(id) {
+    const url = `/admin/product/stop-selling-product/${id}`;
+    return axiosClient.put(url);
+  },
+  continueSellProduct(id) {
+    const url = `/admin/product/resale-product/${id}`;
+    return axiosClient.put(url);
+  },
 
   testImage(image) {
     const url = "/rate/upload-image";

@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React from "react";
 import { toast } from "react-toastify";
+import adminAPI from "../../../../api/adminAPI";
 
 toast.configure();
 ContinueProduct.propTypes = {
@@ -28,8 +29,21 @@ function ContinueProduct(props) {
   };
 
   const handleContinueSellProduct = () => {
-    console.log(productId);
-    props.closeContinue(false);
+    (async () => {
+      try {
+        const response = await adminAPI.continueSellProduct(productId);
+        if (response.status === 200) {
+          toast.success("Bán lại sản phẩm thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          props.closeContinue(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (

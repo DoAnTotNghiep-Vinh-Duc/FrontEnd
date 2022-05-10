@@ -154,12 +154,87 @@
                                 width: 5%;
                                 display: flex;
                                 align-items: center;
-                                justify-content: center;
+                                justify-content: space-around;
                                 i {
+                                    font-size: 16px;
                                     cursor: pointer;
                                     &:hover {
                                         color: #fb2e86;
                                     }
+                                }
+                            }
+                            .block-container {
+                                width: 0;
+                                height: 0;
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                            .unblock {
+                                width: 0;
+                                height: 0;
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                        }
+                        .block {
+                            background-color: #f0f0f0;
+                            position: relative;
+                            overflow: hidden;
+                            .admin-customers-content-body-container-body-customers-customer-seri {
+                                opacity: 0.6;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-customer {
+                                opacity: 0.6;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-phone {
+                                opacity: 0.6;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-quantityOrder {
+                                opacity: 0.6;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-address {
+                                opacity: 0.6;
+                            }
+                            .admin-customers-content-body-container-body-customers-customer-action {
+                                opacity: 0.6;
+                            }
+                            .block-container {
+                                position: absolute;
+                                top: 20%;
+                                left: -3%;
+                                width: 150px;
+                                height: 30px;
+                                transform: rotate(-40deg);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: red;
+                                opacity: 1;
+                                visibility: visible;
+                                border-top: 1px solid red;
+                                border-bottom: 1px solid red;
+                                font-weight: bold;
+                            }
+                            .unblock {
+                                position: absolute;
+                                top: 50%;
+                                right: 5px;
+                                width: 100px;
+                                height: 30px;
+                                background-color: black;
+                                border: 1px solid black;
+                                transform: translateY(-50%);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                opacity: 1;
+                                visibility: visible;
+                                &:hover {
+                                    background-color: white;
+                                    color: black;
                                 }
                             }
                         }

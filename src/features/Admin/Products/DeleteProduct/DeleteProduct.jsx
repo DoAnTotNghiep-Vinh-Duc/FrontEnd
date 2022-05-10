@@ -30,21 +30,21 @@ function DeleteProduct(props) {
   };
 
   const handleDeleteProduct = () => {
-    // (async () => {
-    //   try {
-    //     const response = await adminAPI.deleteProduct(productId);
-    //     if (response.status === 200) {
-    //       toast.success("Xóa sản phẩm thành công", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //         autoClose: 2000,
-    //         theme: "dark",
-    //       });
-    //       props.closeDelete(false);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })();
+    (async () => {
+      try {
+        const response = await adminAPI.stopSellProduct(productId);
+        if (response.status === 200) {
+          toast.success("Dừng bán sản phẩm thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          props.closeDelete(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (

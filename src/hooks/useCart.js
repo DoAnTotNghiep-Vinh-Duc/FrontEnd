@@ -11,6 +11,7 @@ export default function useCart() {
         if (Cookies.get("token")) {
           const response = await cartAPI.getCartByAccountId();
           setCart(response.data.data);
+          console.log(response);
         }
       } catch (error) {
         console.log(error);
