@@ -1,5 +1,5 @@
 import Rating from "@material-ui/lab/Rating";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { toast } from "react-toastify";
 import "swiper/css";
@@ -10,6 +10,8 @@ import favoriteAPI from "../../api/favoriteAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
+import { ACTIONS } from "../../context/actions";
+import { GlobalContext } from "../../context/context";
 import useFavorite from "../../hooks/useFavorite";
 import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
@@ -19,6 +21,8 @@ toast.configure();
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
+  const { dispatch } = useContext(GlobalContext);
+
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
@@ -78,6 +82,17 @@ function ProductDetailPage(props) {
             quantity: quantity,
           });
           if (response.status === 204) {
+            (async () => {
+              try {
+                const response = await cartAPI.getCartByAccountId();
+                dispatch({
+                  type: ACTIONS.dataCart,
+                  payload: response.data.data,
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            })();
             toast.success("Thêm vào giỏ hành thành công", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000,

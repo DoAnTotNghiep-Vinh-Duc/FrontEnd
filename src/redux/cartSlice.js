@@ -42,6 +42,16 @@ const listCartSlice = createSlice({
       state.listProductCart[index].quantity =
         state.listProductCart[index].quantity - 1;
     },
+    deleteItem(state, action) {
+      const idProduct = action.payload.idProduct;
+      console.log(idProduct);
+      state.listProductCart = state.listProductCart.filter(
+        (x) => x.productDetail._id !== idProduct
+      );
+      state.listIdProductCart = state.listIdProductCart.filter(
+        (x) => x !== idProduct
+      );
+    },
   },
 });
 
@@ -51,5 +61,6 @@ export const {
   removeFromPayment,
   increaseQuantity,
   decreaseQuantity,
+  deleteItem,
 } = actions;
 export default reducer;

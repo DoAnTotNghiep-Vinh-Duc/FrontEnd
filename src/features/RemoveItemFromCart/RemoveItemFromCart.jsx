@@ -5,14 +5,29 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import React, { Fragment } from "react";
-import cartAPI from "../../api/cartAPI";
+import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+import React, { Fragment, useContext } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import cartAPI from "../../api/cartAPI";
+import { ACTIONS } from "../../context/actions";
+import { GlobalContext } from "../../context/context";
+import { deleteItem } from "../../redux/cartSlice";
 
 toast.configure();
 RemoveItemFromCart.propTypes = {};
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
+
 function RemoveItemFromCart({ closeRemoveItem, productDetail }) {
+  const classes = useStyles();
+  const { dispatch } = useContext(GlobalContext);
+  const dispatchCartSlice = useDispatch();
   const local = localStorage.getItem("account");
   const account = local && JSON.parse(local);
 
@@ -28,6 +43,23 @@ function RemoveItemFromCart({ closeRemoveItem, productDetail }) {
           productDetailId: productDetail.productDetail._id,
         });
         if (response.status === 204) {
+          (async () => {
+            try {
+              const response = await cartAPI.getCartByAccountId();
+              dispatch({
+                type: ACTIONS.dataCart,
+                payload: response.data.data,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+
+          const action = deleteItem({
+            idProduct: productDetail.productDetail._id,
+          });
+          dispatchCartSlice(action);
+
           toast.success("Xóa sản phẩm ra khỏi giỏ hàng thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
@@ -50,11 +82,18 @@ function RemoveItemFromCart({ closeRemoveItem, productDetail }) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleClose} variant="outlined">
           Hủy
         </Button>
-        <Button onClick={handleRemoveItem} color="primary">
-          Xác nhận
+
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<DeleteIcon />}
+          onClick={handleRemoveItem}
+        >
+          Xóa
         </Button>
       </DialogActions>
     </Fragment>

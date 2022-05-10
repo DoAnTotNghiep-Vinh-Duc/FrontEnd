@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import userAPI from "../../api/userAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
-import useCart from "../../hooks/useCart";
+import { GlobalContext } from "../../context/context";
 import "./css/CartPage.scss";
 import Product from "./Product/Product";
 
 CartPage.propTypes = {};
 
 function CartPage(props) {
+  const { state } = useContext(GlobalContext);
   const History = useHistory();
   const match = useRouteMatch();
 
@@ -23,7 +24,7 @@ function CartPage(props) {
   const userLogIn = useSelector((state) => state.user.currentUser);
   const listProductCart = useSelector((state) => state.listProductCart);
 
-  const { cart } = useCart();
+  console.log(state.dataCart);
 
   listProductCart.listProductCart.forEach((element) => {
     quantityTotal += element.quantity;
@@ -65,7 +66,7 @@ function CartPage(props) {
           </div>
         </div>
         <div className="cart-content">
-          {cart.listCartDetail?.length ? (
+          {state.dataCart.listCartDetail?.length ? (
             <>
               <div className="cart-content-cart">
                 <div className="cart-content-cart-header">
@@ -85,7 +86,7 @@ function CartPage(props) {
                   </div>
                 </div>
 
-                {cart.listCartDetail?.map((element) => {
+                {state.dataCart.listCartDetail?.map((element) => {
                   return (
                     <Product
                       product={element}
