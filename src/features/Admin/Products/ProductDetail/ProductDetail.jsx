@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
-import { useRouteMatch, useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
@@ -9,7 +9,7 @@ import collar_female from "../../../../data/collar_female.json";
 import collar_male from "../../../../data/collar_male.json";
 import gender from "../../../../data/gender.json";
 import typeProduct from "../../../../data/short_long.json";
-import useProductDetail from "../../../../hooks/useProductDetail";
+import useProductDetailAdmin from "../../../../hooks/useProductDetailAdmin";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import AddColor from "./AddColor/AddColor";
@@ -30,7 +30,7 @@ function ProductDetail(props) {
   let listDiscount = [];
   let listColorDetail = [];
   const [listColorDetailAdd, setListColorDetailAdd] = useState([]);
-  const { product, loading, colorDetails } = useProductDetail(productId);
+  const { product, loading, colorDetails } = useProductDetailAdmin(productId);
   const [colorDetails_temp, setColorDetails_temp] = useState([]);
   const [productEdit, setProductEdit] = useState(() => {
     const product_temp = product;
@@ -69,7 +69,6 @@ function ProductDetail(props) {
       value: element._id,
     });
   });
-  console.log(listDiscount);
 
   useEffect(() => {
     listDiscount.forEach((element) => {
@@ -257,8 +256,6 @@ function ProductDetail(props) {
       }
     })();
   };
-
-  console.log(discountProduct);
 
   return (
     <div className="admin-orderDetail">

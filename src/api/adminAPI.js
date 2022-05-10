@@ -50,6 +50,10 @@ const adminAPI = {
     const url = `/admin/product/${value.id}`;
     return axiosClient.put(url, value.fd);
   },
+  getProductById(id) {
+    const url = `/admin/product/${id}`;
+    return axiosClient.get(url);
+  },
 
   testImage(image) {
     const url = "/rate/upload-image";
@@ -110,11 +114,11 @@ const adminAPI = {
     return axiosClient.get(url);
   },
   nextStatus(orderId) {
-    const url = `/order/next-status-order/${orderId}`;
+    const url = `/admin/order/next-status-order/${orderId}`;
     return axiosClient.put(url);
   },
   cancelOrder(orderId) {
-    const url = `/order/cancel-order/${orderId}`;
+    const url = `/admin/order/cancel-order/${orderId}`;
     return axiosClient.put(url);
   },
 };
