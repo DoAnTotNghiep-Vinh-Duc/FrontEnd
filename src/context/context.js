@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const initalState = {
     dataCart: [],
     dataAllCustomer: [],
+    dataAllProductAdmin: [],
   };
 
   const [state, dispatch] = useReducer(reducers, initalState);

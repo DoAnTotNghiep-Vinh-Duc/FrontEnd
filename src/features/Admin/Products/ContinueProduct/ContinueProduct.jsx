@@ -5,9 +5,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
+import { ACTIONS } from "../../../../context/actions";
+import { GlobalContext } from "../../../../context/context";
 
 toast.configure();
 ContinueProduct.propTypes = {
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function ContinueProduct(props) {
   const { productId } = props;
   const classes = useStyles();
+  const { dispatch } = useContext(GlobalContext);
 
   const handleClose = () => {
     props.closeContinue(false);
@@ -33,6 +36,20 @@ function ContinueProduct(props) {
       try {
         const response = await adminAPI.continueSellProduct(productId);
         if (response.status === 200) {
+          (async () => {
+            try {
+              const response = await adminAPI.getAllProduct({
+                _page: 1,
+                _limit: 5,
+              });
+              dispatch({
+                type: ACTIONS.dataAllProductAdmin,
+                payload: response.data,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
           toast.success("Bán lại sản phẩm thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,

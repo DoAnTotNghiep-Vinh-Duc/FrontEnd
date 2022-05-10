@@ -44,6 +44,11 @@
         "displayName": "Cài đặt",
         "route": "/admin/setting",
         "icon": "bi bi-gear"
+    },
+    {
+        "displayName": "Trang chủ",
+        "route": "/",
+        "icon": "bi bi-house-door"
     }
   
 ]

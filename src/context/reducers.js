@@ -14,6 +14,12 @@ const reducer = (state, action) => {
         dataAllCustomer: action.payload,
       };
 
+    case ACTIONS.dataAllProductAdmin:
+      return {
+        ...state,
+        dataAllProductAdmin: action.payload,
+      };
+
     default:
       return state;
   }
