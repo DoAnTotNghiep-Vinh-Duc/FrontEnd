@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import adminAPI from "../../../api/adminAPI";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Customer from "./Customer/Customer";
 import "./Customers.scss";
 import Pagination from "@material-ui/lab/Pagination";
+import { GlobalContext } from "../../../context/context";
+import { ACTIONS } from "../../../context/actions";
 
 Customers.propTypes = {};
 
 function Customers(props) {
-  const [customers, setCustomers] = useState([]);
+  const { dispatch, state } = useContext(GlobalContext);
+
   const [filters, setFilters] = useState({
     _page: 1,
     _limit: 10,
@@ -33,13 +36,16 @@ function Customers(props) {
           _page: filters._page,
           _limit: filters._limit,
         });
-        setCustomers(response.data);
+        dispatch({
+          type: ACTIONS.dataAllCustomer,
+          payload: response.data,
+        });
         setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [filters]);
+  }, [dispatch, filters]);
 
   return (
     <div className="admin-customers">
@@ -79,7 +85,7 @@ function Customers(props) {
                 <div className="admin-customers-content-body-container-body-header-action"></div>
               </div>
               <div className="admin-customers-content-body-container-body-customers">
-                {customers.map((customer, index) => {
+                {state.dataAllCustomer.map((customer, index) => {
                   return <Customer key={index} customer={customer} />;
                 })}
               </div>

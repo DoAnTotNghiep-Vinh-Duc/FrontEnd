@@ -99,6 +99,14 @@ const adminAPI = {
       },
     };
   },
+  blockCustomer(accountId) {
+    const url = "/admin/account/close-account";
+    return axiosClient.post(url, { accountId });
+  },
+  unBlockCustomer(accountId) {
+    const url = "/admin/account/active-account";
+    return axiosClient.post(url, { accountId });
+  },
 
   // order
   async getAllOrder(params) {

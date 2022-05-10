@@ -8,6 +8,12 @@ const reducer = (state, action) => {
         dataCart: action.payload,
       };
 
+    case ACTIONS.dataAllCustomer:
+      return {
+        ...state,
+        dataAllCustomer: action.payload,
+      };
+
     default:
       return state;
   }

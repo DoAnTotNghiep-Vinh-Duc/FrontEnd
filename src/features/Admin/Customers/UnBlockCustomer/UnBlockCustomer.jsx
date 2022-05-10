@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import LockIcon from "@material-ui/icons/Lock";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PropTypes from "prop-types";
 import React, { useContext } from "react";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ import { ACTIONS } from "../../../../context/actions";
 import { GlobalContext } from "../../../../context/context";
 
 toast.configure();
-BlockCustomer.propTypes = {
+UnBlockCustomer.propTypes = {
   customerId: PropTypes.string,
 };
 
@@ -23,20 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BlockCustomer(props) {
+function UnBlockCustomer(props) {
   const { customerId } = props;
   const classes = useStyles();
   const { dispatch } = useContext(GlobalContext);
 
   const handleClose = () => {
-    props.closeBlockCustomer(false);
+    props.closeUnBlockCustomer(false);
   };
 
-  const handleBlockCustomer = () => {
+  const handleUnBlockCustomer = () => {
     (async () => {
       try {
-        const response = await adminAPI.blockCustomer(customerId);
-        console.log(response);
+        const response = await adminAPI.unBlockCustomer(customerId);
         if (response.status === 200) {
           (async () => {
             try {
@@ -52,12 +51,12 @@ function BlockCustomer(props) {
               console.log(error);
             }
           })();
-          toast.success("Đã khóa người dùng thành công", {
+          toast.success("Mở khóa người dùng thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             theme: "dark",
           });
-          props.closeBlockCustomer(false);
+          props.closeUnBlockCustomer(false);
         }
       } catch (error) {
         console.log(error);
@@ -68,12 +67,12 @@ function BlockCustomer(props) {
   return (
     <>
       <DialogTitle id="responsive-dialog-title">
-        {"Khóa khách hàng?"}
+        {"Mở khóa khách hàng?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Bạn có muốn chắc chắn khóa khách hàng này lại không? Khách hàng sẽ
-          không thể thực hiện bất cứ chức năng mua bán nào một khi đã bị khóa!
+          Bạn có muốn chắc chắn muốn mở khóa khách hàng này không? Khách hàng sẽ
+          có thể thực hiện tất cả các chức năng nếu được mở khóa!
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -84,14 +83,14 @@ function BlockCustomer(props) {
           variant="contained"
           color="secondary"
           className={classes.button}
-          startIcon={<LockIcon />}
-          onClick={handleBlockCustomer}
+          startIcon={<LockOpenIcon />}
+          onClick={handleUnBlockCustomer}
         >
-          Khóa
+          Mở Khóa
         </Button>
       </DialogActions>
     </>
   );
 }
 
-export default BlockCustomer;
+export default UnBlockCustomer;

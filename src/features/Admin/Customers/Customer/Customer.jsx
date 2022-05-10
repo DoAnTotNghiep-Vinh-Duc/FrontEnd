@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/Dialog";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 import BlockCustomer from "../BlockCustomer/BlockCustomer";
+import UnBlockCustomer from "../UnBlockCustomer/UnBlockCustomer";
 
 Customer.propTypes = {
   customer: PropTypes.object,
@@ -14,12 +15,20 @@ function Customer({ customer }) {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [openBlockUser, setOpenBlockUser] = useState(false);
+  const [openUnBlockUser, setOpenUnBlockUser] = useState(false);
 
   const handleClickBlockUser = () => {
     setOpenBlockUser(true);
   };
   const handleCloseBlockUser = () => {
     setOpenBlockUser(false);
+  };
+
+  const handleClickUnBlockUser = () => {
+    setOpenUnBlockUser(true);
+  };
+  const handleCloseUnBlockUser = () => {
+    setOpenUnBlockUser(false);
   };
 
   return (
@@ -62,7 +71,9 @@ function Customer({ customer }) {
           <i className="bi bi-lock" onClick={handleClickBlockUser}></i>
         </div>
         <div className="block-container">BỊ KHÓA</div>
-        <div className="unblock">Mở khóa</div>
+        <div className="unblock" onClick={handleClickUnBlockUser}>
+          Mở khóa
+        </div>
       </div>
 
       <Dialog
@@ -74,6 +85,18 @@ function Customer({ customer }) {
         <BlockCustomer
           customerId={customer._id}
           closeBlockCustomer={handleCloseBlockUser}
+        />
+      </Dialog>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={openUnBlockUser}
+        onClose={handleCloseUnBlockUser}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <UnBlockCustomer
+          customerId={customer._id}
+          closeUnBlockCustomer={handleCloseUnBlockUser}
         />
       </Dialog>
     </>

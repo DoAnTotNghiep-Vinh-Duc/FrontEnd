@@ -5,6 +5,7 @@ export const GlobalContext = createContext();
 export const DataProvider = ({ children }) => {
   const initalState = {
     dataCart: [],
+    dataAllCustomer: [],
   };
 
   const [state, dispatch] = useReducer(reducers, initalState);
