@@ -129,6 +129,16 @@ const adminAPI = {
     const url = `/admin/order/cancel-order/${orderId}`;
     return axiosClient.put(url);
   },
+  sortOrder(typeSort, sort, typeOrderStatus) {
+    const url = "/admin/order/sortOrder";
+    return axiosClient.get(url, {
+      params: {
+        typeSort,
+        sort,
+        typeOrderStatus,
+      },
+    });
+  },
 };
 
 export default adminAPI;

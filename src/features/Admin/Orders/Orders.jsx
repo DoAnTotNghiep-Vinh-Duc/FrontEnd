@@ -1,12 +1,12 @@
 import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
 import adminAPI from "../../../api/adminAPI";
+import sortASC_DESC from "../../../data/sortASC_DESC.json";
 import status_order from "../../../data/status_order.json";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Order from "./Order/Order";
 import "./Orders.scss";
-import sortASC_DESC from "../../../data/sortASC_DESC.json";
 
 Orders.propTypes = {};
 
@@ -73,16 +73,48 @@ function Orders(props) {
     setIconCustomer(item.value);
     setIconCash("");
     setIconDate("");
+    (async () => {
+      try {
+        const response = await adminAPI.sortOrder("NAME", item.value, "ALL");
+        setOrders(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
   const handleSelectCashFiler = (item) => {
     setIconCash(item.value);
     setIconCustomer("");
     setIconDate("");
+    (async () => {
+      try {
+        const response = await adminAPI.sortOrder(
+          "TOTALMONEY",
+          item.value,
+          "ALL"
+        );
+        setOrders(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
   const handleSelectDateFiler = (item) => {
     setIconDate(item.value);
     setIconCustomer("");
     setIconCash("");
+    (async () => {
+      try {
+        const response = await adminAPI.sortOrder(
+          "ORDERDATE",
+          item.value,
+          "ALL"
+        );
+        setOrders(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
