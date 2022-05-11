@@ -1,11 +1,12 @@
 import Button from "@material-ui/core/Button";
 import { green } from "@material-ui/core/colors";
+import Dialog from "@material-ui/core/Dialog";
 import Paper from "@material-ui/core/Paper";
-import moment from "moment";
 import {
   createTheme,
   makeStyles,
   ThemeProvider,
+  useTheme,
   withStyles,
 } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -14,21 +15,21 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CancelIcon from "@material-ui/icons/Cancel";
-import LocalPrintshopIcon from '@material-ui/icons/LocalPrintshop';
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import React, { useEffect, useState, useRef, Component } from "react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/vi";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
+import PrintOrder from "../PrintOrder/PrintOrder";
 import "./OrderDetail.scss";
-import { toast } from "react-toastify";
-import "moment/locale/vi";
-import { useReactToPrint } from 'react-to-print';
-import ReactToPrint,{ PrintContextConsumer } from 'react-to-print';
-import Order from '../../Orders/Orders';
 
 moment.locale("vi");
 toast.configure();
@@ -66,33 +67,19 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-class ComponentToPrint extends React.Component {
-  render() {
-    return (
-      <div>
-        <div style={{ fontSize: "20px", color: "green" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium
-          viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Eu
-          lobortis elementum nibh tellus. Urna molestie at elementum eu
-          facilisis sed odio morbi quis. Et molestie ac feugiat sed lectus
-          vestibulum mattis ullamcorper. Ut tellus elementum sagittis vitae et.
-          Leo urna molestie at elementum. Vestibulum rhoncus est pellentesque
-          elit ullamcorper dignissim. Sollicitudin nibh sit amet commodo nulla
-          facilisi. Amet luctus venenatis lectus magna. Ultricies integer quis
-          auctor elit sed vulputate mi.
-        </div>
-      </div>
-    );
-  }
-}
+
 function OrderDetail(props) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
   const History = useHistory();
+
+  const [openPrintOrder, setOpenPrintOrder] = useState(false);
 
   const {
     params: { orderId },
   } = useRouteMatch();
+
   const [orderDetail, setOrderDetail] = useState({});
 
   useEffect(() => {
@@ -159,304 +146,328 @@ function OrderDetail(props) {
       }
     })();
   };
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+
+  const handleClickOpenPrintOrder = () => {
+    setOpenPrintOrder(true);
+  };
+
+  const handleClosePrintOrder = () => {
+    setOpenPrintOrder(false);
+  };
+
   return (
-    <div className="admin-orderDetail">
-      <NavBars />
-      <div className="admin-orderDetail-content">
-        <Header />
-        <div className="admin-orderDetail-body">
-          <div className="admin-orderDetail-title">
-            <div className="admin-orderDetail-title-left">
-              <p>Chi tiết đơn hàng</p>
-            </div>
-            <div className="admin-orderDetail-title-right">
-              <Link className="admin-orderDetail-dashboard" to="/admin">
-                Dashboard
-              </Link>
-              <i className="bi bi-chevron-right"></i>
-              <p className="admin-orderDetail-order">Đơn hàng</p>
-            </div>
-          </div>
-          <div className="admin-orderDetail-infor">
-            <div className="admin-orderDetail-infor-top">
-              Mã đơn hàng:
-              <span>
-                #
-                {orderDetail._id?.substring(
-                  orderDetail._id?.length - 5,
-                  orderDetail._id?.length
-                )}
-              </span>
-            </div>
-            <div className="admin-orderDetail-infor-bot">
-              <div className="admin-orderDetail-infor-card">
-                <div className="admin-orderDetail-infor-card-title">
-                  Khách hàng
-                </div>
-                <div className="admin-orderDetail-infor-card-content">
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.account?.information.name === ""
-                      ? orderDetail.account?.nameDisplay
-                      : orderDetail.account?.information.name}
-                  </p>
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.account?.email}
-                  </p>
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.account?.information.phone}
-                  </p>
-                </div>
+    <>
+      <div className="admin-orderDetail">
+        <NavBars />
+        <div className="admin-orderDetail-content">
+          <Header />
+          <div className="admin-orderDetail-body">
+            <div className="admin-orderDetail-title">
+              <div className="admin-orderDetail-title-left">
+                <p>Chi tiết đơn hàng</p>
               </div>
-              <div className="admin-orderDetail-infor-card">
-                <div className="admin-orderDetail-infor-card-title">
-                  Giao tới
-                </div>
-                <div className="admin-orderDetail-infor-card-content">
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.name}
-                  </p>
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.street}, {orderDetail.ward},{" "}
-                    {orderDetail.district}, {orderDetail.city}
-                  </p>
-                </div>
-              </div>
-              <div className="admin-orderDetail-infor-card">
-                <div className="admin-orderDetail-infor-card-title">
-                  Phương thức thanh toán
-                </div>
-                <div className="admin-orderDetail-infor-card-content">
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {orderDetail.typePayment === "CASH"
-                      ? "Thanh toán khi nhận hàng"
-                      : "Thanh toán bằng thẻ VISA"}
-                  </p>
-                </div>
-              </div>
-              <div className="admin-orderDetail-infor-card">
-                <div className="admin-orderDetail-infor-card-title">
-                  Ngày đặt hàng
-                </div>
-                <div className="admin-orderDetail-infor-card-content">
-                  <p className="admin-orderDetail-infor-card-content-text">
-                    {moment(orderDetail.createdAt).format("LLLL")}
-                  </p>
-                </div>
+              <div className="admin-orderDetail-title-right">
+                <Link className="admin-orderDetail-dashboard" to="/admin">
+                  Dashboard
+                </Link>
+                <i className="bi bi-chevron-right"></i>
+                <p className="admin-orderDetail-order">Đơn hàng</p>
               </div>
             </div>
-          </div>
-          <div className="admin-orderDetail-status">
-            <div className="admin-orderDetail-status-title">
-              TÌNH TRẠNG ĐƠN HÀNG
+            <div className="admin-orderDetail-print">
+              <Button
+                variant="contained"
+                color="secondary"
+                size="medium"
+                className={classes.button}
+                startIcon={<LocalPrintshopIcon />}
+                onClick={handleClickOpenPrintOrder}
+              >
+                In hóa đơn
+              </Button>
             </div>
-            <div
-              className={`${"admin-orderDetail-status-body"} ${
-                orderDetail.status === "CANCELED" ? "cancel" : ""
-              }`}
-            >
+
+            <div className="admin-orderDetail-infor">
+              <div className="admin-orderDetail-infor-top">
+                Mã đơn hàng:
+                <span>
+                  #
+                  {orderDetail._id?.substring(
+                    orderDetail._id?.length - 5,
+                    orderDetail._id?.length
+                  )}
+                </span>
+              </div>
+              <div className="admin-orderDetail-infor-bot">
+                <div className="admin-orderDetail-infor-card">
+                  <div className="admin-orderDetail-infor-card-title">
+                    Khách hàng
+                  </div>
+                  <div className="admin-orderDetail-infor-card-content">
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.account?.information.name === ""
+                        ? orderDetail.account?.nameDisplay
+                        : orderDetail.account?.information.name}
+                    </p>
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.account?.email}
+                    </p>
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.account?.information.phone}
+                    </p>
+                  </div>
+                </div>
+                <div className="admin-orderDetail-infor-card">
+                  <div className="admin-orderDetail-infor-card-title">
+                    Giao tới
+                  </div>
+                  <div className="admin-orderDetail-infor-card-content">
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.name}
+                    </p>
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.street}, {orderDetail.ward},{" "}
+                      {orderDetail.district}, {orderDetail.city}
+                    </p>
+                  </div>
+                </div>
+                <div className="admin-orderDetail-infor-card">
+                  <div className="admin-orderDetail-infor-card-title">
+                    Phương thức thanh toán
+                  </div>
+                  <div className="admin-orderDetail-infor-card-content">
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {orderDetail.typePayment === "CASH"
+                        ? "Thanh toán khi nhận hàng"
+                        : "Thanh toán bằng thẻ VISA"}
+                    </p>
+                  </div>
+                </div>
+                <div className="admin-orderDetail-infor-card">
+                  <div className="admin-orderDetail-infor-card-title">
+                    Ngày đặt hàng
+                  </div>
+                  <div className="admin-orderDetail-infor-card-content">
+                    <p className="admin-orderDetail-infor-card-content-text">
+                      {moment(orderDetail.createdAt).format("LLLL")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="admin-orderDetail-status">
+              <div className="admin-orderDetail-status-title">
+                TÌNH TRẠNG ĐƠN HÀNG
+              </div>
               <div
-                className={`${"admin-orderDetail-status-body-card"} ${
-                  orderDetail.status === "DELIVERING"
-                    ? "shipping"
-                    : orderDetail.status === "DONE"
-                    ? "done"
-                    : ""
+                className={`${"admin-orderDetail-status-body"} ${
+                  orderDetail.status === "CANCELED" ? "cancel" : ""
                 }`}
               >
-                <div className="admin-orderDetail-status-body-card-confirm">
-                  <i className="bi bi-cart-check-fill"></i>
+                <div
+                  className={`${"admin-orderDetail-status-body-card"} ${
+                    orderDetail.status === "DELIVERING"
+                      ? "shipping"
+                      : orderDetail.status === "DONE"
+                      ? "done"
+                      : ""
+                  }`}
+                >
+                  <div className="admin-orderDetail-status-body-card-confirm">
+                    <i className="bi bi-cart-check-fill"></i>
+                  </div>
+                  <div className="line-confirm"></div>
+                  <div className="admin-orderDetail-status-body-card-handling">
+                    <i className="bi bi-arrow-repeat"></i>
+                  </div>
+                  <div className="line-handling"></div>
+                  <div className="admin-orderDetail-status-body-card-shipping">
+                    <i className="bi bi-truck"></i>
+                  </div>
+                  <div className="line-shipping"></div>
+                  <div className="admin-orderDetail-status-body-card-done">
+                    <i className="bi bi-check-circle"></i>
+                  </div>
+                  <div className="admin-orderDetail-status-body-card-cancel">
+                    ĐÃ BỊ HỦY
+                  </div>
                 </div>
-                <div className="line-confirm"></div>
-                <div className="admin-orderDetail-status-body-card-handling">
-                  <i className="bi bi-arrow-repeat"></i>
-                </div>
-                <div className="line-handling"></div>
-                <div className="admin-orderDetail-status-body-card-shipping">
-                  <i className="bi bi-truck"></i>
-                </div>
-                <div className="line-shipping"></div>
-                <div className="admin-orderDetail-status-body-card-done">
-                  <i className="bi bi-check-circle"></i>
-                </div>
-                <div className="admin-orderDetail-status-body-card-cancel">
-                  ĐÃ BỊ HỦY
+                <div className="admin-orderDetail-status-body-text">
+                  <div className="admin-orderDetail-status-body-text-confirm">
+                    Đã đặt hàng
+                  </div>
+                  <div className="admin-orderDetail-status-body-text-handling">
+                    Chờ xử lý
+                  </div>
+                  <div className="admin-orderDetail-status-body-text-shipping">
+                    Đang vận chuyển
+                  </div>
+                  <div className="admin-orderDetail-status-body-text-done">
+                    Hoàn thành
+                  </div>
                 </div>
               </div>
-              <div className="admin-orderDetail-status-body-text">
-                <div className="admin-orderDetail-status-body-text-confirm">
-                  Đã đặt hàng
+            </div>
+            <div className="admin-orderDetail-table-title">
+              CHI TIẾT HÓA ĐƠN
+            </div>
+            <div className="admin-orderDetail-table">
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell width="5%">#</StyledTableCell>
+                      <StyledTableCell width="10%">HÌNH ẢNH</StyledTableCell>
+                      <StyledTableCell width="40%">SẢN PHẨM</StyledTableCell>
+                      <StyledTableCell width="15%">GIÁ</StyledTableCell>
+                      <StyledTableCell width="15%">SỐ LƯỢNG</StyledTableCell>
+                      <StyledTableCell width="15%">TỔNG</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {orderDetail.listOrderDetail?.map((product, index) => {
+                      return (
+                        <StyledTableRow key={index}>
+                          <StyledTableCell>{index + 1}</StyledTableCell>
+                          <StyledTableCell>
+                            <div className="admin-orderDetail-table-image">
+                              <img src={product.productDetail.image} alt="" />
+                            </div>
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {product.productDetail.product.name}
+                            <p className="admin-orderDetail-table-size">
+                              Size: {product.productDetail.size}
+                            </p>
+                            <p className="admin-orderDetail-table-size">
+                              Màu: {product.productDetail.color.name}
+                            </p>
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(product.price)}
+                          </StyledTableCell>
+                          <StyledTableCell>{product.quantity}</StyledTableCell>
+                          <StyledTableCell>
+                            {new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(product.price * product.quantity)}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+            <div className="admin-orderDetail-table-footer">
+              <div className="admin-orderDetail-table-footer-subtotal">
+                <div className="admin-orderDetail-table-footer-subtotal-title">
+                  THÀNH TIỀN
                 </div>
-                <div className="admin-orderDetail-status-body-text-handling">
-                  Chờ xử lý
+                <div className="admin-orderDetail-table-footer-subtotal-cost">
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(orderDetail.subTotal)}
                 </div>
-                <div className="admin-orderDetail-status-body-text-shipping">
-                  Đang vận chuyển
+              </div>
+              <div className="admin-orderDetail-table-footer-subtotal">
+                <div className="admin-orderDetail-table-footer-subtotal-title">
+                  PHÍ VẬN CHUYỂN
                 </div>
-                <div className="admin-orderDetail-status-body-text-done">
-                  Hoàn thành
+                <div className="admin-orderDetail-table-footer-subtotal-cost">
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(30000)}
+                </div>
+              </div>
+              <div className="admin-orderDetail-table-footer-total">
+                <div className="admin-orderDetail-table-footer-total-title">
+                  TỔNG
+                </div>
+                <div className="admin-orderDetail-table-footer-total-cost">
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(orderDetail.total)}
                 </div>
               </div>
             </div>
-          </div>
-          <div className="admin-orderDetail-table-title">CHI TIẾT HÓA ĐƠN</div>
-          <div className="admin-orderDetail-table">
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell width="5%">#</StyledTableCell>
-                    <StyledTableCell width="10%">HÌNH ẢNH</StyledTableCell>
-                    <StyledTableCell width="40%">SẢN PHẨM</StyledTableCell>
-                    <StyledTableCell width="15%">GIÁ</StyledTableCell>
-                    <StyledTableCell width="15%">SỐ LƯỢNG</StyledTableCell>
-                    <StyledTableCell width="15%">TỔNG</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orderDetail.listOrderDetail?.map((product, index) => {
-                    return (
-                      <StyledTableRow key={index}>
-                        <StyledTableCell>{index + 1}</StyledTableCell>
-                        <StyledTableCell>
-                          <div className="admin-orderDetail-table-image">
-                            <img src={product.productDetail.image} alt="" />
-                          </div>
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {product.productDetail.product.name}
-                          <p className="admin-orderDetail-table-size">
-                            Size: {product.productDetail.size}
-                          </p>
-                          <p className="admin-orderDetail-table-size">
-                            Màu: {product.productDetail.color.name}
-                          </p>
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(product.price)}
-                        </StyledTableCell>
-                        <StyledTableCell>{product.quantity}</StyledTableCell>
-                        <StyledTableCell>
-                          {new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(product.price * product.quantity)}
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-          <div className="admin-orderDetail-table-footer">
-            <div className="admin-orderDetail-table-footer-subtotal">
-              <div className="admin-orderDetail-table-footer-subtotal-title">
-                THÀNH TIỀN
-              </div>
-              <div className="admin-orderDetail-table-footer-subtotal-cost">
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(orderDetail.subTotal)}
-              </div>
-            </div>
-            <div className="admin-orderDetail-table-footer-subtotal">
-              <div className="admin-orderDetail-table-footer-subtotal-title">
-                PHÍ VẬN CHUYỂN
-              </div>
-              <div className="admin-orderDetail-table-footer-subtotal-cost">
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(30000)}
-              </div>
-            </div>
-            <div className="admin-orderDetail-table-footer-total">
-              <div className="admin-orderDetail-table-footer-total-title">
-                TỔNG
-              </div>
-              <div className="admin-orderDetail-table-footer-total-cost">
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(orderDetail.total)}
-              </div>
-            </div>
-          </div>
 
-          {orderDetail.status === "CANCELED" ? (
-            ""
-          ) : orderDetail.status === "DONE" ? (
-            ""
-          ) : (
-            <>
-              <div className="admin-orderDetail-btn">
-                <div className="admin-orderDetail-btn-cancel">
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    className={classes.button}
-                    startIcon={<CancelIcon />}
-                    onClick={handleCancelOrder}
-                  >
-                    HỦY ĐƠN
-                  </Button>
-                </div>
-                <div>
-                  <ComponentToPrint ref={componentRef} />
-                  <Button variant="contained"
-                    color="secondary"
-                    size="large"
-                    className={classes.button}
-                    startIcon={<LocalPrintshopIcon />} onClick={handlePrint}>Print this out!</Button>
-                </div>
-                <div className="admin-orderDetail-btn-shipping">
-                  {orderDetail.status === "HANDLING" ? (
-                    <>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        className={classes.button}
-                        startIcon={<LocalShippingIcon />}
-                        onClick={handleAcceptOrder}
-                      >
-                        CHẤP NHẬN
-                      </Button>
-                    </>
-                  ) : orderDetail.status === "DELIVERING" ? (
-                    <>
-                      <ThemeProvider theme={theme}>
+            {orderDetail.status === "CANCELED" ? (
+              ""
+            ) : orderDetail.status === "DONE" ? (
+              ""
+            ) : (
+              <>
+                <div className="admin-orderDetail-btn">
+                  <div className="admin-orderDetail-btn-cancel">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      className={classes.button}
+                      startIcon={<CancelIcon />}
+                      onClick={handleCancelOrder}
+                    >
+                      HỦY ĐƠN
+                    </Button>
+                  </div>
+                  <div className="admin-orderDetail-btn-shipping">
+                    {orderDetail.status === "HANDLING" ? (
+                      <>
                         <Button
                           variant="contained"
                           color="primary"
                           size="large"
-                          className={classes.margin}
-                          startIcon={<CheckCircleOutlineIcon />}
-                          onClick={handleDoneOrder}
+                          className={classes.button}
+                          startIcon={<LocalShippingIcon />}
+                          onClick={handleAcceptOrder}
                         >
-                          HOÀN THÀNH
+                          CHẤP NHẬN
                         </Button>
-                      </ThemeProvider>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                      </>
+                    ) : orderDetail.status === "DELIVERING" ? (
+                      <>
+                        <ThemeProvider theme={theme}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            className={classes.margin}
+                            startIcon={<CheckCircleOutlineIcon />}
+                            onClick={handleDoneOrder}
+                          >
+                            HOÀN THÀNH
+                          </Button>
+                        </ThemeProvider>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <Dialog
+        fullScreen={fullScreen}
+        open={openPrintOrder}
+        onClose={handleClosePrintOrder}
+        fullWidth
+        maxWidth="md"
+        aria-labelledby="responsive-dialog-title"
+      >
+        <PrintOrder closePrint={handleClosePrintOrder} />
+      </Dialog>
+    </>
   );
 }
 

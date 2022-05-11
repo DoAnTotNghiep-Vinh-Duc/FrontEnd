@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
-import NavbarUser from "../../../components/NavBarUser/NavbarUser";
-import "./MyOrderDetail.scss";
-import orderAPI from "../../../api/orderAPI";
-import { green } from "@material-ui/core/colors";
 import Paper from "@material-ui/core/Paper";
-import moment from "moment";
-import {
-  createTheme,
-  makeStyles,
-  ThemeProvider,
-  withStyles,
-} from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { Link, useRouteMatch } from "react-router-dom";
+import orderAPI from "../../../api/orderAPI";
+import NavbarUser from "../../../components/NavBarUser/NavbarUser";
+import "./MyOrderDetail.scss";
 
 MyOrderDetail.propTypes = {};
 
@@ -38,12 +32,6 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
-
-const theme = createTheme({
-  palette: {
-    primary: green,
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -72,8 +60,6 @@ function MyOrderDetail(props) {
       }
     })();
   }, [orderId]);
-
-  console.log(myOrder);
 
   return (
     <div className="myOrderDetail">
