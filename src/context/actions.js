@@ -1,5 +1,6 @@
 export const ACTIONS = {
   dataCart: "dataCart",
-  dataAllCustomer: "dataAllCustomer",
+  dataFavorite: "dataFavorite",
+  dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
 };

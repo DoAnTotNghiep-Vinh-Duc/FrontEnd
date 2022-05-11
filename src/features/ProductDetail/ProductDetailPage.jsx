@@ -113,6 +113,17 @@ function ProductDetailPage(props) {
           productId: productId,
         });
         if (response.status === 200) {
+          (async () => {
+            try {
+              const response = await favoriteAPI.getAll();
+              dispatch({
+                type: ACTIONS.dataFavorite,
+                payload: response.data.data.listProduct,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
           toast.success("Thêm vào danh sách yêu thích thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,

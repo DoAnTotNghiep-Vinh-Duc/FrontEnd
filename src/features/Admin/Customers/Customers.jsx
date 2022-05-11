@@ -37,7 +37,7 @@ function Customers(props) {
           _limit: filters._limit,
         });
         dispatch({
-          type: ACTIONS.dataAllCustomer,
+          type: ACTIONS.dataAllCustomerAdmin,
           payload: response.data,
         });
         setPagination(response.pagination);
@@ -85,8 +85,14 @@ function Customers(props) {
                 <div className="admin-customers-content-body-container-body-header-action"></div>
               </div>
               <div className="admin-customers-content-body-container-body-customers">
-                {state.dataAllCustomer.map((customer, index) => {
-                  return <Customer key={index} customer={customer} />;
+                {state.dataAllCustomerAdmin.map((customer, index) => {
+                  return customer.roleAccount !== "Admin" ? (
+                    <>
+                      <Customer key={index} customer={customer} />
+                    </>
+                  ) : (
+                    <></>
+                  );
                 })}
               </div>
             </div>

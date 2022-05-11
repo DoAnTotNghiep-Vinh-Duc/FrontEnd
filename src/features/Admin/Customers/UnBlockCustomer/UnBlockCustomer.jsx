@@ -44,7 +44,7 @@ function UnBlockCustomer(props) {
                 _limit: 10,
               });
               dispatch({
-                type: ACTIONS.dataAllCustomer,
+                type: ACTIONS.dataAllCustomerAdmin,
                 payload: response.data,
               });
             } catch (error) {

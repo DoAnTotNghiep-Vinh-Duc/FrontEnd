@@ -36,7 +36,6 @@ function BlockCustomer(props) {
     (async () => {
       try {
         const response = await adminAPI.blockCustomer(customerId);
-        console.log(response);
         if (response.status === 200) {
           (async () => {
             try {
@@ -45,18 +44,20 @@ function BlockCustomer(props) {
                 _limit: 10,
               });
               dispatch({
-                type: ACTIONS.dataAllCustomer,
+                type: ACTIONS.dataAllCustomerAdmin,
                 payload: response.data,
               });
             } catch (error) {
               console.log(error);
             }
           })();
+
           toast.success("Đã khóa người dùng thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             theme: "dark",
           });
+
           props.closeBlockCustomer(false);
         }
       } catch (error) {

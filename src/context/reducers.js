@@ -8,10 +8,16 @@ const reducer = (state, action) => {
         dataCart: action.payload,
       };
 
-    case ACTIONS.dataAllCustomer:
+    case ACTIONS.dataFavorite:
       return {
         ...state,
-        dataAllCustomer: action.payload,
+        dataFavorite: action.payload,
+      };
+
+    case ACTIONS.dataAllCustomerAdmin:
+      return {
+        ...state,
+        dataAllCustomerAdmin: action.payload,
       };
 
     case ACTIONS.dataAllProductAdmin:

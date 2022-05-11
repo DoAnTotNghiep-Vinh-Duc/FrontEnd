@@ -15,13 +15,13 @@ Menu.propTypes = {};
 
 function Menu(props) {
   const { cart } = useCart();
+  const { listFavorite } = useFavorite();
+
   const { state } = useContext(GlobalContext);
   const userLogIn = useSelector((state) => state.user.currentUser);
   const History = useHistory();
 
   const [scroll, setScroll] = useState(false);
-
-  const { listFavorite } = useFavorite();
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {
@@ -272,7 +272,7 @@ function Menu(props) {
         </div>
         <div className="menu-right-wishlist" onClick={handleClickFavorite}>
           <i className="bi bi-suit-heart"></i>
-          <span>{listFavorite.length ?? 0}</span>
+          <span>{state.dataFavorite.length ?? 0}</span>
         </div>
         <div className="menu-right-bag" onClick={handleClickCart}>
           <i className="bi bi-handbag"></i>

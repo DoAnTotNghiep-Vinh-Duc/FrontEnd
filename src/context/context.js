@@ -5,7 +5,8 @@ export const GlobalContext = createContext();
 export const DataProvider = ({ children }) => {
   const initalState = {
     dataCart: [],
-    dataAllCustomer: [],
+    dataFavorite:[],
+    dataAllCustomerAdmin: [],
     dataAllProductAdmin: [],
   };
 
