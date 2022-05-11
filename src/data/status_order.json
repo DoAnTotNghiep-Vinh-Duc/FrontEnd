@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "value":"HANDLING",
+        "label": "Chờ xử lý"
+    },
+    {
+        "id": 2,
+        "value":"DELIVERING",
+        "label": "Đang vận chuyển"
+    },
+    {
+        "id": 3,
+        "value":"CANCELED",
+        "label": "Đã bị hủy"
+    },
+    {
+        "id": 4,
+        "value":"DONE",
+        "label": "Đã hoàn tất"
+    }
+]

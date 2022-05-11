@@ -4,6 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PropTypes from "prop-types";
 import React, { useContext } from "react";
 import { toast } from "react-toastify";
@@ -12,8 +13,8 @@ import { ACTIONS } from "../../../../context/actions";
 import { GlobalContext } from "../../../../context/context";
 
 toast.configure();
-ContinueProduct.propTypes = {
-  productId: PropTypes.string,
+UnBlockCustomer.propTypes = {
+  customerId: PropTypes.string,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -22,40 +23,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ContinueProduct(props) {
-  const { productId } = props;
+function UnBlockCustomer(props) {
+  const { customerId } = props;
   const classes = useStyles();
   const { dispatch } = useContext(GlobalContext);
 
   const handleClose = () => {
-    props.closeContinue(false);
+    props.closeUnBlockCustomer(false);
   };
 
-  const handleContinueSellProduct = () => {
+  const handleUnBlockCustomer = () => {
     (async () => {
       try {
-        const response = await adminAPI.continueSellProduct(productId);
+        const response = await adminAPI.unBlockCustomer(customerId);
         if (response.status === 200) {
           (async () => {
             try {
-              const response = await adminAPI.getAllProduct({
+              const response = await adminAPI.getAllCustomer({
                 _page: 1,
-                _limit: 5,
+                _limit: 10,
               });
               dispatch({
-                type: ACTIONS.dataAllProductAdmin,
+                type: ACTIONS.dataAllCustomer,
                 payload: response.data,
               });
             } catch (error) {
               console.log(error);
             }
           })();
-          toast.success("Bán lại sản phẩm thành công", {
+          toast.success("Mở khóa người dùng thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             theme: "dark",
           });
-          props.closeContinue(false);
+          props.closeUnBlockCustomer(false);
         }
       } catch (error) {
         console.log(error);
@@ -66,12 +67,12 @@ function ContinueProduct(props) {
   return (
     <>
       <DialogTitle id="responsive-dialog-title">
-        {"Bán lại sản phẩm?"}
+        {"Mở khóa khách hàng?"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Sản phẩm này hiện tại đang ngừng bán. Bạn có muốn chắc chắn sẽ bán lại
-          sản phẩm này không?
+          Bạn có muốn chắc chắn muốn mở khóa khách hàng này không? Khách hàng sẽ
+          có thể thực hiện tất cả các chức năng nếu được mở khóa!
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -80,15 +81,16 @@ function ContinueProduct(props) {
         </Button>
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           className={classes.button}
-          onClick={handleContinueSellProduct}
+          startIcon={<LockOpenIcon />}
+          onClick={handleUnBlockCustomer}
         >
-          Xác nhận
+          Mở Khóa
         </Button>
       </DialogActions>
     </>
   );
 }
 
-export default ContinueProduct;
+export default UnBlockCustomer;

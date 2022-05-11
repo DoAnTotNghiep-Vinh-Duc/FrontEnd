@@ -1,7 +1,9 @@
 import Pagination from "@material-ui/lab/Pagination";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import adminAPI from "../../../api/adminAPI";
+import { ACTIONS } from "../../../context/actions";
+import { GlobalContext } from "../../../context/context";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Product from "./Product/Product";
@@ -11,8 +13,8 @@ Products.propTypes = {};
 
 function Products(props) {
   const History = useHistory();
+  const { dispatch, state } = useContext(GlobalContext);
 
-  const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
     _limit: 5,
@@ -29,13 +31,16 @@ function Products(props) {
           _page: filters._page,
           _limit: filters._limit,
         });
-        setProducts(response.data);
+        dispatch({
+          type: ACTIONS.dataAllProductAdmin,
+          payload: response.data,
+        });
         setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [filters]);
+  }, [dispatch, filters]);
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({
@@ -98,9 +103,9 @@ function Products(props) {
                 <div className="admin-products-content-body-listProducts-body-header-action"></div>
               </div>
               <div className="admin-products-content-body-listProducts-body-products">
-                {products.length ? (
+                {state.dataAllProductAdmin.length ? (
                   <>
-                    {products.map((product) => {
+                    {state.dataAllProductAdmin.map((product) => {
                       return <Product product={product} key={product._id} />;
                     })}
                   </>

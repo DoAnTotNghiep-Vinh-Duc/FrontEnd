@@ -40,7 +40,9 @@ function Product({ product }) {
   return (
     <>
       <div
-        className={`${"admin-products-content-body-listProducts-body-products-product"} ${""}`}
+        className={`${"admin-products-content-body-listProducts-body-products-product"} ${
+          product.status === "STOPPSELLING" ? "stop" : ""
+        }`}
       >
         <div className="admin-products-content-body-listProducts-body-products-product-seri">
           #{product._id.substring(product._id.length - 5, product._id.length)}

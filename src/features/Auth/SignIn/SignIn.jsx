@@ -49,7 +49,11 @@ function SignIn(props) {
             autoClose: 2000,
             theme: "colored",
           });
-          History.push("/");
+          if (result.data.account.role === "Admin") {
+            History.push("/admin");
+          } else {
+            History.push("/");
+          }
         }
       } catch (error) {
         setError(error.message);

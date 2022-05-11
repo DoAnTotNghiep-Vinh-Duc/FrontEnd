@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { DataProvider } from "./context/context";
 import AdminPage from "./features/Admin/index";
 import Auth from "./features/Auth/index";
 import Cart from "./features/Cart/index";
@@ -15,30 +16,36 @@ import "./sass/index.scss";
 function App() {
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" component={Home} exact></Route>
+      <DataProvider>
+        <Switch>
+          <Route path="/" component={Home} exact></Route>
 
-        <Route path="/auth" component={Auth}></Route>
+          <Route path="/auth" component={Auth}></Route>
 
-        <Route path="/products" component={ListProduct}></Route>
+          <Route path="/products" component={ListProduct}></Route>
 
-        <Route path="/cart" component={Cart}></Route>
+          <Route path="/cart" component={Cart}></Route>
 
-        <Route path="/favorites" component={ListFavorite}></Route>
+          <Route path="/favorites" component={ListFavorite}></Route>
 
-        <Route path="/admin" component={AdminPage}></Route>
+          <Route path="/admin" component={AdminPage}></Route>
 
-        <Route path="/verifyAccount" component={SuccessVerify}></Route>
+          <Route path="/verifyAccount" component={SuccessVerify}></Route>
 
-        <Route path="/forgotPassword" component={ForgotPassword} exact></Route>
-        <Route
-          path="/forgotPassword/changePassword"
-          component={ChangePassword}
-          exact
-        ></Route>
+          <Route
+            path="/forgotPassword"
+            component={ForgotPassword}
+            exact
+          ></Route>
+          <Route
+            path="/forgotPassword/changePassword"
+            component={ChangePassword}
+            exact
+          ></Route>
 
-        <Route path="/userInformation" component={InformationPage}></Route>
-      </Switch>
+          <Route path="/userInformation" component={InformationPage}></Route>
+        </Switch>
+      </DataProvider>
     </div>
   );
 }

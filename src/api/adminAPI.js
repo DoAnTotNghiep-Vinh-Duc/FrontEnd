@@ -54,6 +54,14 @@ const adminAPI = {
     const url = `/admin/product/${id}`;
     return axiosClient.get(url);
   },
+  stopSellProduct(id) {
+    const url = `/admin/product/stop-selling-product/${id}`;
+    return axiosClient.put(url);
+  },
+  continueSellProduct(id) {
+    const url = `/admin/product/resale-product/${id}`;
+    return axiosClient.put(url);
+  },
 
   testImage(image) {
     const url = "/rate/upload-image";
@@ -91,6 +99,14 @@ const adminAPI = {
       },
     };
   },
+  blockCustomer(accountId) {
+    const url = "/admin/account/close-account";
+    return axiosClient.post(url, { accountId });
+  },
+  unBlockCustomer(accountId) {
+    const url = "/admin/account/active-account";
+    return axiosClient.post(url, { accountId });
+  },
 
   // order
   async getAllOrder(params) {
@@ -120,6 +136,16 @@ const adminAPI = {
   cancelOrder(orderId) {
     const url = `/admin/order/cancel-order/${orderId}`;
     return axiosClient.put(url);
+  },
+  sortOrder(typeSort, sort, typeOrderStatus) {
+    const url = "/admin/order/sortOrder";
+    return axiosClient.get(url, {
+      params: {
+        typeSort,
+        sort,
+        typeOrderStatus,
+      },
+    });
   },
 };
 

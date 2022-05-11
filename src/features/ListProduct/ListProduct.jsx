@@ -22,10 +22,10 @@ function ListPage(props) {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     _page: 1,
-    _limit: 1,
+    _limit: 16,
   });
   const [pagination, setPagination] = useState({
-    limit: 1,
+    limit: 16,
     page: 1,
   });
 

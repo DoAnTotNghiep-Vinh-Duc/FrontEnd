@@ -6,9 +6,11 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
+import { ACTIONS } from "../../../../context/actions";
+import { GlobalContext } from "../../../../context/context";
 
 toast.configure();
 DeleteProduct.propTypes = {
@@ -24,27 +26,42 @@ const useStyles = makeStyles((theme) => ({
 function DeleteProduct(props) {
   const { productId } = props;
   const classes = useStyles();
+  const { dispatch } = useContext(GlobalContext);
 
   const handleClose = () => {
     props.closeDelete(false);
   };
 
   const handleDeleteProduct = () => {
-    // (async () => {
-    //   try {
-    //     const response = await adminAPI.deleteProduct(productId);
-    //     if (response.status === 200) {
-    //       toast.success("Xóa sản phẩm thành công", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //         autoClose: 2000,
-    //         theme: "dark",
-    //       });
-    //       props.closeDelete(false);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // })();
+    (async () => {
+      try {
+        const response = await adminAPI.stopSellProduct(productId);
+        if (response.status === 200) {
+          (async () => {
+            try {
+              const response = await adminAPI.getAllProduct({
+                _page: 1,
+                _limit: 5,
+              });
+              dispatch({
+                type: ACTIONS.dataAllProductAdmin,
+                payload: response.data,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+          toast.success("Dừng bán sản phẩm thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
+          props.closeDelete(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
