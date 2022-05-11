@@ -142,9 +142,9 @@ function Orders(props) {
                 </div>
                 <div className="admin-orders-content-body-container-body-header-customer">
                   <div className="admin-orders-customer-icon">
-                    {iconCustomer === "DESC" ? (
+                    {iconCustomer === "ASC" ? (
                       <i className="bi bi-arrow-up"></i>
-                    ) : iconCustomer === "ASC" ? (
+                    ) : iconCustomer === "DESC" ? (
                       <i className="bi bi-arrow-down"></i>
                     ) : (
                       ""
@@ -176,9 +176,9 @@ function Orders(props) {
                 </div>
                 <div className="admin-orders-content-body-container-body-header-cash">
                   <div className="admin-orders-cash-icon">
-                    {iconCash === "DESC" ? (
+                    {iconCash === "ASC" ? (
                       <i className="bi bi-arrow-up"></i>
-                    ) : iconCash === "ASC" ? (
+                    ) : iconCash === "DESC" ? (
                       <i className="bi bi-arrow-down"></i>
                     ) : (
                       ""
@@ -209,9 +209,9 @@ function Orders(props) {
                 </div>
                 <div className="admin-orders-content-body-container-body-header-date">
                   <div className="admin-orders-date-icon">
-                    {iconDate === "DESC" ? (
+                    {iconDate === "ASC" ? (
                       <i className="bi bi-arrow-up"></i>
-                    ) : iconDate === "ASC" ? (
+                    ) : iconDate === "DESC" ? (
                       <i className="bi bi-arrow-down"></i>
                     ) : (
                       ""

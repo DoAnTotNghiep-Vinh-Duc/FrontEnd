@@ -2,11 +2,11 @@
     {
         "id":1,
         "value": "ASC",
-        "label": "Giảm dần"
+        "label": "Tăng dần"
     },
     {
         "id":2,
         "value": "DESC",
-        "label": "Tăng dần"
+        "label": "Giảm dần"
     }
 ]

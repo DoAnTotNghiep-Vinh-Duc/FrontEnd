@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
 import Scroll from "../../components/Scroll/Scroll";
-import useFavorite from "../../hooks/useFavorite";
+import { GlobalContext } from "../../context/context";
 import "./ListFavorite.scss";
 import ProductFavorite from "./ProductFavorite/ProductFavorite";
 
@@ -13,7 +13,7 @@ ListFavorite.propTypes = {};
 function ListFavorite(props) {
   const History = useHistory();
 
-  const { listFavorite } = useFavorite();
+  const { state } = useContext(GlobalContext);
 
   const handleClickContinue = () => {
     History.goBack();
@@ -31,7 +31,7 @@ function ListFavorite(props) {
         </div>
       </div>
       <div className="favorite-content">
-        {listFavorite.length ? (
+        {state.dataFavorite.length ? (
           <>
             <div className="favorite-header">
               <div className="favorite-header-product">Sản phẩm</div>
@@ -41,7 +41,7 @@ function ListFavorite(props) {
               <div className="favorite-header-add"></div>
             </div>
             <div className="favorite-body">
-              {listFavorite.map((product, index) => {
+              {state.dataFavorite.map((product, index) => {
                 return <ProductFavorite product={product} key={index} />;
               })}
             </div>

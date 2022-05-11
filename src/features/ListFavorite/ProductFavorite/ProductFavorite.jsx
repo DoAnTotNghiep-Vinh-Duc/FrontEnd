@@ -8,10 +8,12 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import favoriteAPI from "../../../api/favoriteAPI";
+import { ACTIONS } from "../../../context/actions";
+import { GlobalContext } from "../../../context/context";
 
 toast.configure();
 ProductFavorite.propTypes = {
@@ -29,6 +31,8 @@ function ProductFavorite({ product }) {
   const History = useHistory();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { dispatch } = useContext(GlobalContext);
 
   const [open, setOpen] = useState(false);
 
@@ -51,6 +55,17 @@ function ProductFavorite({ product }) {
           productId: product._id,
         });
         if (response.status === 204) {
+          (async () => {
+            try {
+              const response = await favoriteAPI.getAll();
+              dispatch({
+                type: ACTIONS.dataFavorite,
+                payload: response.data.data.listProduct,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
           toast.success("Xóa khỏi danh sách yêu thích thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,

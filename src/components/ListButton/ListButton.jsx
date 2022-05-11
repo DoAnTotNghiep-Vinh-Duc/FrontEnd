@@ -1,10 +1,11 @@
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import favoriteAPI from "../../api/favoriteAPI";
+import { ACTIONS } from "../../context/actions";
+import { GlobalContext } from "../../context/context";
 import QuickView from "../../features/QuickView/QuickView";
-import useFavorite from "../../hooks/useFavorite";
 import "./ListButton.scss";
 
 toast.configure();
@@ -16,11 +17,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function ListButton(props) {
   const { product } = props;
+
+  const { dispatch, state } = useContext(GlobalContext);
+
   const [open, setOpen] = useState(false);
   const [productSelected, setProductSelected] = useState(product);
 
-  const { listFavorite } = useFavorite();
-  let index = listFavorite.findIndex((x) => x._id === productSelected._id);
+  let index = state.dataFavorite.findIndex(
+    (x) => x._id === productSelected._id
+  );
 
   const handleClickOpen = () => {
     setProductSelected(product);
@@ -38,6 +43,17 @@ function ListButton(props) {
           productId: productSelected._id,
         });
         if (response.status === 200) {
+          (async () => {
+            try {
+              const response = await favoriteAPI.getAll();
+              dispatch({
+                type: ACTIONS.dataFavorite,
+                payload: response.data.data.listProduct,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
           toast.success("Thêm vào danh sách yêu thích thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,

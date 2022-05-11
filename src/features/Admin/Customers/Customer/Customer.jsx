@@ -34,7 +34,9 @@ function Customer({ customer }) {
   return (
     <>
       <div
-        className={`${"admin-customers-content-body-container-body-customers-customer"} ${""}`}
+        className={`${"admin-customers-content-body-container-body-customers-customer"} ${
+          customer.status === "CLOSED" ? "block" : ""
+        }`}
       >
         <div className="admin-customers-content-body-container-body-customers-customer-seri">
           #
