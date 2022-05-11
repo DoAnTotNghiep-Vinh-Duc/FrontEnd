@@ -15,9 +15,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import CancelIcon from "@material-ui/icons/Cancel";
+import LocalPrintshopIcon from '@material-ui/icons/LocalPrintshop';
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, Component } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import adminAPI from "../../../../api/adminAPI";
 import Header from "../../components/Header/Header";
@@ -25,6 +26,9 @@ import NavBars from "../../components/NavBars/NavBars";
 import "./OrderDetail.scss";
 import { toast } from "react-toastify";
 import "moment/locale/vi";
+import { useReactToPrint } from 'react-to-print';
+import ReactToPrint,{ PrintContextConsumer } from 'react-to-print';
+import Order from '../../Orders/Orders';
 
 moment.locale("vi");
 toast.configure();
@@ -62,7 +66,26 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-
+class ComponentToPrint extends React.Component {
+  render() {
+    return (
+      <div>
+        <div style={{ fontSize: "20px", color: "green" }}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium
+          viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Eu
+          lobortis elementum nibh tellus. Urna molestie at elementum eu
+          facilisis sed odio morbi quis. Et molestie ac feugiat sed lectus
+          vestibulum mattis ullamcorper. Ut tellus elementum sagittis vitae et.
+          Leo urna molestie at elementum. Vestibulum rhoncus est pellentesque
+          elit ullamcorper dignissim. Sollicitudin nibh sit amet commodo nulla
+          facilisi. Amet luctus venenatis lectus magna. Ultricies integer quis
+          auctor elit sed vulputate mi.
+        </div>
+      </div>
+    );
+  }
+}
 function OrderDetail(props) {
   const classes = useStyles();
   const History = useHistory();
@@ -136,7 +159,10 @@ function OrderDetail(props) {
       }
     })();
   };
-
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
     <div className="admin-orderDetail">
       <NavBars />
@@ -383,6 +409,14 @@ function OrderDetail(props) {
                   >
                     HỦY ĐƠN
                   </Button>
+                </div>
+                <div>
+                  <ComponentToPrint ref={componentRef} />
+                  <Button variant="contained"
+                    color="secondary"
+                    size="large"
+                    className={classes.button}
+                    startIcon={<LocalPrintshopIcon />} onClick={handlePrint}>Print this out!</Button>
                 </div>
                 <div className="admin-orderDetail-btn-shipping">
                   {orderDetail.status === "HANDLING" ? (
