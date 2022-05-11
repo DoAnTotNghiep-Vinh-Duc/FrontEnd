@@ -5,8 +5,8 @@ const cartAPI = {
     const url = "/cart/add-item";
     return axiosClient.put(url, productDetailId);
   },
-  getCartByAccountId(accountId) {
-    const url = `/cart/${accountId}`;
+  getCartByAccountId() {
+    const url = `/cart`;
     return axiosClient.get(url);
   },
   increaseQuantity(productDetailId) {
