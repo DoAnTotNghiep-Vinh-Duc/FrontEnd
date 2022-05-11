@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import NotFound from "../../components/NotFound/NotFound";
 import MyOrder from "../MyOrder/MyOrder";
 import MyOrderDetail from "../MyOrder/MyOrderDetail/MyOrderDetail";
 import Phone from "../Phone/Phone";
@@ -36,9 +37,11 @@ function InformationPage(props) {
         <Route path={`${match.url}/myOrders`} exact>
           <MyOrder />
         </Route>
-        <Route path={`${match.url}/myOrders/:orderId`}>
+        <Route path={`${match.url}/myOrders/:orderId`} exact>
           <MyOrderDetail />
         </Route>
+
+        <Route component={NotFound}></Route>
       </Switch>
     </div>
   );

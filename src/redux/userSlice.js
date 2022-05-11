@@ -19,7 +19,7 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: {
     [signIn.fulfilled]: (state, action) => {
-      state.currentUser = action.payload;
+      state.currentUser = action.payload.data.account;
     },
   },
 });

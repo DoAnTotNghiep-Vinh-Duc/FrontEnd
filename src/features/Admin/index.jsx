@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import NotFound from "../../components/NotFound/NotFound";
 import Customers from "./Customers/Customers";
 import Dashboard from "./Dashboard/Dashboard";
 import OrderDetail from "./Orders/OrderDetail/OrderDetail";
@@ -22,21 +23,25 @@ function AdminPage(props) {
         <Route path={`${match.url}/products`} exact>
           <Products />
         </Route>
-        <Route path={`${match.url}/products/:productId`}>
+        <Route path={`${match.url}/products/:productId`} exact>
           <ProductDetail />
         </Route>
+
         <Route path={`${match.url}/orders`} exact>
           <Orders />
         </Route>
-        <Route path={`${match.url}/orders/:orderId`}>
+        <Route path={`${match.url}/orders/:orderId`} exact>
           <OrderDetail />
         </Route>
+
         <Route path={`${match.url}/customers`} exact>
           <Customers />
         </Route>
-        <Route path={`${match.url}/addproduct`}>
+        <Route path={`${match.url}/addproduct`} exact>
           <AddProduct />
         </Route>
+
+        <Route component={NotFound}></Route>
       </Switch>
     </div>
   );

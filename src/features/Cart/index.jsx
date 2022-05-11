@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import NotFound from "../../components/NotFound/NotFound";
 import InformationPage from "../CartInformation/InformationPage";
 import NotificationPage from "../CartNotification/NotificationPage";
 import PaymentPage from "../Payment/PaymentPage";
@@ -20,15 +21,20 @@ function CartFeature(props) {
         <Route path={match.url} exact>
           <CartPage />
         </Route>
+
         <Route path={`${match.url}/information`} exact>
           <InformationPage sendUserShip={handleReceiceUser} />
         </Route>
+
         <Route path={`${match.url}/information/payment`} exact>
           <PaymentPage user={user} />
         </Route>
+
         <Route path={`${match.url}/information/payment/notification`} exact>
           <NotificationPage />
         </Route>
+
+        <Route component={NotFound}></Route>
       </Switch>
     </div>
   );

@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import NotFound from "./components/NotFound/NotFound";
 import { DataProvider } from "./context/context";
 import AdminPage from "./features/Admin/index";
 import Auth from "./features/Auth/index";
@@ -11,6 +12,7 @@ import ListFavorite from "./features/ListFavorite/ListFavorite";
 import ListProduct from "./features/ListProduct/index";
 import SuccessVerify from "./features/SuccessVerify/SuccessVerify";
 import InformationPage from "./features/UserInformation/index";
+import { authentication } from "./pages/authentications";
 import "./sass/index.scss";
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
 
           <Route path="/favorites" component={ListFavorite}></Route>
 
-          <Route path="/admin" component={AdminPage}></Route>
+          <PrivateRouter path="/admin" component={AdminPage}></PrivateRouter>
 
           <Route path="/verifyAccount" component={SuccessVerify}></Route>
 
@@ -44,9 +46,26 @@ function App() {
           ></Route>
 
           <Route path="/userInformation" component={InformationPage}></Route>
+
+          <Route component={NotFound}></Route>
         </Switch>
       </DataProvider>
     </div>
+  );
+}
+
+function PrivateRouter({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authentication.isAuthencation().role === "Admin" ? (
+          <Component {...props} />
+        ) : (
+          <NotFound />
+        )
+      }
+    ></Route>
   );
 }
 

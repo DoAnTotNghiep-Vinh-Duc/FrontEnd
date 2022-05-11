@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import NotFound from "../../components/NotFound/NotFound";
 import VerifyAccount from "../VerifyAccount/VerifyAccount";
 import Auth from "./Auth";
 
@@ -19,9 +20,12 @@ function AuthPage(props) {
         <Route path={match.url} exact>
           <Auth sendEmailToVerify={receiEmailHandle} />
         </Route>
+
         <Route path={`${match.url}/verify`} exact>
           <VerifyAccount email={email} />
         </Route>
+
+        <Route component={NotFound}></Route>
       </Switch>
     </div>
   );
