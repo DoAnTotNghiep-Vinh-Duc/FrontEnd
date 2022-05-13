@@ -3,4 +3,5 @@ export const ACTIONS = {
   dataFavorite: "dataFavorite",
   dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
+  emailForgotPassword: "emailForgotPassword",
 };

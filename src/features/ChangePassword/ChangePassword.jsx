@@ -1,16 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import OtpInput from "react-otp-input";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import icon from "../../assets/images/changepass.png";
+import { GlobalContext } from "../../context/context";
 import PasswordField from "../../form-control/PasswordField";
 import "./ChangePassword.scss";
 
 ChangePassword.propTypes = {};
 
 function ChangePassword(props) {
+  const { state } = useContext(GlobalContext);
   const History = useHistory();
   const [OTP, setOTP] = useState("");
 
@@ -64,7 +66,9 @@ function ChangePassword(props) {
                 </p>
                 <p className="changePassword-header-right-container-otp-title-sub2">
                   Chúng tôi đã gửi mã OTP đến
-                  <b style={{ marginLeft: "5px" }}>12345ddduc@gmail.com</b>
+                  <b style={{ marginLeft: "5px" }}>
+                    {state.emailForgotPassword ?? ""}
+                  </b>
                 </p>
               </div>
               <div className="changePassword-header-right-container-otp-input">

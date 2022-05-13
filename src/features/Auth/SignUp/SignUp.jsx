@@ -18,7 +18,7 @@ function SignUp(props) {
   const [error, setError] = useState("");
   const [token, setToken] = useState("");
   const reCaptcha = useRef();
-  
+
   const schema = yup.object().shape({
     fullname: yup.string().required("Vui lòng nhập Họ tên"),
     email: yup
@@ -49,7 +49,7 @@ function SignUp(props) {
     (async () => {
       try {
         if (!token) {
-          setError("Yoou must verify the captcha");
+          setError("Chưa xác thực captcha!");
           return;
         }
         setError("");
@@ -92,13 +92,13 @@ function SignUp(props) {
         Đăng kí
       </button>
       <div className="form-group">
-                                    <ReCAPTCHA
-                                        ref={reCaptcha}
-                                        sitekey={"6Leq9tcfAAAAAOXGY1PngSBAoQzdtk194DhWzp7A"}
-                                        onChange={token => setToken(token)}
-                                        onExpired={e => setToken("")}
-                                    />
-                                </div>
+        <ReCAPTCHA
+          ref={reCaptcha}
+          sitekey={"6Leq9tcfAAAAAOXGY1PngSBAoQzdtk194DhWzp7A"}
+          onChange={(token) => setToken(token)}
+          onExpired={(e) => setToken("")}
+        />
+      </div>
     </form>
   );
 }

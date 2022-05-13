@@ -26,6 +26,12 @@ const reducer = (state, action) => {
         dataAllProductAdmin: action.payload,
       };
 
+    case ACTIONS.emailForgotPassword:
+      return {
+        ...state,
+        emailForgotPassword: action.payload,
+      };
+
     default:
       return state;
   }

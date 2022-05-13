@@ -1,12 +1,56 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../assets/images/forgotpass.png";
+import { ACTIONS } from "../../context/actions";
+import { GlobalContext } from "../../context/context";
 import "./ForgotPassword.scss";
 
 ForgotPassword.propTypes = {};
 
 function ForgotPassword(props) {
   const location = useLocation();
+  const History = useHistory();
+  const reCaptcha = useRef();
+  const { dispatch } = useContext(GlobalContext);
+
+  const [token, setToken] = useState("");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [btnSend, setBtnSend] = useState(false);
+
+  const handleChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleClickSend = () => {
+    if (!email) {
+      setError("Chưa nhập email!");
+    }
+
+    if (!token) {
+      setError("Chưa xác thực captcha!");
+    }
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setError("");
+      dispatch({
+        type: ACTIONS.emailForgotPassword,
+        payload: email,
+      });
+      History.push(`${location.pathname}/changePassword`);
+    } else {
+      setError("Email không hợp lệ!");
+    }
+  };
+
+  useEffect(() => {
+    if (!email || !token) {
+      setBtnSend(false);
+    } else {
+      setBtnSend(true);
+    }
+  }, [email, token]);
 
   return (
     <div className="forgotpassword">
@@ -32,16 +76,37 @@ function ForgotPassword(props) {
                 sẽ gửi cho bạn một mã OTP để giúp bạn lấy lại mật khẩu.
               </div>
               <div className="forgotpassword-container-body-input">
-                <input type="email" name="" id="" placeholder="EMAIL CỦA BẠN" />
+                <input
+                  type="email"
+                  name=""
+                  id=""
+                  value={email}
+                  placeholder="EMAIL CỦA BẠN"
+                  onChange={handleChangeEmail}
+                />
               </div>
             </div>
+            <div className="forgotpassword-recaptcha">
+              <ReCAPTCHA
+                ref={reCaptcha}
+                sitekey={"6Leq9tcfAAAAAOXGY1PngSBAoQzdtk194DhWzp7A"}
+                onChange={(token) => setToken(token)}
+                onExpired={(e) => setToken("")}
+              />
+            </div>
+            <div className="forgotpassword-error">
+              <span>{error}</span>
+            </div>
             <div className="forgotpassword-container-footer">
-              <Link
-                className="forgotpassword-container-footer-btnSend"
-                to={`${location.pathname}/changePassword`}
+              <button
+                className={`${"forgotpassword-container-footer-btnSend"} ${
+                  btnSend ? "" : "notSend"
+                }`}
+                disabled={btnSend ? false : true}
+                onClick={handleClickSend}
               >
                 GỬI
-              </Link>
+              </button>
             </div>
           </div>
         </div>
