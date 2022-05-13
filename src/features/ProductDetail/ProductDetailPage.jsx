@@ -1,3 +1,4 @@
+import { makeStyles, withStyles } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import React, { useContext, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -16,12 +17,40 @@ import useFavorite from "../../hooks/useFavorite";
 import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
 import "./css/ProductDetailPage.scss";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 toast.configure();
 ProductDetailPage.propTypes = {};
 
+const StyledRating = withStyles({
+  root: {
+    color: "#FE8C23",
+  },
+  iconFilled: {
+    color: "#FE8C23",
+  },
+  iconHover: {
+    color: "#fff",
+    backgroundColor: "#000",
+  },
+})(Rating);
+
+const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 700,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  colorPrimary: { backgroundColor: "#EEEEEE" },
+  barColorPrimary: {
+    backgroundColor: "#FE8C23",
+  },
+}));
+
 function ProductDetailPage(props) {
   const { dispatch } = useContext(GlobalContext);
+  const classes = useStyles();
 
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
@@ -296,7 +325,234 @@ function ProductDetailPage(props) {
             </div>
           </div>
         </div>
+        <div className="product-details-content-rate">
+          <div className="product-details-content-rate-left">
+            <div className="product-details-content-rate-left-name">
+              <p>Áo thun tay dài màu đen</p>
+            </div>
+            <div className="product-details-content-rate-left-container">
+              <div className="product-details-content-rate-left-container-left">
+                <div className="product-details-content-rate-left-container-left-total">
+                  <span className="total">4.6</span>
+
+                  <StyledRating
+                    name="half-rating-read"
+                    defaultValue={product.point}
+                    precision={0.1}
+                    readOnly
+                    size="large"
+                    color="#fb2e86"
+                  />
+                </div>
+                <div className="product-details-content-rate-left-container-left-vote">
+                  <div className="product-details-content-rate-left-container-left-vote-item">
+                    <div className="product-details-content-rate-left-container-left-vote-item-title">
+                      <span>5</span> <i className="bi bi-star-fill"></i>
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-line">
+                      <LinearProgress
+                        variant="determinate"
+                        value={66}
+                        classes={{
+                          colorPrimary: classes.colorPrimary,
+                          barColorPrimary: classes.barColorPrimary,
+                        }}
+                      />
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-percent">
+                      66%
+                    </div>
+                  </div>
+                  <div className="product-details-content-rate-left-container-left-vote-item">
+                    <div className="product-details-content-rate-left-container-left-vote-item-title">
+                      <span>4</span> <i className="bi bi-star-fill"></i>
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-line">
+                      <LinearProgress
+                        variant="determinate"
+                        value={66}
+                        classes={{
+                          colorPrimary: classes.colorPrimary,
+                          barColorPrimary: classes.barColorPrimary,
+                        }}
+                      />
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-percent">
+                      66%
+                    </div>
+                  </div>
+                  <div className="product-details-content-rate-left-container-left-vote-item">
+                    <div className="product-details-content-rate-left-container-left-vote-item-title">
+                      <span>3</span> <i className="bi bi-star-fill"></i>
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-line">
+                      <LinearProgress
+                        variant="determinate"
+                        value={66}
+                        classes={{
+                          colorPrimary: classes.colorPrimary,
+                          barColorPrimary: classes.barColorPrimary,
+                        }}
+                      />
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-percent">
+                      66%
+                    </div>
+                  </div>
+                  <div className="product-details-content-rate-left-container-left-vote-item">
+                    <div className="product-details-content-rate-left-container-left-vote-item-title">
+                      <span>2</span> <i className="bi bi-star-fill"></i>
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-line">
+                      <LinearProgress
+                        variant="determinate"
+                        value={66}
+                        classes={{
+                          colorPrimary: classes.colorPrimary,
+                          barColorPrimary: classes.barColorPrimary,
+                        }}
+                      />
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-percent">
+                      66%
+                    </div>
+                  </div>
+                  <div className="product-details-content-rate-left-container-left-vote-item">
+                    <div className="product-details-content-rate-left-container-left-vote-item-title">
+                      <span>1</span> <i className="bi bi-star-fill"></i>
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-line">
+                      <LinearProgress
+                        variant="determinate"
+                        value={66}
+                        classes={{
+                          colorPrimary: classes.colorPrimary,
+                          barColorPrimary: classes.barColorPrimary,
+                        }}
+                      />
+                    </div>
+                    <div className="product-details-content-rate-left-container-left-vote-item-percent">
+                      66%
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="product-details-content-rate-left-container-right">
+                <p>11 đánh giá</p>
+              </div>
+            </div>
+          </div>
+          <div className="product-details-content-rate-right">
+            <div className="product-details-content-rate-right-title">
+              <p>XEM THÔNG TIN TÓM LƯỢC</p>
+              <span>ĐÁNH GIÁ CỦA KHÁCH HÀNG</span>
+            </div>
+            <div className="product-details-content-rate-right-rating">
+              <div className="product-details-content-rate-right-rating-item">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="medium"
+                />
+                <span className="total">(10)</span>
+              </div>
+              <div className="product-details-content-rate-right-rating-item">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="medium"
+                />
+                <span className="total">(10)</span>
+              </div>
+              <div className="product-details-content-rate-right-rating-item">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="medium"
+                />
+                <span className="total">(10)</span>
+              </div>
+              <div className="product-details-content-rate-right-rating-item">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="medium"
+                />
+                <span className="total">(10)</span>
+              </div>
+              <div className="product-details-content-rate-right-rating-item">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="medium"
+                />
+                <span className="total">(10)</span>
+              </div>
+            </div>
+            <div className="product-details-content-rate-right-btn">
+              <button>Viết bài đánh giá</button>
+            </div>
+          </div>
+        </div>
+        <div className="comment">
+          <div className="comment-list">
+            <div className="comment-list-comment">
+              <div className="comment-list-comment-name-date">
+                <div className="comment-list-comment-name">Đạt Đức</div>
+                <div className="comment-list-comment-date">14/05/2022</div>
+              </div>
+              <div className="comment-list-comment-name-rate">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="small"
+                />
+              </div>
+              <div className="comment-list-comment-text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                voluptas magnam reiciendis minus modi. Maxime qui iure, omnis
+                perspiciatis labore id. Neque nihil autem minus sapiente velit
+                vero dicta labore!
+              </div>
+            </div>
+            <div className="comment-list-comment">
+              <div className="comment-list-comment-name-date">
+                <div className="comment-list-comment-name">Đạt Đức</div>
+                <div className="comment-list-comment-date">14/05/2022</div>
+              </div>
+              <div className="comment-list-comment-name-rate">
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.point}
+                  precision={0.1}
+                  readOnly
+                  size="small"
+                />
+              </div>
+              <div className="comment-list-comment-text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                voluptas magnam reiciendis minus modi. Maxime qui iure, omnis
+                perspiciatis labore id. Neque nihil autem minus sapiente velit
+                vero dicta labore!
+              </div>
+            </div>
+          </div>
+          <div className="comment-pagination">pagination</div>
+        </div>
       </div>
+
       <Footer />
     </div>
   );
