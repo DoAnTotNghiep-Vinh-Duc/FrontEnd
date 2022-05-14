@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import orderAPI from "../../../api/orderAPI";
 import NavbarUser from "../../../components/NavBarUser/NavbarUser";
+import Product from "../Product/Product";
 import "./MyOrderDetail.scss";
 
 MyOrderDetail.propTypes = {};
@@ -25,20 +26,9 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
-  },
-  button: {
-    margin: theme.spacing(1),
   },
 }));
 
@@ -167,47 +157,37 @@ function MyOrderDetail(props) {
               <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell width="5%">#</StyledTableCell>
-                    <StyledTableCell width="10%">HÌNH ẢNH</StyledTableCell>
-                    <StyledTableCell width="40%">SẢN PHẨM</StyledTableCell>
-                    <StyledTableCell width="15%">GIÁ</StyledTableCell>
-                    <StyledTableCell width="15%">SỐ LƯỢNG</StyledTableCell>
-                    <StyledTableCell width="15%">TỔNG</StyledTableCell>
+                    {myOrder.status === "DONE" ? (
+                      <>
+                        <StyledTableCell width="5%">#</StyledTableCell>
+                        <StyledTableCell width="10%">HÌNH ẢNH</StyledTableCell>
+                        <StyledTableCell width="33%">SẢN PHẨM</StyledTableCell>
+                        <StyledTableCell width="15%">GIÁ</StyledTableCell>
+                        <StyledTableCell width="10%">SỐ LƯỢNG</StyledTableCell>
+                        <StyledTableCell width="15%">TỔNG</StyledTableCell>
+                        <StyledTableCell width="12%"></StyledTableCell>
+                      </>
+                    ) : (
+                      <>
+                        <StyledTableCell width="5%">#</StyledTableCell>
+                        <StyledTableCell width="10%">HÌNH ẢNH</StyledTableCell>
+                        <StyledTableCell width="40%">SẢN PHẨM</StyledTableCell>
+                        <StyledTableCell width="15%">GIÁ</StyledTableCell>
+                        <StyledTableCell width="15%">SỐ LƯỢNG</StyledTableCell>
+                        <StyledTableCell width="15%">TỔNG</StyledTableCell>
+                      </>
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {myOrder.listOrderDetail?.map((product, index) => {
                     return (
-                      <StyledTableRow key={index}>
-                        <StyledTableCell>{index + 1}</StyledTableCell>
-                        <StyledTableCell>
-                          <div className="myOrderDetail-table-image">
-                            <img src={product.productDetail.image} alt="" />
-                          </div>
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {product.productDetail.product.name}
-                          <p className="myOrderDetail-table-size">
-                            Size: {product.productDetail.size}
-                          </p>
-                          <p className="myOrderDetail-table-size">
-                            Màu: {product.productDetail.color.name}
-                          </p>
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          {new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(product.price)}
-                        </StyledTableCell>
-                        <StyledTableCell>{product.quantity}</StyledTableCell>
-                        <StyledTableCell>
-                          {new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(product.price * product.quantity)}
-                        </StyledTableCell>
-                      </StyledTableRow>
+                      <Product
+                        key={index}
+                        product={product}
+                        index={index}
+                        myOrder={myOrder}
+                      />
                     );
                   })}
                 </TableBody>
