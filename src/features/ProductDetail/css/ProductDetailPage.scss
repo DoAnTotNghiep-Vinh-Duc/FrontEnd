@@ -257,6 +257,16 @@
                                 color: white;
                             }
                         }
+                        .notadd {
+                            color: #151875;
+                            opacity: 0.65;
+                            cursor: not-allowed;
+                            &:hover {
+                                border: 1px solid #151875;
+                                background-color: white;
+                                color: #151875;
+                            }
+                        }
                         .product-details-content-product-infor-wishlist {
                             i {
                                 font-size: 25px;

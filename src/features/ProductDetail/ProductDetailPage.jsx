@@ -2,6 +2,7 @@ import { makeStyles, withStyles } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Rating from "@material-ui/lab/Rating";
 import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import { toast } from "react-toastify";
 import "swiper/css";
@@ -64,6 +65,7 @@ function ProductDetailPage(props) {
   const { dispatch } = useContext(GlobalContext);
   const { product, loading, colorDetails } = useProductDetail(productId);
   const { listFavorite } = useFavorite();
+  const userLogin = useSelector((state) => state.user.currentUser);
 
   let index = listFavorite.findIndex((x) => x._id === productId);
 
@@ -302,13 +304,16 @@ function ProductDetailPage(props) {
                     className="bi bi-plus-lg"
                     onClick={() => updateQuantity("plus")}
                   ></i>
-                  <div
-                    className="product-details-content-product-infor-action-btnadd"
+                  <button
+                    className={`${"product-details-content-product-infor-action-btnadd"} ${
+                      userLogin ? "" : "notadd"
+                    }`}
+                    disabled={userLogin ? false : true}
                     onClick={addToCart}
                   >
                     <i className="bi bi-handbag"></i>
                     Thêm vào giỏ hàng
-                  </div>
+                  </button>
 
                   <span className="product-details-content-product-infor-wishlist">
                     {index >= 0 ? (

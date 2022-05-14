@@ -18,14 +18,25 @@ function InformationPage(props) {
   const userLogIn = useSelector((state) => state.user.currentUser);
 
   const [userInformation, setUserInformation] = useState({});
+  const [error, setError] = useState("");
 
   const handleBtnBack = () => {
     History.goBack();
   };
 
   const handleBtnContinue = () => {
-    props.sendUserShip(userInformation);
-    History.push(`${match.url}/payment`);
+    if (
+      userInformation.street === "" ||
+      userInformation.ward === "" ||
+      userInformation.district === "" ||
+      userInformation.city === ""
+    ) {
+      setError("Chưa nhập thông tin giao hàng!");
+    } else {
+      setError("");
+      props.sendUserShip(userInformation);
+      History.push(`${match.url}/payment`);
+    }
   };
 
   useEffect(() => {
@@ -162,6 +173,8 @@ function InformationPage(props) {
               onChange={handleStreet}
             />
           </div>
+          <span className="error-informationpage">{error}</span>
+
           <div className="payment-content-information-btn">
             <div
               className="payment-content-information-btnback"
@@ -179,6 +192,7 @@ function InformationPage(props) {
             </div>
           </div>
         </div>
+
         <div className="cart-information-content-cart">
           <ListProductCart />
         </div>
