@@ -6,38 +6,28 @@ ProductSort.propTypes = {
   onChange: PropTypes.func,
 };
 
-function ProductSort({ onChange }) {
+function ProductSort(props) {
   const data = [
     {
-      value: "salePrice:ASC",
+      value: "price-asc",
       label: "Giá thấp - cao",
     },
     {
-      value: "salePrice:DESC",
+      value: "price-desc",
       label: "Giá cao - thấp",
     },
     {
-      value: "name:ASC",
-      label: "Tên A - Z",
-    },
-    {
-      value: "name:DESC",
-      label: "Tên Z - A",
-    },
-    {
-      value: "bestseller",
+      value: "best-selling",
       label: "Bán chạy",
     },
     {
-      value: "favorite",
-      label: "Yêu thích",
+      value: "new-product",
+      label: "Sản phẩm mới",
     },
   ];
 
   const handleSortChange = (newValue) => {
-    if (onChange) {
-      onChange(newValue.value);
-    }
+    props.onChange(newValue.value);
   };
 
   return (
@@ -48,7 +38,7 @@ function ProductSort({ onChange }) {
           <Select
             options={data}
             onChange={handleSortChange}
-            defaultValue={{ value: "salePrice:ASC", label: "Giá thấp - cao" }}
+            defaultValue={{ value: "price-asc", label: "Giá thấp - cao" }}
           />
         </div>
       </div>
