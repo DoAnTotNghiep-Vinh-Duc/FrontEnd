@@ -30,35 +30,6 @@ function FilterByPrice({ onChange }) {
           <span className="checkmark-price"></span>
         </label>
       </div>
-      <div className="product-content-filter-price-filter-input">
-        <label htmlFor="">Chọn khoảng giá</label>
-        <div className="product-content-filter-price-filter-input-container">
-          <div className="product-content-filter-price-filter-input-min">
-            <TextField
-              id="outlined-basic"
-              label="Thấp"
-              variant="outlined"
-              size="small"
-              type="number"
-              name="salePrice_gte"
-            />
-          </div>
-          <i className="bi bi-arrow-right-short"></i>
-          <div className="product-content-filter-price-filter-input-max">
-            <TextField
-              id="outlined-basic"
-              label="Cao"
-              variant="outlined"
-              size="small"
-              type="number"
-              name="salePrice_lte"
-            />
-          </div>
-        </div>
-        <Button color="primary" variant="outlined" size="small">
-          Tìm
-        </Button>
-      </div>
     </Fragment>
   );
 }
