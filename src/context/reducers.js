@@ -32,6 +32,12 @@ const reducer = (state, action) => {
         emailForgotPassword: action.payload,
       };
 
+    case ACTIONS.dataProductForRate:
+      return {
+        ...state,
+        dataProductForRate: action.payload,
+      };
+
     default:
       return state;
   }

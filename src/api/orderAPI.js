@@ -9,6 +9,10 @@ const orderAPI = {
     const url = `/order/get-order-by-orderId/${orderId}`;
     return axiosClient.get(url);
   },
+  getProductForRate(orderId) {
+    const url = `/rate/get-product-for-rate/${orderId}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default orderAPI;

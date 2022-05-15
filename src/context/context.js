@@ -9,6 +9,7 @@ export const DataProvider = ({ children }) => {
     dataAllCustomerAdmin: [],
     dataAllProductAdmin: [],
     emailForgotPassword: "",
+    dataProductForRate: [],
   };
 
   const [state, dispatch] = useReducer(reducers, initalState);

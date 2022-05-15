@@ -54,5 +54,10 @@ const productAPI = {
       },
     };
   },
+
+  rateProduct(value) {
+    const url = "/rate";
+    return axiosClient.post(url, value);
+  },
 };
 export default productAPI;

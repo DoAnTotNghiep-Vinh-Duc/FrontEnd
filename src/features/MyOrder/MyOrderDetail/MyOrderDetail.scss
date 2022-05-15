@@ -244,7 +244,7 @@
             height: auto;
             border: 1px solid rgba($color: gray, $alpha: 0.3);
             padding: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             .myOrderDetail-order-logo {
                 width: 100%;
                 height: 50px;
@@ -353,6 +353,13 @@
                     }
                 }
             }
+        }
+        .myOrderDetail-comment {
+            width: 100%;
+            height: auto;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: flex-end;
         }
     }
 }

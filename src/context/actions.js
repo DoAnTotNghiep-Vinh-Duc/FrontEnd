@@ -4,4 +4,5 @@ export const ACTIONS = {
   dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
   emailForgotPassword: "emailForgotPassword",
+  dataProductForRate: "dataProductForRate",
 };
