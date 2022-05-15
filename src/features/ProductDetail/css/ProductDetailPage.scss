@@ -410,38 +410,57 @@
             max-height: 700px;
             margin-bottom: 50px;
             padding: 10px 50px;
+            .comment-title {
+                width: 100%;
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
             .comment-list {
                 width: 100%;
                 height: calc(100% - 50px);
                 .comment-list-comment {
                     width: 100%;
                     height: auto;
-                    margin-bottom: 20px;
+                    margin-bottom: 30px;
                     border-bottom: 1px solid rgba(gray, 0.5);
-                    .comment-list-comment-name-date {
-                        width: 100%;
-                        height: auto;
-                        display: flex;
-                        .comment-list-comment-name {
-                            width: 50%;
-                            height: 100%;
-                            display: flex;
-                            align-items: center;
-                            font-weight: bold;
-                            font-size: 18px;
-                        }
-                        .comment-list-comment-date {
-                            width: 50%;
-                            height: 100%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            font-size: 16px;
+                    display: flex;
+                    .comment-list-comment-avatar {
+                        width: 5%;
+                        height: 100%;
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
                         }
                     }
-                    .comment-list-comment-name-rate {
-                        width: 100%;
-                        height: auto;
+                    .comment-list-comment-comment {
+                        width: 95%;
+                        height: 100%;
+                        .comment-list-comment-name-date {
+                            width: 100%;
+                            height: auto;
+                            display: flex;
+                            .comment-list-comment-name {
+                                width: 50%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                font-weight: bold;
+                                font-size: 18px;
+                            }
+                            .comment-list-comment-date {
+                                width: 50%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                font-size: 16px;
+                            }
+                        }
+                        .comment-list-comment-name-rate {
+                            width: 100%;
+                            height: auto;
+                        }
                     }
                 }
             }
@@ -451,6 +470,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+            .comment-nolist {
+                width: 100%;
+                text-align: center;
+                i {
+                    font-size: 40px;
+                }
+                p {
+                    font-size: 18px;
+                }
             }
         }
     }

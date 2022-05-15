@@ -11,22 +11,6 @@ const productAPI = {
     return axiosClient.get(url);
   },
 
-  async getProductWithType(params) {
-    const url = `/product/types?listType=${JSON.stringify(params.listType)}`;
-    const total = await axiosClient.get(url, { params: params.listType });
-
-    const start = params._page * params._limit - params._limit;
-    const end = params._page * params._limit - 1;
-    return {
-      data: total.data.data.slice(start, end + 1),
-      pagination: {
-        page: params._page,
-        limit: params._limit,
-        total: total.data.data.length,
-      },
-    };
-  },
-
   async getProductWithFilters(value) {
     const url = "/product/filter-product";
     const total = await axiosClient.post(url, value);
@@ -51,6 +35,24 @@ const productAPI = {
   getSaleProduct() {
     const url = "/product/on-sell";
     return axiosClient.get(url);
+  },
+
+  async getAllRateByProductId({ filters, productId }) {
+    const url = `/rate/all/${productId}`;
+    const total = await axiosClient.get(url);
+
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+    return {
+      dataSummary: total.data.data.rateAndCount,
+      dataPercent: total.data.data.ratePercent,
+      dataRates: total.data.data.rates.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
+        total: total.data.data.rates.length,
+      },
+    };
   },
 };
 export default productAPI;
