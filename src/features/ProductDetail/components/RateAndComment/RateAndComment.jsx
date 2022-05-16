@@ -79,6 +79,8 @@ function RateAndComment({ product }) {
     }));
   };
 
+  console.log(listComment);
+
   return (
     <>
       <div className="product-details-content-rate">

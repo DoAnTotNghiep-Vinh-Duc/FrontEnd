@@ -34,8 +34,8 @@ function ProductComment(props) {
     content: "",
   });
   const [listImage, setListImage] = useState([]);
-  // const [image, setImage] = useState();
   const [imagePreview, setImagePreview] = useState([]);
+  const [button, setButton] = useState(false);
 
   const handleClose = () => {
     props.closeComment(false);
@@ -59,10 +59,12 @@ function ProductComment(props) {
     const fileSelected = e.target.files[0];
 
     if (fileSelected && fileSelected.type.substr(0, 5) === "image") {
-      // setImage(fileSelected);
-      setListImage([...listImage, fileSelected]);
+      setListImage([
+        ...listImage,
+        { file: fileSelected, key: Math.floor(Math.random() * 1000) },
+      ]);
     } else {
-      // setImage(undefined);
+      setListImage([...listImage]);
     }
   };
 
@@ -72,12 +74,15 @@ function ProductComment(props) {
         if (image) {
           const reader = new FileReader();
           reader.onloadend = () => {
-            setImagePreview([
-              ...imagePreview,
-              { name: image.name, url: reader.result },
-            ]);
+            const index = imagePreview.findIndex((x) => x.key === image.key);
+            if (index < 0) {
+              setImagePreview([
+                ...imagePreview,
+                { key: image.key, url: reader.result },
+              ]);
+            }
           };
-          reader.readAsDataURL(image);
+          reader.readAsDataURL(image.file);
         } else {
           setImagePreview([...imagePreview]);
         }
@@ -85,9 +90,15 @@ function ProductComment(props) {
     }
   }, [listImage]);
 
-  const handleDeleteImage = (index) => {};
+  const handleDeleteImage = (image) => {
+    setListImage((listImage) =>
+      listImage.filter((item) => item.key !== image.key)
+    );
 
-  console.log(imagePreview);
+    setImagePreview((imagePreview) =>
+      imagePreview.filter((x) => x.key !== image.key)
+    );
+  };
 
   const handleRate = () => {
     (async () => {
@@ -122,6 +133,14 @@ function ProductComment(props) {
       }
     })();
   };
+
+  useEffect(() => {
+    if (productComment.point === 0 || productComment.content === "") {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  }, [productComment.content, productComment.point]);
 
   return (
     <>
@@ -168,13 +187,16 @@ function ProductComment(props) {
           <div className="product-comment-image-upload">
             {imagePreview.length ? (
               <>
-                {imagePreview.map((image, index) => {
+                {imagePreview.map((image) => {
                   return (
-                    <div className="product-comment-image-upload-item">
-                      <img src={image.url} alt="" key={index} />
+                    <div
+                      className="product-comment-image-upload-item"
+                      key={image.key}
+                    >
+                      <img src={image.url} alt="" />
                       <i
                         className="bi bi-x"
-                        onClick={() => handleDeleteImage(index)}
+                        onClick={() => handleDeleteImage(image)}
                       ></i>
                     </div>
                   );
@@ -207,6 +229,7 @@ function ProductComment(props) {
           size="medium"
           startIcon={<GradeIcon />}
           onClick={handleRate}
+          disabled={button ? false : true}
         >
           Đánh giá
         </Button>
