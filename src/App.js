@@ -5,13 +5,13 @@ import { DataProvider } from "./context/context";
 import AdminPage from "./features/Admin/index";
 import Auth from "./features/Auth/index";
 import Cart from "./features/Cart/index";
-import RenewPassword from "./features/RenewPassword/RenewPassword";
 import ForgotPassword from "./features/ForgotPassword/ForgotPassword";
 import Home from "./features/Home/Home";
 import ListFavorite from "./features/ListFavorite/ListFavorite";
 import ListProduct from "./features/ListProduct/index";
 import SuccessVerify from "./features/SuccessVerify/SuccessVerify";
 import InformationPage from "./features/UserInformation/index";
+import VerifyPassword from "./features/VerifyPassword/VerifyPassword";
 import { authentication } from "./pages/authentications";
 import "./sass/index.scss";
 
@@ -33,17 +33,18 @@ function App() {
           <PrivateRouter path="/admin" component={AdminPage}></PrivateRouter>
 
           <Route path="/verifyAccount" component={SuccessVerify}></Route>
+          <Route path="/verifyPassword" component={VerifyPassword}></Route>
 
           <Route
             path="/forgotPassword"
             component={ForgotPassword}
             exact
           ></Route>
-          <Route
+          {/* <Route
             path="/forgotPassword/changePassword"
             component={RenewPassword}
             exact
-          ></Route>
+          ></Route> */}
 
           <Route path="/userInformation" component={InformationPage}></Route>
 

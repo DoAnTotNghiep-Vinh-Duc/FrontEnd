@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import icon from "../../assets/images/forgotpass.png";
-import { ACTIONS } from "../../context/actions";
-import { GlobalContext } from "../../context/context";
 import "./ForgotPassword.scss";
+import userAPI from "../../api/userAPI";
 
+toast.configure();
 ForgotPassword.propTypes = {};
 
 function ForgotPassword(props) {
-  const location = useLocation();
   const History = useHistory();
   const reCaptcha = useRef();
-  const { dispatch } = useContext(GlobalContext);
 
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
@@ -34,11 +33,26 @@ function ForgotPassword(props) {
 
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setError("");
-      dispatch({
-        type: ACTIONS.emailForgotPassword,
-        payload: email,
-      });
-      History.push(`${location.pathname}/changePassword`);
+      (async () => {
+        try {
+          const response = await userAPI.forgotPassword({ email });
+          if (response.status === 200) {
+            toast.info("Đã gửi email cho bạn!", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: false,
+              theme: "dark",
+            });
+          }
+          History.push("/auth");
+        } catch (error) {
+          console.log(error);
+          toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: false,
+            theme: "dark",
+          });
+        }
+      })();
     } else {
       setError("Email không hợp lệ!");
     }
