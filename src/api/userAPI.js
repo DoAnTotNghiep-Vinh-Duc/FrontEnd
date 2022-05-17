@@ -45,7 +45,6 @@ const userAPI = {
     return axiosClient.put(url, value);
   },
   forgotPassword(value) {
-    console.log(value);
     const url = "/auth/send-mail-forgot-password";
     return axiosClient.post(url, value);
   },

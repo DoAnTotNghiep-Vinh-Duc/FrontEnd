@@ -33,7 +33,10 @@ function App() {
           <PrivateRouter path="/admin" component={AdminPage}></PrivateRouter>
 
           <Route path="/verifyAccount" component={SuccessVerify}></Route>
-          <Route path="/verifyPassword" component={VerifyPassword}></Route>
+          <Route
+            path="/verifyPassword/:passwordId"
+            component={VerifyPassword}
+          ></Route>
 
           <Route
             path="/forgotPassword"

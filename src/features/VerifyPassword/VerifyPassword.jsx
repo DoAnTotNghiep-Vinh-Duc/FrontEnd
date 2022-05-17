@@ -13,23 +13,25 @@ function VerifyPassword(props) {
   const location = useLocation();
   var parts = location.pathname.split("/");
 
+  console.log(parts);
+
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await userAPI.verifyAccountWeb({
-          verifyCode: parts[2],
-        });
-        console.log(response);
-        if (response.status === 200) {
-          setSuccess(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [parts]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await userAPI.verifyAccountWeb({
+  //         verifyCode: parts[2],
+  //       });
+  //       console.log(response);
+  //       if (response.status === 200) {
+  //         setSuccess(true);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [parts]);
 
   return (
     <div className="SuccessVerify">
