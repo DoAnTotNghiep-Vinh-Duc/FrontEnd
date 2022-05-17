@@ -41,6 +41,7 @@ const userAPI = {
   },
 
   changePassword(value) {
+    console.log(value);
     const url = "/auth/change-password";
     return axiosClient.put(url, value);
   },

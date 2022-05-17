@@ -62,7 +62,7 @@ function ChangePassword(props) {
       try {
         const response = await userAPI.changePassword({
           password: value.oldpassword,
-          newPassword: value.newPassword,
+          newPassword: value.newpassword,
           reEnterPassword: value.renewpassword,
         });
         if (response.status === 204) {
