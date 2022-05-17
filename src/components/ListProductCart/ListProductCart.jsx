@@ -35,7 +35,7 @@ function ListProduct(props) {
             <div className="cart-information-content-cart-product-quantity">
               {element.quantity}
             </div>
-            <div className="cart-information-content-cart-product-price">
+            <div className="cart-information-content-cart-product-total">
               {new Intl.NumberFormat("vi-VN", {
                 style: "currency",
                 currency: "VND",

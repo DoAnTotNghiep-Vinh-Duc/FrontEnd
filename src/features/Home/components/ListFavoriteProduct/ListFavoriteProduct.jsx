@@ -1,70 +1,30 @@
-import Rating from "@material-ui/lab/Rating";
-import React from "react";
-import AiryWTS from "../../../../assets/product/AiryWTS-black.jpg";
-import TranhVintage from "../../../../assets/product/TranhVintage-gray.jpg";
-import ListButton from "../../../../components/ListButton/ListButton";
+import React, { useEffect, useState } from "react";
+import productAPI from "../../../../api/productAPI";
 import "./ListFavoriteProduct.scss";
+import Product from "./Product/Product";
 
 ListFavoriteProduct.propTypes = {};
 
 function ListFavoriteProduct(props) {
-  const data = [
-    { id: 1, name: "Áo Thun BC Space Theme", price: "350.000 VNĐ" },
-    { id: 2, name: "Áo Thun BW Embroi Signature", price: "200.000 VNĐ" },
-    { id: 3, name: "Áo Thun INF Washed Red Tag", price: "280.000 VNĐ" },
-    { id: 4, name: "Áo Thun Numbi BFB 2M", price: "270.000 VNĐ" },
-    { id: 5, name: "Áo Thun INF x Simpsons Wash", price: "300.000 VNĐ" },
-    { id: 6, name: "Áo Thun Numbi Autumn Print 2M", price: "399.000 VNĐ" },
-    { id: 7, name: "Áo Thun Teddy Bear White", price: "359.000 VNĐ" },
-    { id: 8, name: "Áo Thun Cactus Always Be Smile", price: "350.000 VNĐ" },
-  ];
+  const [listProduct, setListProduct] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await productAPI.getSortPointProduct();
+        setListProduct(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <div className="listfavoriteproduct">
       <div className="listfavoriteproduct-title">Sản phẩm yêu thích</div>
       <div className="listfavoriteproduct-list">
-        {data.map((data) => {
-          return (
-            <div className="home-favoriteproduct" key={data.id}>
-              <div className="home-favoriteproduct-image">
-                <div className="home-favoriteproduct-image-container">
-                  <img src={TranhVintage} alt="" />
-                  <img
-                    src={AiryWTS}
-                    alt=""
-                    className="home-favoriteproduct-img-hover"
-                  />
-                </div>
-
-                <div className="home-favoriteproduct-group-fuction">
-                  {/* <ListButton /> */}
-                </div>
-                <div className="home-favoriteproduct-addtocart">
-                  <i className="bi bi-handbag"></i>
-                  Thêm vào giỏ hàng
-                </div>
-                <div className="home-favoriteproduct-promotion">Top</div>
-              </div>
-              <div className="home-favoriteproduct-infor">
-                <div className="home-favoriteproduct-rating">
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={5}
-                    precision={0.1}
-                    readOnly
-                  />
-                </div>
-                <div className="home-favoriteproduct-name">{data.name}</div>
-                <div className="home-favoriteproduct-price">
-                  <p className="home-favoriteproduct-price-main">
-                    {data.price}
-                  </p>
-                  <p className="home-favoriteproduct-price-sub ">
-                    {data.price}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
+        {listProduct.slice(0, 8).map((data) => {
+          return <Product key={data._id} product={data} />;
         })}
       </div>
       <div className="home-favoriteproduct-more">

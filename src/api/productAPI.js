@@ -37,6 +37,11 @@ const productAPI = {
     return axiosClient.get(url);
   },
 
+  getSortPointProduct() {
+    const url = "/product/sort-point";
+    return axiosClient.get(url);
+  },
+
   async getAllRateByProductId({ filters, productId }) {
     const url = `/rate/all/${productId}`;
     const total = await axiosClient.get(url);

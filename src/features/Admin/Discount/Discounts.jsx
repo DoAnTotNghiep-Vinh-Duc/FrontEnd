@@ -55,7 +55,7 @@ function Discounts(props) {
                 <button>TÌM</button>
               </div>
               <div className="admin-orders-content-body-action-add">
-                <button onClick={handleClickOpen}>THÊM SẢN PHẨM</button>
+                <button onClick={handleClickOpen}>THÊM GIẢM GIÁ</button>
               </div>
             </div>
             <div className="admin-orders-content-body-discount">
