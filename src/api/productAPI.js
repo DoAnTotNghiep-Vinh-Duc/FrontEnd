@@ -20,6 +20,7 @@ const productAPI = {
       optionSizes: data.filters.optionSizes,
       optionColors: data.filters.optionColors,
       optionRates: data.filters.optionRates,
+      keySearch: data.listSearch,
     });
 
     const start =

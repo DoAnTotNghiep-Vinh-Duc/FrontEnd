@@ -34,6 +34,7 @@ function ListPage(props) {
     optionSizes: null,
     optionColors: null,
     optionRates: null,
+    keySearch: listSearch,
   });
   const [pagination, setPagination] = useState({
     limit: 16,
@@ -46,6 +47,7 @@ function ListPage(props) {
         const response = await productAPI.getProductWithFilters({
           filters,
           listType,
+          listSearch,
         });
         setProducts(response.data);
         setPagination(response.pagination);
@@ -54,21 +56,6 @@ function ListPage(props) {
       }
     })();
   }, [filters, location.search]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await productAPI.getProductNameFind(
-  //         filters,
-  //         listSearch
-  //       );
-  //       setProducts(response.data);
-  //       setPagination(response.pagination);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, [filters, listSearch]);
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({

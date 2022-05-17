@@ -119,16 +119,16 @@ function Menu(props) {
   };
 
   const handleChangeSearch = (event) => {
-    // setTextSearch(event.target.value);
+    setTextSearch(event.target.value);
   };
 
   const handleClickSearch = () => {
-    // History.push({
-    //   pathname: "/products",
-    //   search: queryString.stringify({
-    //     search: textSearch,
-    //   }),
-    // });
+    History.push({
+      pathname: "/products",
+      search: queryString.stringify({
+        search: textSearch,
+      }),
+    });
   };
 
   return (
