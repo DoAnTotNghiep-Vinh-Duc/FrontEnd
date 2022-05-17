@@ -103,7 +103,7 @@ function ProductFavorite({ product }) {
           {new Intl.NumberFormat("vi-VN", {
             style: "currency",
             currency: "VND",
-          }).format(product.price * (1 - product.discount.percentDiscount))}
+          }).format(product.priceDiscount)}
         </div>
         <div className="favorite-product-stock">
           {product.status === "SOLDOUT" ? "Hết Hàng" : "Còn hàng"}

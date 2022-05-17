@@ -41,7 +41,7 @@ function Product({ product }) {
     <>
       <div
         className={`${"admin-products-content-body-listProducts-body-products-product"} ${
-          product.status === "STOPPSELLING" ? "stop" : ""
+          product.status === "STOPSELLING" ? "stop" : ""
         }`}
       >
         <div className="admin-products-content-body-listProducts-body-products-product-seri">

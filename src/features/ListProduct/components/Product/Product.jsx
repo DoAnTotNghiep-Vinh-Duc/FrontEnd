@@ -46,7 +46,7 @@ function Product(props) {
           <i className="bi bi-handbag"></i>
           Thêm vào giỏ hàng
         </div>
-        {product.discount.percentDiscount > 0 ? (
+        {product.priceDiscount !== product.price ? (
           <>
             <div className="home-products-promotion">Sale</div>
           </>
@@ -66,15 +66,13 @@ function Product(props) {
         </div>
         <div className="home-product-name">{product.name}</div>
         <div className="home-product-price">
-          {product.discount.percentDiscount > 0 ? (
+          {product.priceDiscount !== product.price ? (
             <>
               <p className="home-product-price-main">
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                }).format(
-                  product.price * (1 - product.discount.percentDiscount)
-                )}
+                }).format(product.priceDiscount)}
               </p>
               <p className="home-product-price-sub ">
                 {new Intl.NumberFormat("vi-VN", {

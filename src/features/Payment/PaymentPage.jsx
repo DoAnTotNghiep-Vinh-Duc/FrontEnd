@@ -133,7 +133,7 @@ function PaymentPage({ user }) {
                   Địa chỉ
                 </div>
                 <div className="payment-content-information-customer-address-address">
-                  {userShip.street} {userShip.ward} {userShip.district}{" "}
+                  {userShip.street} Phường {userShip.ward} {userShip.district}{" "}
                   {userShip.city}
                 </div>
               </div>

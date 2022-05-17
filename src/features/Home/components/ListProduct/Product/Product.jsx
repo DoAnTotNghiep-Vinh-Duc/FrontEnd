@@ -45,7 +45,7 @@ function Product({ product }) {
           <i className="bi bi-handbag"></i>
           Thêm vào giỏ hàng
         </div>
-        {product.discount.percentDiscount > 0 ? (
+        {product.priceDiscount !== product.price ? (
           <>
             <div className="home-products-promotion">Sale</div>
           </>
@@ -68,10 +68,10 @@ function Product({ product }) {
             {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(product.price * (1 - product.discount.percentDiscount))}
+            }).format(product.priceDiscount)}
           </p>
           <p className="home-product-price-sub ">
-            {product.discount.percentDiscount > 0 ? (
+            {product.priceDiscount !== product.price ? (
               <>
                 {new Intl.NumberFormat("vi-VN", {
                   style: "currency",

@@ -53,6 +53,8 @@ function Products(props) {
     History.push("/admin/addproduct");
   };
 
+  console.log(state.dataAllProductAdmin);
+
   return (
     <div className="admin-products">
       <NavBars />

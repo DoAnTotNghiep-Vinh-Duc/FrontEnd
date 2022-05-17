@@ -104,6 +104,11 @@ function ProductDetailPage(props) {
           }
         } catch (error) {
           console.log(error);
+          toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            theme: "dark",
+          });
         }
       })();
     }
@@ -184,7 +189,7 @@ function ProductDetailPage(props) {
                   </div>
                 </div>
                 <div className="product-details-content-product-infor-price">
-                  {product.discount.percentDiscount > 0 ? (
+                  {product.priceDiscount !== product.price ? (
                     <>
                       <span className="product-details-content-product-infor-price-original">
                         {new Intl.NumberFormat("vi-VN", {
@@ -196,9 +201,7 @@ function ProductDetailPage(props) {
                         {new Intl.NumberFormat("vi-VN", {
                           style: "currency",
                           currency: "VND",
-                        }).format(
-                          product.price * (1 - product.discount.percentDiscount)
-                        )}
+                        }).format(product.priceDiscount)}
                       </span>
                     </>
                   ) : (
