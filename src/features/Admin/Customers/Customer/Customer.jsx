@@ -3,6 +3,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import BlockCustomer from "../BlockCustomer/BlockCustomer";
 import UnBlockCustomer from "../UnBlockCustomer/UnBlockCustomer";
 
@@ -11,6 +12,7 @@ Customer.propTypes = {
 };
 
 function Customer({ customer }) {
+  const history = useHistory();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -29,6 +31,10 @@ function Customer({ customer }) {
   };
   const handleCloseUnBlockUser = () => {
     setOpenUnBlockUser(false);
+  };
+
+  const handleClickViewDetail = () => {
+    history.push(`${history.location.pathname}/${customer._id}`);
   };
 
   return (
@@ -69,7 +75,7 @@ function Customer({ customer }) {
           )}
         </div>
         <div className="admin-customers-content-body-container-body-customers-customer-action">
-          <i className="bi bi-eye"></i>
+          <i className="bi bi-eye" onClick={handleClickViewDetail}></i>
           <i className="bi bi-lock" onClick={handleClickBlockUser}></i>
         </div>
         <div className="block-container">BỊ KHÓA</div>

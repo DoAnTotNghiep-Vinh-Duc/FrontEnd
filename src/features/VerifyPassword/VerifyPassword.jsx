@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import userAPI from "../../api/userAPI";
 import check from "../../assets/images/check.png";
 import fail from "../../assets/images/verifyAccountFail.png";
@@ -10,28 +10,27 @@ import "./VerifyPassword.scss";
 
 VerifyPassword.propTypes = {};
 function VerifyPassword(props) {
-  const location = useLocation();
-  var parts = location.pathname.split("/");
-
-  console.log(parts);
+  const {
+    params: { passwordId },
+  } = useRouteMatch();
 
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await userAPI.verifyAccountWeb({
-  //         verifyCode: parts[2],
-  //       });
-  //       console.log(response);
-  //       if (response.status === 200) {
-  //         setSuccess(true);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, [parts]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userAPI.verifyPassword({
+          verifyCode: passwordId,
+        });
+        console.log(response);
+        if (response.status === 200) {
+          setSuccess(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [passwordId]);
 
   return (
     <div className="SuccessVerify">
@@ -51,7 +50,6 @@ function VerifyPassword(props) {
               </div>
               <div className="SuccessVerify-body-content-success">
                 Bạn đã xác thực mật khẩu mới thành công! <br />
-                <p>Mật khẩu mới của bạn là: 123456</p>
               </div>
             </div>
           </div>

@@ -48,6 +48,10 @@ const userAPI = {
     const url = "/auth/send-mail-forgot-password";
     return axiosClient.post(url, value);
   },
+  verifyPassword(value) {
+    const url = "/auth/verify-forgot-password";
+    return axiosClient.post(url, value);
+  },
 };
 
 export default userAPI;

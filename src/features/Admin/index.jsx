@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import NotFound from "../../components/NotFound/NotFound";
+import CustomerDetail from "./Customers/CustomerDetail/CustomerDetail";
 import Customers from "./Customers/Customers";
 import Dashboard from "./Dashboard/Dashboard";
 import Discounts from "./Discount/Discounts";
@@ -41,6 +42,9 @@ function AdminPage(props) {
 
         <Route path={`${match.url}/customers`} exact>
           <Customers />
+        </Route>
+        <Route path={`${match.url}/customers/:customerId`} exact>
+          <CustomerDetail />
         </Route>
 
         <Route path={`${match.url}/discounts`} exact>
