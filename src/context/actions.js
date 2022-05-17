@@ -5,4 +5,6 @@ export const ACTIONS = {
   dataAllProductAdmin: "dataAllProductAdmin",
   emailForgotPassword: "emailForgotPassword",
   dataProductForRate: "dataProductForRate",
+  loadingPage: "loadingPage",
+  dataAllDiscountAdmin: "dataAllDiscountAdmin",
 };

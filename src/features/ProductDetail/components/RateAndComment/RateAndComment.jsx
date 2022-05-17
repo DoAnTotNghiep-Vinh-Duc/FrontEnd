@@ -79,8 +79,6 @@ function RateAndComment({ product }) {
     }));
   };
 
-  console.log(listComment);
-
   return (
     <>
       <div className="product-details-content-rate">
@@ -197,6 +195,24 @@ function RateAndComment({ product }) {
                       </div>
                       <div className="comment-list-comment-text">
                         {comment.content}
+                      </div>
+                      <div className="comment-list-comment-images">
+                        {comment.image.length ? (
+                          <>
+                            {comment.image.map((image, index) => {
+                              return (
+                                <div
+                                  className="comment-list-comment-images-image"
+                                  key={index}
+                                >
+                                  <img src={image} alt="" />
+                                </div>
+                              );
+                            })}
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -10,6 +10,7 @@ import cartAPI from "../../api/cartAPI";
 import favoriteAPI from "../../api/favoriteAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
+import Loading from "../../components/Loading/Loading";
 import Menu from "../../components/Menu/Menu";
 import { ACTIONS } from "../../context/actions";
 import { GlobalContext } from "../../context/context";
@@ -33,7 +34,7 @@ function ProductDetailPage(props) {
     params: { productId },
   } = useRouteMatch();
 
-  const { dispatch } = useContext(GlobalContext);
+  const { dispatch, state } = useContext(GlobalContext);
   const { product, loading, colorDetails } = useProductDetail(productId);
   const { listFavorite } = useFavorite();
   const userLogin = useSelector((state) => state.user.currentUser);
@@ -41,7 +42,7 @@ function ProductDetailPage(props) {
   let index = listFavorite.findIndex((x) => x._id === productId);
 
   if (loading) {
-    return <div>Loading</div>;
+    return <Loading />;
   }
 
   const handleClickColor = (item) => {

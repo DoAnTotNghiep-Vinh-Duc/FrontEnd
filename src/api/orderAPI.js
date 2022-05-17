@@ -1,3 +1,4 @@
+import PayPal from "../features/PayPal/PayPal";
 import axiosClient from "./axiosClient";
 
 const orderAPI = {
@@ -11,6 +12,10 @@ const orderAPI = {
   },
   getProductForRate(orderId) {
     const url = `/rate/get-product-for-rate/${orderId}`;
+    return axiosClient.get(url);
+  },
+  paymentPaypal() {
+    const url = "/order/payment-paypal";
     return axiosClient.get(url);
   },
 };

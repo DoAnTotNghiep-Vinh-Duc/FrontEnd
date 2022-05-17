@@ -108,7 +108,7 @@ function ProductComment(props) {
 
         if (listImage.length) {
           listImage.forEach((element, index) => {
-            fd.append(index, element.image);
+            fd.append(index.toString(), element.file);
           });
         }
 
@@ -151,14 +151,7 @@ function ProductComment(props) {
         <div className="product-comment">
           <div className="product-comment-image-name">
             <div className="product-comment-image">
-              <img
-                src={
-                  product.images[
-                    Math.floor(Math.random() * product.images.length)
-                  ]
-                }
-                alt=""
-              />
+              <img src={product.images[1]} alt="" />
             </div>
             <div className="product-comment-name">{product.name}</div>
           </div>
@@ -167,7 +160,7 @@ function ProductComment(props) {
               name="customized-empty"
               size="large"
               value={productComment.point}
-              precision={0.5}
+              precision={1}
               emptyIcon={<StarBorderIcon fontSize="inherit" />}
               onChange={handleChangeRating}
             />

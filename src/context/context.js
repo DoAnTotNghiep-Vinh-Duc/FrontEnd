@@ -10,6 +10,8 @@ export const DataProvider = ({ children }) => {
     dataAllProductAdmin: [],
     emailForgotPassword: "",
     dataProductForRate: [],
+    loadingPage: false,
+    dataAllDiscountAdmin: [],
   };
 
   const [state, dispatch] = useReducer(reducers, initalState);

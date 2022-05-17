@@ -53,31 +53,45 @@ function Header(props) {
         <div className="header-right">
           <div className="header-right-account">
             <div className="header-right-account-container">
-              <i className="far fa-user"></i>
               {!account ? (
-                <a href="/auth">Tài khoản</a>
+                <>
+                  <i className="far fa-user"></i>
+                  <a href="/auth">Tài khoản</a>
+                </>
               ) : (
-                <div
-                  className="account-name"
-                  onClick={() => setOpen((x) => !x)}
-                >
-                  Xin chào, {account.nameDisplay}
+                <>
                   <div
-                    className={`${"account-function"} ${open ? "active" : ""}`}
+                    className="account-image-name"
+                    onClick={() => setOpen((x) => !x)}
                   >
-                    <Link className="account-item" to="/userInformation">
-                      <i className="bi bi-card-checklist"></i>
-                      <p>Thông tin cá nhân</p>
-                    </Link>
-                    <div
-                      className="account-item"
-                      onClick={handleClickOpenFormLogout}
-                    >
-                      <i className="bi bi-box-arrow-left"></i>
-                      <p>Đăng xuất</p>
+                    <div className="account-image">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
+                        alt=""
+                      />
+                    </div>
+                    <div className="account-name">
+                      Xin chào, {account.nameDisplay}
+                      <div
+                        className={`${"account-function"} ${
+                          open ? "active" : ""
+                        }`}
+                      >
+                        <Link className="account-item" to="/userInformation">
+                          <i className="bi bi-card-checklist"></i>
+                          <p>Thông tin cá nhân</p>
+                        </Link>
+                        <div
+                          className="account-item"
+                          onClick={handleClickOpenFormLogout}
+                        >
+                          <i className="bi bi-box-arrow-left"></i>
+                          <p>Đăng xuất</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>

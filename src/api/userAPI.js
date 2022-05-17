@@ -9,6 +9,10 @@ const userAPI = {
     const url = "/auth/signup";
     return axiosClient.post(url, name, email, password);
   },
+  signInWithGoogle() {
+    const url = "/auth/google";
+    return axiosClient.get(url);
+  },
   logout(refreshToken) {
     const url = "/auth/logout";
     return axiosClient.post(url, refreshToken);

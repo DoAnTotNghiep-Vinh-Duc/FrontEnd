@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
 import { signIn } from "../../../redux/userSlice";
@@ -45,9 +46,9 @@ function SignIn(props) {
         const result = unwrapResult(actionResult);
         if (result.status === 200) {
           toast.success("Đăng nhập thành công", {
-            position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.TOP_CENTER,
             autoClose: 2000,
-            theme: "colored",
+            theme: "light",
           });
           if (result.data.account.role === "Admin") {
             History.push("/admin");
@@ -64,6 +65,14 @@ function SignIn(props) {
 
   const google = () => {
     window.open("http://localhost:5000/auth/google", "_self");
+    // (async () => {
+    //   try {
+    //     const res = await userAPI.signInWithGoogle();
+    //     console.log(res);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })();
   };
 
   const facebook = () => {

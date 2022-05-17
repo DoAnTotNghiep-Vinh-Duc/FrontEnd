@@ -64,10 +64,17 @@ function Orders(props) {
   };
 
   const handleSelectStatusFiler = (item) => {
-    console.log(item);
     setIconDate("");
     setIconCustomer("");
     setIconCash("");
+    (async () => {
+      try {
+        const response = await adminAPI.sortOrder("NAME", "ASC", item.value);
+        setOrders(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
   const handleSelectCustomerFiler = (item) => {
     setIconCustomer(item.value);

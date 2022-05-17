@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import cartAPI from "../../api/cartAPI";
+import orderAPI from "../../api/orderAPI";
 import payment from "../../assets/images/payment.png";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -52,7 +53,15 @@ function PaymentPage({ user }) {
 
   const handleSubmit = () => {
     if (selectedValue === "ONLINE") {
-      setOpenFormPayPal(true);
+      // setOpenFormPayPal(true);
+      (async () => {
+        try {
+          const response = await orderAPI.paymentPaypal();
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     } else {
       (async () => {
         try {

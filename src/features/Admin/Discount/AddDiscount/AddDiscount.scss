@@ -1,0 +1,28 @@
+.adddiscount {
+    border-top: 1px solid rgba($color: gray, $alpha: 0.5);
+    width: 600px;
+    height: 150px;
+    display: flex;
+    .adddiscount-left {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        .adddiscount-name {
+            width: 80%;
+        }
+    }
+    .adddiscount-right {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        .adddiscount-date {
+            width: 80%;
+        }
+    }
+}

@@ -18,5 +18,10 @@
         "id": 4,
         "value":"DONE",
         "label": "Đã hoàn tất"
+    },
+    {
+        "id": 5,
+        "value":"All",
+        "label": "Tất cả"
     }
 ]
