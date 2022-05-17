@@ -35,7 +35,10 @@ function ForgotPassword(props) {
       setError("");
       (async () => {
         try {
-          const response = await userAPI.forgotPassword({ email });
+          const response = await userAPI.forgotPassword({
+            email,
+            token,
+          });
           if (response.status === 200) {
             toast.info("Đã gửi email cho bạn!", {
               position: toast.POSITION.TOP_RIGHT,

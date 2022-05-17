@@ -41,13 +41,13 @@ const userAPI = {
   },
 
   changePassword(value) {
-    console.log(value);
     const url = "/auth/change-password";
     return axiosClient.put(url, value);
   },
   forgotPassword(value) {
+    console.log(value);
     const url = "/auth/send-mail-forgot-password";
-    return axiosClient.put(url, value);
+    return axiosClient.post(url, value);
   },
 };
 
