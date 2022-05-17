@@ -39,6 +39,11 @@ const userAPI = {
     const url = "/information/verify-otp";
     return axiosClient.post(url, phone, otp);
   },
+
+  changePassword(value) {
+    const url = "/auth/change-password";
+    return axiosClient.put(url, value);
+  },
 };
 
 export default userAPI;

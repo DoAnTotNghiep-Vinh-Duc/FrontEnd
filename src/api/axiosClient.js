@@ -55,6 +55,10 @@ axiosClient.interceptors.response.use(
       const error = data.error;
       return Promise.reject(error);
     }
+    if (config.url === "/auth/change-password" && status === 403) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
     if (config.url === "/cart/add-item" && status === 400) {
       // console.log(data);
       const error = data.message;

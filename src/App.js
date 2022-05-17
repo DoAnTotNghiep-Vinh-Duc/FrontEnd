@@ -5,7 +5,7 @@ import { DataProvider } from "./context/context";
 import AdminPage from "./features/Admin/index";
 import Auth from "./features/Auth/index";
 import Cart from "./features/Cart/index";
-import ChangePassword from "./features/ChangePassword/ChangePassword";
+import RenewPassword from "./features/RenewPassword/RenewPassword";
 import ForgotPassword from "./features/ForgotPassword/ForgotPassword";
 import Home from "./features/Home/Home";
 import ListFavorite from "./features/ListFavorite/ListFavorite";
@@ -41,7 +41,7 @@ function App() {
           ></Route>
           <Route
             path="/forgotPassword/changePassword"
-            component={ChangePassword}
+            component={RenewPassword}
             exact
           ></Route>
 
