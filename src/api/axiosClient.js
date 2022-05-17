@@ -64,6 +64,10 @@ axiosClient.interceptors.response.use(
       const error = data.message;
       return Promise.reject(error);
     }
+    if (config.url === "/admin/discount/:discountId" && status === 400) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
     if (status === 401) {
       if (data.error.message === "jwt expired") {
         console.log("Token hết hạn");

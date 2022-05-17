@@ -109,6 +109,11 @@ function AddDiscount(props) {
         }
       } catch (error) {
         console.log(error);
+        toast.error(error, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+          theme: "dark",
+        });
       }
     })();
   };

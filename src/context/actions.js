@@ -1,10 +1,13 @@
 export const ACTIONS = {
   dataCart: "dataCart",
   dataFavorite: "dataFavorite",
+  dataListProduct: "dataListProduct",
+  dataProductForRate: "dataProductForRate",
+  emailForgotPassword: "emailForgotPassword",
+
   dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
-  emailForgotPassword: "emailForgotPassword",
-  dataProductForRate: "dataProductForRate",
-  loadingPage: "loadingPage",
   dataAllDiscountAdmin: "dataAllDiscountAdmin",
+
+  loadingPage: "loadingPage",
 };

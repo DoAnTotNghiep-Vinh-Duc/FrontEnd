@@ -14,6 +14,11 @@ const discountAPI = {
     const url = "/admin/discount";
     return axiosClient.post(url, value);
   },
+
+  deleteDiscount(discountId) {
+    const url = `/admin/discount/${discountId}`;
+    return axiosClient.delete(url);
+  },
 };
 
 export default discountAPI;

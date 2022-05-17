@@ -50,6 +50,12 @@ const reducer = (state, action) => {
         dataAllDiscountAdmin: action.payload,
       };
 
+    case ACTIONS.dataListProduct:
+      return {
+        ...state,
+        dataListProduct: action.payload,
+      };
+
     default:
       return state;
   }

@@ -5,6 +5,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import moment from "moment";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import DeleteDiscount from "../DeleteDiscount/DeleteDiscount";
 import DiscountDetail from "../DiscountDetail/DiscountDetail";
 
 Discount.propTypes = {
@@ -16,28 +17,37 @@ function Discount({ discount }) {
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [open, setOpen] = useState(false);
+  const [openDeleteDiscount, setOpenDeleteDiscount] = useState(false);
   const [btnDelete, setBtnDelete] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleClickOpenDeleteDiscount = () => {
+    setOpenDeleteDiscount(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseDeleteDiscount = () => {
+    setOpenDeleteDiscount(false);
   };
 
   useEffect(() => {
     const now = new Date();
     now.setHours(now.getHours() + 7);
     const startDate = new Date(discount.startDate);
-    if (now.getTime() >= startDate.getTime()) {
-      setBtnDelete(false);
-    } else {
-      setBtnDelete(true);
-    }
-  }, [discount.startDate]);
+    const endDate = new Date(discount.endDate);
 
-  const handleDeleteDiscount = () => {};
+    if (now.getTime() < startDate.getTime()) {
+      setBtnDelete(true);
+    } else if (now.getTime() > endDate.getTime()) {
+      setBtnDelete(true);
+    } else {
+      setBtnDelete(false);
+    }
+  }, [discount.endDate, discount.startDate]);
 
   return (
     <>
@@ -72,7 +82,7 @@ function Discount({ discount }) {
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleDeleteDiscount}
+              onClick={handleClickOpenDeleteDiscount}
               disabled={btnDelete ? false : true}
             >
               Xóa
@@ -89,6 +99,18 @@ function Discount({ discount }) {
         aria-labelledby="responsive-dialog-title"
       >
         <DiscountDetail closeDetail={handleClose} discount={discount} />
+      </Dialog>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={openDeleteDiscount}
+        onClose={handleCloseDeleteDiscount}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DeleteDiscount
+          closeDelete={handleCloseDeleteDiscount}
+          discountId={discount._id}
+        />
       </Dialog>
     </>
   );

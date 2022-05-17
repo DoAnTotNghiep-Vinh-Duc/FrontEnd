@@ -1,6 +1,6 @@
 import Pagination from "@material-ui/lab/Pagination";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import productAPI from "../../api/productAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -18,9 +18,11 @@ import "./css/ListProductPage.scss";
 ListPage.propTypes = {};
 
 function ListPage(props) {
+  const location = useLocation();
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const listType = urlParams.getAll("listType");
+  let listSearch = urlParams.get("search");
 
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
@@ -41,14 +43,32 @@ function ListPage(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await productAPI.getProductWithFilters(filters);
+        const response = await productAPI.getProductWithFilters({
+          filters,
+          listType,
+        });
         setProducts(response.data);
         setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [filters]);
+  }, [filters, location.search]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await productAPI.getProductNameFind(
+  //         filters,
+  //         listSearch
+  //       );
+  //       setProducts(response.data);
+  //       setPagination(response.pagination);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [filters, listSearch]);
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({

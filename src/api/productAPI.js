@@ -11,17 +11,43 @@ const productAPI = {
     return axiosClient.get(url);
   },
 
-  async getProductWithFilters(value) {
+  async getProductWithFilters(data) {
     const url = "/product/filter-product";
-    const total = await axiosClient.post(url, value);
+    const total = await axiosClient.post(url, {
+      listType: data.listType,
+      optionSort: data.filters.optionSort,
+      optionPrice: data.filters.optionPrice,
+      optionSizes: data.filters.optionSizes,
+      optionColors: data.filters.optionColors,
+      optionRates: data.filters.optionRates,
+    });
 
-    const start = value._page * value._limit - value._limit;
-    const end = value._page * value._limit - 1;
+    const start =
+      data.filters._page * data.filters._limit - data.filters._limit;
+    const end = data.filters._page * data.filters._limit - 1;
     return {
       data: total.data.data.slice(start, end + 1),
       pagination: {
-        page: value._page,
-        limit: value._limit,
+        page: data.filters._page,
+        limit: data.filters._limit,
+        total: total.data.data.length,
+      },
+    };
+  },
+
+  async getProductNameFind(filters, listSearch) {
+    console.log(filters);
+    console.log(listSearch);
+    const url = `/product/find/${listSearch}`;
+    const total = await axiosClient.get(url);
+    console.log(total);
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+    return {
+      data: total.data.data.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
         total: total.data.data.length,
       },
     };

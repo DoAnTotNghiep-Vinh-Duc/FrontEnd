@@ -22,6 +22,7 @@ function Menu(props) {
   const History = useHistory();
 
   const [scroll, setScroll] = useState(false);
+  const [textSearch, setTextSearch] = useState("");
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y < -160) {
@@ -115,6 +116,19 @@ function Menu(props) {
         listType: ["nữ", "tay ngắn", `${element.value}`],
       }),
     });
+  };
+
+  const handleChangeSearch = (event) => {
+    // setTextSearch(event.target.value);
+  };
+
+  const handleClickSearch = () => {
+    // History.push({
+    //   pathname: "/products",
+    //   search: queryString.stringify({
+    //     search: textSearch,
+    //   }),
+    // });
   };
 
   return (
@@ -278,8 +292,10 @@ function Menu(props) {
             type="search"
             size="small"
             fullWidth
+            value={textSearch}
+            onChange={handleChangeSearch}
           />
-          <i className="fas fa-search"></i>
+          <i className="fas fa-search" onClick={handleClickSearch}></i>
         </div>
         <div className="menu-right-wishlist" onClick={handleClickFavorite}>
           <i className="bi bi-suit-heart"></i>

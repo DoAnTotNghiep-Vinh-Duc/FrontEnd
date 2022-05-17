@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const initalState = {
     dataCart: [],
     dataFavorite: [],
+    dataListProduct: [],
     dataAllCustomerAdmin: [],
     dataAllProductAdmin: [],
     emailForgotPassword: "",
