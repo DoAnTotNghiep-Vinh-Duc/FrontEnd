@@ -107,6 +107,15 @@ const adminAPI = {
     const url = "/admin/account/active-account";
     return axiosClient.post(url, { accountId });
   },
+  getOrderByCustomerId(accountId, statusOrder) {
+    const url = "/admin/order/get-user-order";
+    return axiosClient.get(url, {
+      params: {
+        accountId,
+        statusOrder,
+      },
+    });
+  },
 
   // order
   async getAllOrder(params) {

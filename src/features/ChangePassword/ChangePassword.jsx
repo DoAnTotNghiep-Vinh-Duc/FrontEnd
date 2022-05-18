@@ -84,6 +84,10 @@ function ChangePassword(props) {
     })();
   };
 
+  const handleReset = () => {
+    form.reset();
+  };
+
   return (
     <div className="user-changePassword">
       <NavbarUser />
@@ -121,7 +125,9 @@ function ChangePassword(props) {
               </div>
               <div className="user-changePassword-btn">
                 <div className="user-changePassword-btn-reset">
-                  <Button variant="contained">RESET</Button>
+                  <Button variant="contained" onClick={handleReset}>
+                    RESET
+                  </Button>
                 </div>
                 <div className="user-changePassword-btn-change">
                   <ThemeProvider theme={theme}>

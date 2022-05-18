@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import userAPI from "../../api/userAPI";
 import check from "../../assets/images/check.png";
 import fail from "../../assets/images/verifyAccountFail.png";
@@ -10,8 +10,9 @@ import "./SuccessVerify.scss";
 
 SuccessVerify.propTypes = {};
 function SuccessVerify(props) {
-  const location = useLocation();
-  var parts = location.pathname.split("/");
+  const {
+    params: { accountId },
+  } = useRouteMatch();
 
   const [success, setSuccess] = useState(false);
 
@@ -19,7 +20,7 @@ function SuccessVerify(props) {
     (async () => {
       try {
         const response = await userAPI.verifyAccountWeb({
-          verifyCode: parts[2],
+          verifyCode: accountId,
         });
         console.log(response);
         if (response.status === 200) {
@@ -29,7 +30,7 @@ function SuccessVerify(props) {
         console.log(error);
       }
     })();
-  }, [parts]);
+  }, [accountId]);
 
   return (
     <div className="SuccessVerify">
