@@ -1,16 +1,18 @@
 import { Checkbox, Dialog, useMediaQuery, useTheme } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import cartAPI from "../../../api/cartAPI";
-import RemoveItemFromCart from "../../RemoveItemFromCart/RemoveItemFromCart";
 import {
   addToPayment,
-  removeFromPayment,
-  increaseQuantity,
   decreaseQuantity,
+  increaseQuantity,
+  removeFromPayment,
 } from "../../../redux/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import RemoveItemFromCart from "../../RemoveItemFromCart/RemoveItemFromCart";
 
+toast.configure();
 Product.propTypes = {
   product: PropTypes.object,
 };
@@ -54,7 +56,11 @@ function Product({ product }) {
           dispatch(action);
         }
       } catch (error) {
-        console.log(error);
+        toast.error(error, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: false,
+          theme: "dark",
+        });
       }
     })();
   };
@@ -76,7 +82,11 @@ function Product({ product }) {
           dispatch(action);
         }
       } catch (error) {
-        console.log(error);
+        toast.error(error, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: false,
+          theme: "dark",
+        });
       }
     })();
   };

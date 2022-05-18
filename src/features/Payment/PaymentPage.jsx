@@ -83,7 +83,11 @@ function PaymentPage({ user }) {
             History.push(`${History.location.pathname}/notification`);
           }
         } catch (error) {
-          console.log(error);
+          toast.error(error, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: false,
+            theme: "dark",
+          });
         }
       })();
     }

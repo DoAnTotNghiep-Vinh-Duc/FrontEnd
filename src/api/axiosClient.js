@@ -67,10 +67,25 @@ axiosClient.interceptors.response.use(
       const error = data.message;
       return Promise.reject(error);
     }
+
     if (config.url === "/cart/add-item" && status === 400) {
       const error = data.message;
       return Promise.reject(error);
     }
+    if (config.url === "/cart/increase-quantity" && status === 400) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
+    if (config.url === "/cart/decrease-quantity" && status === 400) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
+
+    if (config.url === "/order" && status === 400) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
+
     if (config.url === "/admin/discount" && status === 400) {
       const error = data.message;
       return Promise.reject(error);
@@ -79,6 +94,7 @@ axiosClient.interceptors.response.use(
       const error = data.message;
       return Promise.reject(error);
     }
+
     if (status === 401) {
       if (data.error.message === "jwt expired") {
         console.log("Token hết hạn");
