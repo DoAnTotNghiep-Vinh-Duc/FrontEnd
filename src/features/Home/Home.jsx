@@ -1,6 +1,7 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { add } from "date-fns";
-import React from "react";
+import React, { useEffect } from "react";
+import ButtonChat from "../../components/ButtonChat/ButtonChat";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
@@ -25,6 +26,8 @@ function Home(props) {
     minutes: 40,
   });
 
+  console.log("aha");
+
   return (
     <div className="container">
       <Header />
@@ -39,6 +42,7 @@ function Home(props) {
       <Blog />
       <Footer />
       <Scroll showBelow={250} />
+      <ButtonChat />
     </div>
   );
 }

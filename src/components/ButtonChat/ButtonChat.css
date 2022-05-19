@@ -1,0 +1,81 @@
+
+.text-box {
+    position: fixed;
+    bottom: 12%;
+    right: 1%;
+    z-index: 999;
+
+}
+
+.btn:link,
+.btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all 0.2s;
+    position: absolute;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0,0,0, 0.2);
+}
+
+.btn-white {
+    color: #777;
+}
+
+.btn::after {
+    content: "";
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    z-index: -1;
+    transition: all 0.4s;
+    background-color: #fb2e86;
+}
+
+.btn-white::after {
+    background-color: #fb2e86;
+    border-radius: 50%;
+
+}
+
+.btn:hover::after {
+    transform: scaleX(3.4) scaleY(3.6);
+    opacity: 0;
+}
+
+.btn-animated {
+    animation: moveInBottom 5s ease-out;
+    animation-fill-mode: backwards;
+}
+.img-btnchat{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

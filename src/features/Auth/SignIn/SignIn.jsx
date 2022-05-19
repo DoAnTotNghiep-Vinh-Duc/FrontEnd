@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
-import userAPI from "../../../api/userAPI";
 import InputField from "../../../form-control/InputField";
 import PasswordField from "../../../form-control/PasswordField";
 import { signIn } from "../../../redux/userSlice";
@@ -54,6 +53,7 @@ function SignIn(props) {
             History.push("/admin");
           } else {
             History.push("/");
+            window.location.reload();
           }
         }
       } catch (error) {
