@@ -1,5 +1,5 @@
 import Rating from "@material-ui/lab/Rating";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import cartAPI from "../../api/cartAPI";
 import favoriteAPI from "../../api/favoriteAPI";
+import productAPI from "../../api/productAPI";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Loading from "../../components/Loading/Loading";
@@ -15,40 +16,56 @@ import Menu from "../../components/Menu/Menu";
 import { ACTIONS } from "../../context/actions";
 import { GlobalContext } from "../../context/context";
 import useFavorite from "../../hooks/useFavorite";
-import useProductDetail from "../../hooks/useProductDetail";
 import ProductImageSlider from "./components/ProductImageSlider";
 import RateAndComment from "./components/RateAndComment/RateAndComment";
 import "./css/ProductDetailPage.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Thumbs } from "swiper";
 
 toast.configure();
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
+  const {
+    params: { productId },
+  } = useRouteMatch();
+
+  const [product, setProduct] = useState({});
+  const [colorDetails, setColorDetails] = useState([]);
   const [color, setColor] = useState(undefined);
   const [size, setSize] = useState(undefined);
   const [quantity, setQuantity] = useState(1);
   const [sizeDetails, setSizeDetails] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
-
-  const {
-    params: { productId },
-  } = useRouteMatch();
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [activeThumbsColor, setActiveThumbsColor] = useState();
 
   const { dispatch, state } = useContext(GlobalContext);
-  const { product, loading, colorDetails } = useProductDetail(productId);
   const { listFavorite } = useFavorite();
   const userLogin = useSelector((state) => state.user.currentUser);
 
   let index = listFavorite.findIndex((x) => x._id === productId);
 
-  if (loading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await productAPI.getProductById(productId);
+        setColorDetails(result.data.data.listProductDetail);
+        setProduct(result.data.data.product);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [productId]);
 
   const handleClickColor = (item) => {
     setColor(Object.keys(item)[0]);
     setSizeDetails(Object.values(item)[0]);
     setSize(undefined);
+    dispatch({
+      type: ACTIONS.changeColor,
+      payload: true,
+    });
   };
 
   const handleClickSize = (item) => {
@@ -77,6 +94,7 @@ function ProductDetailPage(props) {
   };
 
   const addToCart = () => {
+    setLoadingAdd(true);
     if (check()) {
       (async () => {
         try {
@@ -96,6 +114,9 @@ function ProductDetailPage(props) {
                 console.log(error);
               }
             })();
+            setTimeout(() => {
+              setLoadingAdd(false);
+            }, 300);
             toast.success("Thêm vào giỏ hành thành công", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000,
@@ -154,6 +175,7 @@ function ProductDetailPage(props) {
 
   return (
     <>
+      {loadingAdd && <Loading />}
       <div className="product-details">
         <Header />
         <Menu />
@@ -166,7 +188,10 @@ function ProductDetailPage(props) {
         <div className="product-details-content">
           <div className="product-details-content-product">
             <div className="product-details-content-product-left">
-              <ProductImageSlider data={product.images} />
+              <ProductImageSlider
+                data={product?.images}
+                activeThumbsColor={activeThumbsColor}
+              />
             </div>
 
             <div className="product-details-content-product-right">
@@ -178,7 +203,7 @@ function ProductDetailPage(props) {
                   <div className="product-details-content-product-infor-rate-start">
                     <Rating
                       name="half-rating-read"
-                      defaultValue={product.point}
+                      value={product.point ?? 0}
                       precision={0.1}
                       readOnly
                       size="small"
@@ -222,8 +247,35 @@ function ProductDetailPage(props) {
                   <span className="product-details-content-product-infor-color-title">
                     Màu sắc
                   </span>
-                  <div className="product-details-content-product-infor-color-filter">
-                    {colorDetails.map((item, index) => {
+
+                  <Swiper
+                    onSwiper={setActiveThumbsColor}
+                    slidesPerView={4}
+                    spaceBetween={5}
+                    modules={[Navigation, Thumbs]}
+                    className="product-details-content-product-infor-color-filter"
+                  >
+                    {colorDetails.map((item, index) => (
+                      <SwiperSlide key={index}>
+                        <div
+                          key={index}
+                          className={`${"product-details-content-product-infor-color-filter-container"} ${
+                            color === Object.keys(item)[0] ? "active-color" : ""
+                          }`}
+                          onClick={() => handleClickColor(item)}
+                        >
+                          <div
+                            className={`circle`}
+                            style={{
+                              backgroundColor: `${Object.keys(item)[0]}`,
+                            }}
+                          ></div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+
+                  {/* {colorDetails.map((item, index) => {
                       return (
                         <div
                           key={index}
@@ -240,8 +292,7 @@ function ProductDetailPage(props) {
                           ></div>
                         </div>
                       );
-                    })}
-                  </div>
+                    })} */}
                 </div>
                 <div className="product-details-content-product-infor-size">
                   <span className="product-details-content-product-infor-size-title">

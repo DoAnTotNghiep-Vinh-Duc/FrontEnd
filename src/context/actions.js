@@ -9,5 +9,5 @@ export const ACTIONS = {
   dataAllProductAdmin: "dataAllProductAdmin",
   dataAllDiscountAdmin: "dataAllDiscountAdmin",
 
-  loadingPage: "loadingPage",
+  changeColor: "changeColor",
 };

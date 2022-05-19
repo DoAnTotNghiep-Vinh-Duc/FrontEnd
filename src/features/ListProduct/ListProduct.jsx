@@ -11,6 +11,7 @@ import FilterByPrice from "./components/Filter/FilterByPrice/FilterByPrice";
 import FilterByRate from "./components/Filter/FilterByRate/FilterByRate";
 import FilterBySize from "./components/Filter/FilterBySize/FilterBySize";
 import ProductList from "./components/ProductList/ProductList";
+import SkeletonProductList from "./components/SkeletonProductList/SkeletonProductList";
 import ProductSort from "./components/Sort/ProductSort";
 import "./css/ListProductPage.css";
 import "./css/ListProductPage.scss";
@@ -40,6 +41,7 @@ function ListPage(props) {
     limit: 16,
     page: 1,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -54,6 +56,9 @@ function ListPage(props) {
       } catch (error) {
         console.log(error);
       }
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     })();
   }, [filters, location.search]);
 
@@ -139,46 +144,52 @@ function ListPage(props) {
           <span>Sản phẩm</span>
         </div>
       </div>
-      {products.length > 0 ? (
-        <>
-          <div className="product-sort">
-            <ProductSort onChange={handleChangeSort} />
-          </div>
-          <div className="product-content">
-            <div className="product-content-filter">
-              <div className="producr-content-filter-branch">
-                <FilterBySize onChange={handleChangeSize} />
-              </div>
-              <div className="producr-content-filter-price">
-                <FilterByPrice onChange={handleChangePrice} />
-              </div>
-              <div className="producr-content-filter-color">
-                <FilterByColor onChange={handleChangeColor} />
-              </div>
-              <div className="producr-content-filter-rate">
-                <FilterByRate onChange={handleChangeRate} />
-              </div>
-            </div>
-            <div className="product-content-product">
-              <div className="product-content-product-container">
-                <ProductList data={products} />
-              </div>
-              <div className="product-content-pagination">
-                <Pagination
-                  color="primary"
-                  count={Math.ceil(pagination.total / pagination.limit)}
-                  page={pagination.page}
-                  onChange={handlePaginationChange}
-                />
-              </div>
-            </div>
-          </div>
-        </>
+      {loading ? (
+        <SkeletonProductList />
       ) : (
         <>
-          <div className="product-notfound">
-            <p>Không có sản phẩm phù hợp</p>
-          </div>
+          {products.length > 0 ? (
+            <>
+              <div className="product-sort">
+                <ProductSort onChange={handleChangeSort} />
+              </div>
+              <div className="product-content">
+                <div className="product-content-filter">
+                  <div className="producr-content-filter-branch">
+                    <FilterBySize onChange={handleChangeSize} />
+                  </div>
+                  <div className="producr-content-filter-price">
+                    <FilterByPrice onChange={handleChangePrice} />
+                  </div>
+                  <div className="producr-content-filter-color">
+                    <FilterByColor onChange={handleChangeColor} />
+                  </div>
+                  <div className="producr-content-filter-rate">
+                    <FilterByRate onChange={handleChangeRate} />
+                  </div>
+                </div>
+                <div className="product-content-product">
+                  <div className="product-content-product-container">
+                    <ProductList data={products} />
+                  </div>
+                  <div className="product-content-pagination">
+                    <Pagination
+                      color="primary"
+                      count={Math.ceil(pagination.total / pagination.limit)}
+                      page={pagination.page}
+                      onChange={handlePaginationChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="product-notfound">
+                <p>Không có sản phẩm phù hợp</p>
+              </div>
+            </>
+          )}
         </>
       )}
 

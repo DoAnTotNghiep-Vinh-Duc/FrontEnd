@@ -143,29 +143,30 @@
                         .product-details-content-product-infor-color-filter {
                             height: 100%;
                             width: calc(100% - 80px);
-                            display: flex;
-                            align-items: center;
                             margin-left: 25px;
-                            .product-details-content-product-infor-color-filter-container {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 35px;
-                                height: 35px;
-                                border-radius: 50%;
-                                border: 1px solid rgba(gray, 0.5);
-                                cursor: pointer;
-                                margin-right: 10px;
-                                &.active-color {
-                                    border: 1px solid #fb2e86;
-                                }
-                                &:hover {
-                                    border: 1px solid #fb2e86;
-                                }
-                                .circle {
-                                    width: 29px;
-                                    height: 29px;
+                            .swiper-slide {
+                                width: auto !important;
+                                .product-details-content-product-infor-color-filter-container {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 35px;
+                                    height: 35px;
                                     border-radius: 50%;
+                                    border: 1px solid rgba(gray, 0.5);
+                                    cursor: pointer;
+                                    margin-right: 10px;
+                                    &.active-color {
+                                        border: 1px solid #fb2e86;
+                                    }
+                                    &:hover {
+                                        border: 1px solid #fb2e86;
+                                    }
+                                    .circle {
+                                        width: 29px;
+                                        height: 29px;
+                                        border-radius: 50%;
+                                    }
                                 }
                             }
                         }

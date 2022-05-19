@@ -1,7 +1,6 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { add } from "date-fns";
-import React, { useState } from "react";
-import adminAPI from "../../api/adminAPI";
+import React from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Menu from "../../components/Menu/Menu";
@@ -26,32 +25,6 @@ function Home(props) {
     minutes: 40,
   });
 
-  const [image, setImage] = useState();
-
-  const handleAddImage = (e) => {
-    e.preventDefault();
-    const fileSelected = e.target.files[0];
-
-    if (fileSelected && fileSelected.type.substr(0, 5) === "image") {
-      setImage(fileSelected);
-    } else {
-      setImage(undefined);
-    }
-  };
-
-  const handleClick = () => {
-    (async () => {
-      try {
-        const res = await adminAPI.testImage({
-          image: image,
-        });
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  };
-
   return (
     <div className="container">
       <Header />
@@ -66,12 +39,6 @@ function Home(props) {
       <Blog />
       <Footer />
       <Scroll showBelow={250} />
-
-      <input type="file" onChange={handleAddImage} />
-
-      <button style={{ backgroundColor: "blueviolet" }} onClick={handleClick}>
-        Thêm
-      </button>
     </div>
   );
 }

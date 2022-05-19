@@ -14,8 +14,8 @@ import payment from "../../assets/images/payment.png";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import ListProductCart from "../../components/ListProductCart/ListProductCart";
+import Loading from "../../components/Loading/Loading";
 import Menu from "../../components/Menu/Menu";
-import useCard from "../../hooks/useCard";
 import FormPayPal from "../PayPal/FormPayPal";
 import "./PaymentPage.scss";
 
@@ -33,9 +33,8 @@ function PaymentPage({ user }) {
   const [selectedValue, setSelectedValue] = useState("");
   const [userShip, setUserShip] = useState(user);
   const [errorPayment, setErrorPayment] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // const { handleChange, handleFocus, handleSubmit, values, error } = useCard();
-  const { handleChange, handleFocus, values, error } = useCard();
   const listProductCart = useSelector((state) => state.listProductCart);
 
   const handleClickRadio = (event) => {
@@ -52,6 +51,7 @@ function PaymentPage({ user }) {
   }, [user]);
 
   const handleSubmit = () => {
+    setLoading(true);
     if (selectedValue === "ONLINE") {
       // setOpenFormPayPal(true);
       (async () => {
@@ -74,6 +74,9 @@ function PaymentPage({ user }) {
             street: userShip.street,
             phone: userShip.phone,
           });
+          setTimeout(() => {
+            setLoading(false);
+          }, 300);
           if (response.status === 201) {
             toast.success("Đặt hàng thành công", {
               position: toast.POSITION.TOP_RIGHT,
@@ -99,6 +102,7 @@ function PaymentPage({ user }) {
 
   return (
     <>
+      {loading && <Loading />}
       <div className="payment">
         <Header />
         <Menu />

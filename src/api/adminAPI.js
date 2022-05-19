@@ -63,11 +63,6 @@ const adminAPI = {
     return axiosClient.put(url);
   },
 
-  testImage(image) {
-    const url = "/rate/upload-image";
-    return axiosClient.post(url, image);
-  },
-
   // customer
   async topCustomer(params) {
     const url = "/admin/order/all-top-customer";

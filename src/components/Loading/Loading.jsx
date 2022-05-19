@@ -1,8 +1,7 @@
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useContext } from "react";
-import { GlobalContext } from "../../context/context";
+import React from "react";
 
 Loading.propTypes = {};
 
@@ -15,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Loading(props) {
   const classes = useStyles();
-  const { state } = useContext(GlobalContext);
 
   return (
     <div>

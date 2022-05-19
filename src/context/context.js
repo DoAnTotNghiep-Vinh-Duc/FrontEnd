@@ -11,8 +11,8 @@ export const DataProvider = ({ children }) => {
     dataAllProductAdmin: [],
     emailForgotPassword: "",
     dataProductForRate: [],
-    loadingPage: false,
     dataAllDiscountAdmin: [],
+    changeColor: false,
   };
 
   const [state, dispatch] = useReducer(reducers, initalState);

@@ -1,27 +1,40 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Navigation, Thumbs } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { ACTIONS } from "../../../context/actions";
+import { GlobalContext } from "../../../context/context";
 
 ProductImageSlider.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
+  activeThumbsColor: PropTypes.any,
 };
 
-function ProductImageSlider({ data }) {
+function ProductImageSlider({ data, activeThumbsColor }) {
+  const { dispatch, state } = useContext(GlobalContext);
+
   const [activeThumbs, setActiveThumbs] = useState();
+
+  const handleClick = () => {
+    dispatch({
+      type: ACTIONS.changeColor,
+      payload: false,
+    });
+  };
 
   return (
     <Fragment>
-      {data.length ? (
+      {data?.length ? (
         <>
           <Swiper
-            loop={true}
+            loop={false}
             spaceBetween={10}
             navigation={true}
             modules={[Navigation, Thumbs]}
             grabCursor={true}
-            thumbs={{ swiper: activeThumbs }}
+            thumbs={{ swiper: activeThumbsColor }}
             className="product-details-content-product-imagemain"
+            style={{ display: state.changeColor ? "block" : "none" }}
           >
             {data.map((value, index) => (
               <SwiperSlide key={index}>
@@ -31,6 +44,26 @@ function ProductImageSlider({ data }) {
               </SwiperSlide>
             ))}
           </Swiper>
+
+          <Swiper
+            loop={false}
+            spaceBetween={10}
+            navigation={true}
+            modules={[Navigation, Thumbs]}
+            grabCursor={true}
+            thumbs={{ swiper: activeThumbs }}
+            className="product-details-content-product-imagemain"
+            style={{ display: state.changeColor ? "none" : "block" }}
+          >
+            {data.map((value, index) => (
+              <SwiperSlide key={index}>
+                <div className="product-details-content-product-imagemain-container">
+                  <img src={value} alt="" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
           <Swiper
             onSwiper={setActiveThumbs}
             slidesPerView={4}
@@ -40,7 +73,10 @@ function ProductImageSlider({ data }) {
           >
             {data.map((value, index) => (
               <SwiperSlide key={index}>
-                <div className="product-details-content-product-imagesub-img">
+                <div
+                  className="product-details-content-product-imagesub-img"
+                  onClick={handleClick}
+                >
                   <img src={value} alt="" />
                 </div>
               </SwiperSlide>

@@ -10,6 +10,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import orderAPI from "../../api/orderAPI";
+import icon_order from "../../assets/images/icon-order.jpg";
 import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import "./MyOrder.scss";
 
@@ -63,84 +64,95 @@ function MyOrder(props) {
             <i className="bi bi-search"></i>
           </div>
         </div>
-        <div className="myOrder-listOrder">
-          <div className="myOrder-listOrder-table">
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell width="5%">STT</TableCell>
-                    <TableCell width="5%">ID</TableCell>
-                    <TableCell width="15%">Người nhận</TableCell>
-                    <TableCell width="10%">Số sản phẩm</TableCell>
-                    <TableCell width="10%">Tổng tiền</TableCell>
-                    <TableCell width="20%">Phương thức</TableCell>
-                    <TableCell width="15%">Trạng thái</TableCell>
-                    <TableCell width="12%">Ngày đặt hàng</TableCell>
-                    <TableCell width="8%"></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {listOrder.map((order, index) => {
-                    return (
-                      <TableRow key={order._id}>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell>
-                          #
-                          {order._id.substring(
-                            order._id.length - 5,
-                            order._id.length
-                          )}
-                        </TableCell>
-                        <TableCell>{order.name}</TableCell>
-                        <TableCell>{order.quantity}</TableCell>
-                        <TableCell>
-                          {new Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(order.total)}
-                        </TableCell>
-                        <TableCell>
-                          {order.typePayment === "CASH"
-                            ? "Thanh toán khi nhận hàng"
-                            : "Thẻ VISA"}
-                        </TableCell>
-                        <TableCell>
-                          <div
-                            className={`${"myOrder-listOrder-table-status"} ${
-                              order.status
-                            }`}
-                          >
-                            {order.status === "HANDLING"
-                              ? "Chờ xử lý"
-                              : order.status === "CANCELED"
-                              ? "Đã bị hủy"
-                              : order.status === "DONE"
-                              ? "Hoàn thành"
-                              : order.status === "DELIVERING"
-                              ? "Đang vận chuyển"
-                              : ""}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          {moment(order.createdAt).format("L")}
-                        </TableCell>
-                        <TableCell>
-                          <button
-                            className="myOrder-listOrder-table-view"
-                            onClick={() => handleClickViewDetail(order)}
-                          >
-                            Xem
-                          </button>
-                        </TableCell>
+        {listOrder.length ? (
+          <>
+            <div className="myOrder-listOrder">
+              <div className="myOrder-listOrder-table">
+                <TableContainer component={Paper}>
+                  <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell width="5%">STT</TableCell>
+                        <TableCell width="5%">ID</TableCell>
+                        <TableCell width="15%">Người nhận</TableCell>
+                        <TableCell width="10%">Số sản phẩm</TableCell>
+                        <TableCell width="10%">Tổng tiền</TableCell>
+                        <TableCell width="20%">Phương thức</TableCell>
+                        <TableCell width="15%">Trạng thái</TableCell>
+                        <TableCell width="12%">Ngày đặt hàng</TableCell>
+                        <TableCell width="8%"></TableCell>
                       </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-        </div>
+                    </TableHead>
+                    <TableBody>
+                      {listOrder.map((order, index) => {
+                        return (
+                          <TableRow key={order._id}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>
+                              #
+                              {order._id.substring(
+                                order._id.length - 5,
+                                order._id.length
+                              )}
+                            </TableCell>
+                            <TableCell>{order.name}</TableCell>
+                            <TableCell>{order.quantity}</TableCell>
+                            <TableCell>
+                              {new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              }).format(order.total)}
+                            </TableCell>
+                            <TableCell>
+                              {order.typePayment === "CASH"
+                                ? "Thanh toán khi nhận hàng"
+                                : "Thẻ VISA"}
+                            </TableCell>
+                            <TableCell>
+                              <div
+                                className={`${"myOrder-listOrder-table-status"} ${
+                                  order.status
+                                }`}
+                              >
+                                {order.status === "HANDLING"
+                                  ? "Chờ xử lý"
+                                  : order.status === "CANCELED"
+                                  ? "Đã bị hủy"
+                                  : order.status === "DONE"
+                                  ? "Hoàn thành"
+                                  : order.status === "DELIVERING"
+                                  ? "Đang vận chuyển"
+                                  : ""}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {moment(order.createdAt).format("L")}
+                            </TableCell>
+                            <TableCell>
+                              <button
+                                className="myOrder-listOrder-table-view"
+                                onClick={() => handleClickViewDetail(order)}
+                              >
+                                Xem
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="myOrder-listOrder-notfound">
+              <img src={icon_order} alt="" />
+              <p>Chưa có đơn hàng</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

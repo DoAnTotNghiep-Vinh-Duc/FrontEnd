@@ -38,12 +38,6 @@ const reducer = (state, action) => {
         dataProductForRate: action.payload,
       };
 
-    case ACTIONS.loadingPage:
-      return {
-        ...state,
-        loadingPage: action.payload,
-      };
-
     case ACTIONS.dataAllDiscountAdmin:
       return {
         ...state,
@@ -54,6 +48,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         dataListProduct: action.payload,
+      };
+
+    case ACTIONS.changeColor:
+      return {
+        ...state,
+        changeColor: action.payload,
       };
 
     default:

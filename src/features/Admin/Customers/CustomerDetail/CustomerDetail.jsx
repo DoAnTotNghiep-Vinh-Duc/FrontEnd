@@ -3,6 +3,7 @@ import Tabs from "@material-ui/core/Tabs";
 import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import adminAPI from "../../../../api/adminAPI";
+import icon_order from "../../../../assets/images/icon-order.jpg";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import "./CustomerDetail.scss";
@@ -99,10 +100,7 @@ function CustomerDetail(props) {
             <>
               <div className="admin-customer-detail-list-notfound">
                 <div className="admin-customer-detail-list-notfound-container">
-                  <img
-                    src="https://theme.hstatic.net/1000341850/1000438988/14/infor3_icon_2_1.png?v=798"
-                    alt=""
-                  />
+                  <img src={icon_order} alt="" />
                   <p>Chưa có đơn hàng</p>
                 </div>
               </div>

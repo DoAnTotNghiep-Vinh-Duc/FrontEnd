@@ -92,7 +92,7 @@ function RateAndComment({ product }) {
                 <span className="total">{product.point}</span>
                 <StyledRating
                   name="half-rating-read"
-                  value={product.point}
+                  value={product.point ?? 2}
                   precision={0.1}
                   readOnly
                   size="large"
