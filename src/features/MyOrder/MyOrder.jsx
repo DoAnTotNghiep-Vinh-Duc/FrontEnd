@@ -13,6 +13,9 @@ import orderAPI from "../../api/orderAPI";
 import icon_order from "../../assets/images/icon-order.jpg";
 import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import "./MyOrder.scss";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
+import a from "../../assets/product/AiryWTS-black.jpg";
 
 MyOrder.propTypes = {};
 
@@ -25,7 +28,9 @@ const useStyles = makeStyles({
 function MyOrder(props) {
   const classes = useStyles();
   const History = useHistory();
+
   const [listOrder, setListOrder] = useState([]);
+  const [value, setValue] = useState("ALL");
 
   useEffect(() => {
     (async () => {
@@ -37,6 +42,10 @@ function MyOrder(props) {
       }
     })();
   }, []);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleClickViewDetail = (order) => {
     History.push(`${History.location.pathname}/${order._id}`);
@@ -66,7 +75,7 @@ function MyOrder(props) {
         </div>
         {listOrder.length ? (
           <>
-            <div className="myOrder-listOrder">
+            {/* <div className="myOrder-listOrder">
               <div className="myOrder-listOrder-table">
                 <TableContainer component={Paper}>
                   <Table className={classes.table} aria-label="simple table">
@@ -143,6 +152,124 @@ function MyOrder(props) {
                   </Table>
                 </TableContainer>
               </div>
+            </div> */}
+            <div className="myOrder-listOrder-title">
+              <Tabs
+                value={value}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={handleChange}
+                aria-label="disabled tabs example"
+              >
+                <Tab
+                  value="ALL"
+                  label="tất cả"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+                <Tab
+                  value="HANDLING"
+                  label="chờ xử lí"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+                <Tab
+                  value="DELIVERING"
+                  label="đang vận chuyển"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+                <Tab
+                  value="DONE"
+                  label="đã giao"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+                <Tab
+                  value="CANCELED"
+                  label="đã hủy"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+              </Tabs>
+            </div>
+            <div className="myOrder-listOrder-title-list">
+              {listOrder.map((order) => {
+                return (
+                  <div
+                    className="myOrder-listOrder-title-list-order"
+                    key={order._id}
+                  >
+                    <div className="myOrder-listOrder-title-list-order-header">
+                      <div className="myOrder-listOrder-title-list-order-header-id">
+                        <p>
+                          Mã hóa đơn: <b>123</b>
+                        </p>
+                      </div>
+                      <div className="myOrder-listOrder-title-list-order-header-status">
+                        <div
+                          className={`${"myOrder-listOrder-title-list-order-header-status-container"} ${
+                            order.status
+                          }`}
+                        >
+                          <p>
+                            {order.status === "DONE"
+                              ? "Đã hoàn tất"
+                              : order.status === "CANCELED"
+                              ? "Đã bị hủy"
+                              : order.status === "DELIVERING"
+                              ? "Đang vận chuyển"
+                              : order.status === "HANDLING"
+                              ? "Chờ xử lí"
+                              : ""}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="myOrder-listOrder-title-list-order-product">
+                      <div className="myOrder-listOrder-title-list-order-product-image">
+                        <img src={a} alt="" />
+                      </div>
+                      <div className="myOrder-listOrder-title-list-order-product-infor">
+                        <div className="myOrder-listOrder-title-list-order-product-infor-name">
+                          fdffef
+                        </div>
+                        <div className="myOrder-listOrder-title-list-order-product-infor-size">
+                          Màu: êfegrg
+                        </div>
+                        <div className="myOrder-listOrder-title-list-order-product-infor-size">
+                          Kích cỡ: grfgrgd
+                        </div>
+                        <div className="myOrder-listOrder-title-list-order-product-infor-name">
+                          x2
+                        </div>
+                      </div>
+                      <div className="myOrder-listOrder-title-list-order-product-price">
+                        <span className="myOrder-listOrder-title-list-order-product-price-main">
+                          150.000 đ
+                        </span>
+                        <span className="myOrder-listOrder-title-list-order-product-price-sale">
+                          150.000 đ
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="myOrder-listOrder-title-list-order-footer">
+                      <div className="myOrder-listOrder-title-list-order-footer-btn">
+                        <button onClick={() => handleClickViewDetail(order)}>
+                          Xem chi tiết
+                        </button>
+                      </div>
+                      <div className="myOrder-listOrder-title-list-order-footer-total">
+                        <i className="bi bi-coin"></i>
+                        Tổng số tiền:{" "}
+                        <span>
+                          {new Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(order.total)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </>
         ) : (

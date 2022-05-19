@@ -48,6 +48,8 @@
                         img {
                             width: 100%;
                             height: 100%;
+                            object-fit: cover;
+                            border-radius: 50%;
                         }
                     }
                 }
@@ -64,8 +66,22 @@
                         color: white;
                         border-radius: 5px;
                         cursor: pointer;
+                        position: relative;
                         &:hover {
                             background-color: #fb2e86;
+                        }
+                        input {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            height: 100%;
+                            width: 100%;
+                            font-size: 1px;
+                            text-align: right;
+                            opacity: 0;
+                            outline: none;
+                            cursor: inherit;
+                            display: block;
                         }
                     }
                 }

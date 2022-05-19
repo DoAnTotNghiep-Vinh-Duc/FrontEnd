@@ -27,9 +27,9 @@ const userAPI = {
     const url = "/information";
     return axiosClient.get(url);
   },
-  updateInformation(newInformation) {
+  updateInformation(value) {
     const url = "/information/update-information";
-    return axiosClient.put(url, newInformation);
+    return axiosClient.put(url, value);
   },
   sendOTP(phone) {
     const url = "/information/send-otp";

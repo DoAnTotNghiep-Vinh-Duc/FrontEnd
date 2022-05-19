@@ -14,6 +14,8 @@ function UserInformation(props) {
   const pathname = location.pathname;
 
   const [userInformation, setUserInformation] = useState({});
+  const [image, setImage] = useState();
+  const [imagePreview, setImagePreview] = useState();
 
   useEffect(() => {
     (async () => {
@@ -57,10 +59,40 @@ function UserInformation(props) {
     });
   };
 
+  const handleAddImage = (e) => {
+    e.preventDefault();
+    const fileSelected = e.target.files[0];
+
+    if (fileSelected && fileSelected.type.substr(0, 5) === "image") {
+      setImage(fileSelected);
+      setUserInformation({
+        ...userInformation,
+        avatar: fileSelected,
+      });
+    } else {
+      setImage(undefined);
+    }
+  };
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      setImagePreview(undefined);
+    }
+  }, [image]);
+
   const handleUpdate = () => {
     (async () => {
       try {
-        const response = await userAPI.updateInformation(userInformation);
+        const fd = new FormData();
+        fd.append("newInformation", JSON.stringify(userInformation));
+        fd.append("uploadFile", userInformation.avatar);
+        const response = await userAPI.updateInformation(fd);
         if (response.status === 204) {
           toast.success("Cập nhập thành công", {
             position: toast.POSITION.TOP_RIGHT,
@@ -83,14 +115,14 @@ function UserInformation(props) {
             <div className="infor-name">{userInformation.name}</div>
             <div className="infor-image">
               <div className="infor-image-circle">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
-                  alt=""
-                />
+                <img src={imagePreview ?? userInformation.avatar} alt="" />
               </div>
             </div>
             <div className="infor-button">
-              <button>Tải hình mới lên</button>
+              <button>
+                <input type="file" accept="image/*" onChange={handleAddImage} />
+                Tải hình mới lên
+              </button>
             </div>
             <div className="infor-time">
               Tham gia <b>{moment(userInformation.createdAt).format("L")}</b>

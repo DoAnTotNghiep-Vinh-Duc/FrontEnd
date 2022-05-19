@@ -1,8 +1,9 @@
 import Dialog from "@material-ui/core/Dialog";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import userAPI from "../../api/userAPI";
 import Logout from "../../features/Logout/Logout";
 import "./style.scss";
 
@@ -17,6 +18,18 @@ function Header(props) {
   const [open, setOpen] = useState(false);
 
   const [openFormLogout, setOpenFormLogout] = useState(false);
+  const [userInformation, setUserInformation] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userAPI.getInformation();
+        setUserInformation(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const handleClickOpenFormLogout = () => {
     setOpenFormLogout(true);
@@ -65,10 +78,7 @@ function Header(props) {
                     onClick={() => setOpen((x) => !x)}
                   >
                     <div className="account-image">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
-                        alt=""
-                      />
+                      <img src={userInformation.avatar} alt="" />
                     </div>
                     <div className="account-name">
                       Xin chào, {account.nameDisplay}
