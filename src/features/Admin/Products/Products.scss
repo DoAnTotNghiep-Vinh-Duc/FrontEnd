@@ -89,6 +89,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
                         }
                         .admin-products-content-body-listProducts-body-header-image {
                             width: 15%;
@@ -98,6 +99,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
                         }
                         .admin-products-content-body-listProducts-body-header-name {
                             width: 25%;
@@ -107,15 +109,105 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
+                            position: relative;
+                            .admin-products-name-icon {
+                                position: absolute;
+                                top: 50%;
+                                left: 25%;
+                                transform: translateY(-50%);
+                                font-size: 16px;
+                            }
+                            .admin-products-name-icon-filter {
+                                cursor: pointer;
+                                position: absolute;
+                                top: 50%;
+                                right: 0;
+                                transform: translateY(-50%);
+                                font-size: 18px;
+                                &:hover {
+                                    color: #e80000;
+                                }
+                                .dropdown-name {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    width: 100px;
+                                    height: 70px;
+                                    background-color: white;
+                                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                                    border-radius: 5px;
+
+                                    p {
+                                        width: 100%;
+                                        height: 50%;
+                                        color: #1f4173;
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 10px;
+                                        font-size: 14px;
+                                        font-style: normal;
+                                        font-weight: normal;
+                                        &:hover {
+                                            background-color: #f5f5f5;
+                                        }
+                                    }
+                                }
+                            }
                         }
                         .admin-products-content-body-listProducts-body-header-stock {
-                            width: 10%;
+                            width: 20%;
                             height: 100%;
                             font-size: 12px;
                             font-weight: bold;
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
+                            position: relative;
+                            .admin-products-stock-icon {
+                                position: absolute;
+                                top: 50%;
+                                left: 20%;
+                                transform: translateY(-50%);
+                                font-size: 16px;
+                            }
+                            .admin-products-stock-icon-filter {
+                                cursor: pointer;
+                                position: absolute;
+                                top: 50%;
+                                right: 0;
+                                transform: translateY(-50%);
+                                font-size: 18px;
+                                &:hover {
+                                    color: #e80000;
+                                }
+                                .dropdown-stock {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    width: 100px;
+                                    height: 70px;
+                                    background-color: white;
+                                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                                    border-radius: 5px;
+
+                                    p {
+                                        width: 100%;
+                                        height: 50%;
+                                        color: #1f4173;
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 10px;
+                                        font-size: 14px;
+                                        font-style: normal;
+                                        font-weight: normal;
+                                        &:hover {
+                                            background-color: #f5f5f5;
+                                        }
+                                    }
+                                }
+                            }
                         }
                         .admin-products-content-body-listProducts-body-header-price {
                             width: 15%;
@@ -125,15 +217,61 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
+                            position: relative;
+                            .admin-products-price-icon {
+                                position: absolute;
+                                top: 50%;
+                                left: 30%;
+                                transform: translateY(-50%);
+                                font-size: 16px;
+                            }
+                            .admin-products-price-icon-filter {
+                                cursor: pointer;
+                                position: absolute;
+                                top: 50%;
+                                right: 0;
+                                transform: translateY(-50%);
+                                font-size: 18px;
+                                &:hover {
+                                    color: #e80000;
+                                }
+                                .dropdown-price {
+                                    position: absolute;
+                                    top: 100%;
+                                    right: 0;
+                                    width: 100px;
+                                    height: 70px;
+                                    background-color: white;
+                                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                                    border-radius: 5px;
+
+                                    p {
+                                        width: 100%;
+                                        height: 50%;
+                                        color: #1f4173;
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 10px;
+                                        font-size: 14px;
+                                        font-style: normal;
+                                        font-weight: normal;
+                                        &:hover {
+                                            background-color: #f5f5f5;
+                                        }
+                                    }
+                                }
+                            }
                         }
                         .admin-products-content-body-listProducts-body-header-categogy {
-                            width: 20%;
+                            width: 10%;
                             height: 100%;
                             font-size: 12px;
                             font-weight: bold;
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-right: 1px solid rgba($color: gray, $alpha: 0.3);
                         }
                         .admin-products-content-body-listProducts-body-header-action {
                             width: 5%;
@@ -184,7 +322,7 @@
                                 text-overflow: ellipsis;
                             }
                             .admin-products-content-body-listProducts-body-products-product-stock {
-                                width: 10%;
+                                width: 20%;
                                 height: 100%;
                                 display: flex;
                                 justify-content: center;
@@ -198,7 +336,7 @@
                                 align-items: center;
                             }
                             .admin-products-content-body-listProducts-body-products-product-category {
-                                width: 20%;
+                                width: 10%;
                                 height: 100%;
                                 display: flex;
                                 justify-content: center;

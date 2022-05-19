@@ -69,8 +69,14 @@ function Orders(props) {
     setIconCash("");
     (async () => {
       try {
-        const response = await adminAPI.sortOrder("NAME", "ASC", item.value);
-        setOrders(response.data.data);
+        const response = await adminAPI.sortOrder(
+          "NAME",
+          "ASC",
+          item.value,
+          filters
+        );
+        setOrders(response.data);
+        setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
@@ -82,8 +88,14 @@ function Orders(props) {
     setIconDate("");
     (async () => {
       try {
-        const response = await adminAPI.sortOrder("NAME", item.value, "ALL");
-        setOrders(response.data.data);
+        const response = await adminAPI.sortOrder(
+          "NAME",
+          item.value,
+          "ALL",
+          filters
+        );
+        setOrders(response.data);
+        setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
@@ -98,9 +110,11 @@ function Orders(props) {
         const response = await adminAPI.sortOrder(
           "TOTALMONEY",
           item.value,
-          "ALL"
+          "ALL",
+          filters
         );
-        setOrders(response.data.data);
+        setOrders(response.data);
+        setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }
@@ -115,9 +129,11 @@ function Orders(props) {
         const response = await adminAPI.sortOrder(
           "ORDERDATE",
           item.value,
-          "ALL"
+          "ALL",
+          filters
         );
-        setOrders(response.data.data);
+        setOrders(response.data);
+        setPagination(response.pagination);
       } catch (error) {
         console.log(error);
       }

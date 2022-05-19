@@ -141,15 +141,27 @@ const adminAPI = {
     const url = `/admin/order/cancel-order/${orderId}`;
     return axiosClient.put(url);
   },
-  sortOrder(typeSort, sort, typeOrderStatus) {
+  async sortOrder(typeSort, sort, typeOrderStatus, filters) {
     const url = "/admin/order/sortOrder";
-    return axiosClient.get(url, {
+    const listOrder = await axiosClient.get(url, {
       params: {
         typeSort,
         sort,
         typeOrderStatus,
       },
     });
+
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+
+    return {
+      data: listOrder.data.data.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
+        total: listOrder.data.data.length,
+      },
+    };
   },
 };
 

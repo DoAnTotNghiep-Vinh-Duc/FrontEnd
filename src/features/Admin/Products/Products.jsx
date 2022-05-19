@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import adminAPI from "../../../api/adminAPI";
 import { ACTIONS } from "../../../context/actions";
 import { GlobalContext } from "../../../context/context";
+import sortASC_DESC from "../../../data/sortASC_DESC.json";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Product from "./Product/Product";
@@ -23,6 +24,12 @@ function Products(props) {
     limit: 5,
     page: 1,
   });
+  const [openFilterProduct, setOpenFilterProduct] = useState(false);
+  const [openFilterQuantity, setOpenFilterQuantity] = useState(false);
+  const [openFilterPrice, setOpenFilterPrice] = useState(false);
+  const [iconProduct, setIconProduct] = useState("");
+  const [iconQuantity, setIconQuantity] = useState("");
+  const [iconPrice, setIconPrice] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -51,6 +58,32 @@ function Products(props) {
 
   const handleClickAddProduct = () => {
     History.push("/admin/addproduct");
+  };
+
+  const handleOpenFilterCustomer = () => {
+    setOpenFilterProduct(!openFilterProduct);
+  };
+  const handleOpenFilterQuantity = () => {
+    setOpenFilterQuantity(!openFilterQuantity);
+  };
+  const handleOpenFilterPrice = () => {
+    setOpenFilterPrice(!openFilterPrice);
+  };
+
+  const handleSelectCustomerFiler = (item) => {
+    setIconProduct(item.value);
+    setIconQuantity("");
+    setIconPrice("");
+  };
+  const handleSelectQuantityFiler = (item) => {
+    setIconQuantity(item.value);
+    setIconProduct("");
+    setIconPrice("");
+  };
+  const handleSelectPriceFiler = (item) => {
+    setIconPrice(item.value);
+    setIconProduct("");
+    setIconQuantity("");
   };
 
   return (
@@ -89,13 +122,103 @@ function Products(props) {
                   HÌNH ẢNH
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-name">
-                  TÊN SẢN PHẨM
+                  <div className="admin-products-name-icon">
+                    {iconProduct === "ASC" ? (
+                      <i className="bi bi-arrow-up"></i>
+                    ) : iconProduct === "DESC" ? (
+                      <i className="bi bi-arrow-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <p>TÊN SẢN PHẨM</p>
+                  <div className="admin-products-name-icon-filter">
+                    <i
+                      className="bi bi-list-task"
+                      onClick={handleOpenFilterCustomer}
+                    >
+                      {openFilterProduct && (
+                        <div className="dropdown-name">
+                          {sortASC_DESC.map((item) => {
+                            return (
+                              <p
+                                key={item.id}
+                                onClick={() => handleSelectCustomerFiler(item)}
+                              >
+                                {item.label}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </i>
+                  </div>
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-stock">
-                  SỐ LƯỢNG TỒN
+                  <div className="admin-products-stock-icon">
+                    {iconQuantity === "ASC" ? (
+                      <i className="bi bi-arrow-up"></i>
+                    ) : iconQuantity === "DESC" ? (
+                      <i className="bi bi-arrow-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <p>SỐ LƯỢNG TỒN</p>
+                  <div className="admin-products-stock-icon-filter">
+                    <i
+                      className="bi bi-list-task"
+                      onClick={handleOpenFilterQuantity}
+                    >
+                      {openFilterQuantity && (
+                        <div className="dropdown-stock">
+                          {sortASC_DESC.map((item) => {
+                            return (
+                              <p
+                                key={item.id}
+                                onClick={() => handleSelectQuantityFiler(item)}
+                              >
+                                {item.label}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </i>
+                  </div>
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-price">
-                  GIÁ
+                  <div className="admin-products-price-icon">
+                    {iconPrice === "ASC" ? (
+                      <i className="bi bi-arrow-up"></i>
+                    ) : iconPrice === "DESC" ? (
+                      <i className="bi bi-arrow-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <p> GIÁ</p>
+                  <div className="admin-products-price-icon-filter">
+                    <i
+                      className="bi bi-list-task"
+                      onClick={handleOpenFilterPrice}
+                    >
+                      {openFilterPrice && (
+                        <div className="dropdown-price">
+                          {sortASC_DESC.map((item) => {
+                            return (
+                              <p
+                                key={item.id}
+                                onClick={() => handleSelectPriceFiler(item)}
+                              >
+                                {item.label}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </i>
+                  </div>
                 </div>
                 <div className="admin-products-content-body-listProducts-body-header-categogy">
                   GIẢM GIÁ

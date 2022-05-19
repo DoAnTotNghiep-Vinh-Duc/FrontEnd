@@ -1,12 +1,13 @@
+import Pagination from "@material-ui/lab/Pagination";
 import React, { useContext, useEffect, useState } from "react";
 import adminAPI from "../../../api/adminAPI";
+import { ACTIONS } from "../../../context/actions";
+import { GlobalContext } from "../../../context/context";
+import sortASC_DESC from "../../../data/sortASC_DESC.json";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import Customer from "./Customer/Customer";
 import "./Customers.scss";
-import Pagination from "@material-ui/lab/Pagination";
-import { GlobalContext } from "../../../context/context";
-import { ACTIONS } from "../../../context/actions";
 
 Customers.propTypes = {};
 
@@ -21,6 +22,10 @@ function Customers(props) {
     limit: 10,
     page: 1,
   });
+  const [openFilterCustomer, setOpenFilterCustomer] = useState(false);
+  const [openFilterNumber, setOpenFilterNumber] = useState(false);
+  const [iconCustomer, setIconCustomer] = useState("");
+  const [iconNumber, setIconNumber] = useState("");
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({
@@ -47,6 +52,22 @@ function Customers(props) {
     })();
   }, [dispatch, filters]);
 
+  const handleOpenFilterCustomer = () => {
+    setOpenFilterCustomer(!openFilterCustomer);
+  };
+  const handleOpenFilterNumber = () => {
+    setOpenFilterNumber(!openFilterNumber);
+  };
+
+  const handleSelectCustomerFiler = (item) => {
+    setIconCustomer(item.value);
+    setIconNumber("");
+  };
+  const handleSelectNumberFiler = (item) => {
+    setIconNumber(item.value);
+    setIconCustomer("");
+  };
+
   return (
     <div className="admin-customers">
       <NavBars />
@@ -71,13 +92,73 @@ function Customers(props) {
                   MÃ KHÁCH HÀNG
                 </div>
                 <div className="admin-customers-content-body-container-body-header-customer">
-                  TÊN KHÁCH HÀNG
+                  <div className="admin-products-customer-icon">
+                    {iconCustomer === "ASC" ? (
+                      <i className="bi bi-arrow-up"></i>
+                    ) : iconCustomer === "DESC" ? (
+                      <i className="bi bi-arrow-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <p>TÊN KHÁCH HÀNG</p>
+                  <div className="admin-products-customer-icon-filter">
+                    <i
+                      className="bi bi-list-task"
+                      onClick={handleOpenFilterCustomer}
+                    >
+                      {openFilterCustomer && (
+                        <div className="dropdown-customer">
+                          {sortASC_DESC.map((item) => {
+                            return (
+                              <p
+                                key={item.id}
+                                onClick={() => handleSelectCustomerFiler(item)}
+                              >
+                                {item.label}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </i>
+                  </div>
                 </div>
                 <div className="admin-customers-content-body-container-body-header-phone">
                   SỐ ĐIỆN THOẠI
                 </div>
                 <div className="admin-customers-content-body-container-body-header-quantityOrder">
-                  SỐ LẦN MUA
+                  <div className="admin-products-quantityOrder-icon">
+                    {iconNumber === "ASC" ? (
+                      <i className="bi bi-arrow-up"></i>
+                    ) : iconNumber === "DESC" ? (
+                      <i className="bi bi-arrow-down"></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <p>LẦN MUA</p>
+                  <div className="admin-products-quantityOrder-icon-filter">
+                    <i
+                      className="bi bi-list-task"
+                      onClick={handleOpenFilterNumber}
+                    >
+                      {openFilterNumber && (
+                        <div className="dropdown-quantityOrder">
+                          {sortASC_DESC.map((item) => {
+                            return (
+                              <p
+                                key={item.id}
+                                onClick={() => handleSelectNumberFiler(item)}
+                              >
+                                {item.label}
+                              </p>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </i>
+                  </div>
                 </div>
                 <div className="admin-customers-content-body-container-body-header-address">
                   ĐỊA CHỈ
