@@ -85,13 +85,13 @@ function Customers(props) {
                 <div className="admin-customers-content-body-container-body-header-action"></div>
               </div>
               <div className="admin-customers-content-body-container-body-customers">
-                {state.dataAllCustomerAdmin.map((customer, index) => {
+                {state.dataAllCustomerAdmin.map((customer) => {
                   return customer.roleAccount !== "Admin" ? (
                     <>
-                      <Customer key={index} customer={customer} />
+                      <Customer key={customer._id} customer={customer} />
                     </>
                   ) : (
-                    <></>
+                    ""
                   );
                 })}
               </div>

@@ -1,6 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
-import a from "../../../../../assets/product/AiryWTS-black.jpg";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 CustomerOrder.propTypes = {
@@ -42,33 +41,57 @@ function CustomerOrder({ order }) {
           </div>
         </div>
       </div>
-      <div className="admin-customer-detail-list-order-product">
-        <div className="admin-customer-detail-list-order-product-image">
-          <img src={a} alt="" />
-        </div>
-        <div className="admin-customer-detail-list-order-product-infor">
-          <div className="admin-customer-detail-list-order-product-infor-name">
-            áo thun nam tính đầu trâu
+      {order.listOrderDetail.map((product, index) => {
+        return (
+          <div className="admin-customer-detail-list-order-product" key={index}>
+            <div className="admin-customer-detail-list-order-product-image">
+              <img src={product.productDetail.image} alt="" />
+            </div>
+            <div className="admin-customer-detail-list-order-product-infor">
+              <div className="admin-customer-detail-list-order-product-infor-name">
+                {product.productDetail.product.name}
+              </div>
+              <div className="admin-customer-detail-list-order-product-infor-size">
+                Màu: {product.productDetail.color.name}
+              </div>
+              <div className="admin-customer-detail-list-order-product-infor-size">
+                Kích cỡ: {product.productDetail.size}
+              </div>
+              <div className="admin-customer-detail-list-order-product-infor-name">
+                x{product.quantity}
+              </div>
+            </div>
+            <div className="admin-customer-detail-list-order-product-price">
+              {product.price === product.productDetail.product.price ? (
+                <>
+                  <span className="admin-customer-detail-list-order-product-price-main-nosale">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.productDetail.product.price)}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="admin-customer-detail-list-order-product-price-main">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.productDetail.product.price)}
+                  </span>
+                  <span className="admin-customer-detail-list-order-product-price-sale">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.price)}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-          <div className="admin-customer-detail-list-order-product-infor-size">
-            Màu: Trắng
-          </div>
-          <div className="admin-customer-detail-list-order-product-infor-size">
-            Kích cỡ: M
-          </div>
-          <div className="admin-customer-detail-list-order-product-infor-name">
-            x2
-          </div>
-        </div>
-        <div className="admin-customer-detail-list-order-product-price">
-          <span className="admin-customer-detail-list-order-product-price-main">
-            198.000 đ
-          </span>
-          <span className="admin-customer-detail-list-order-product-price-sale">
-            198.000 đ
-          </span>
-        </div>
-      </div>
+        );
+      })}
+
       <div className="admin-customer-detail-list-order-footer">
         <div className="admin-customer-detail-list-order-footer-btn">
           <button onClick={handleClickViewDetail}>Xem chi tiết</button>
