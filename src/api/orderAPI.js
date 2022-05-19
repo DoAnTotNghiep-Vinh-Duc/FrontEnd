@@ -1,10 +1,13 @@
-import PayPal from "../features/PayPal/PayPal";
 import axiosClient from "./axiosClient";
 
 const orderAPI = {
-  getAllOrderByAccount() {
+  getAllOrderByAccount(statusOrder) {
     const url = "/order/get-order-by-account";
-    return axiosClient.get(url);
+    return axiosClient.get(url, {
+      params: {
+        statusOrder,
+      },
+    });
   },
   getOrderByOrderId(orderId) {
     const url = `/order/get-order-by-orderId/${orderId}`;

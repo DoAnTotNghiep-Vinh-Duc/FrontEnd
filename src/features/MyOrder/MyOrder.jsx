@@ -1,32 +1,15 @@
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import moment from "moment";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import orderAPI from "../../api/orderAPI";
 import icon_order from "../../assets/images/icon-order.jpg";
 import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import "./MyOrder.scss";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import a from "../../assets/product/AiryWTS-black.jpg";
 
 MyOrder.propTypes = {};
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
 function MyOrder(props) {
-  const classes = useStyles();
   const History = useHistory();
 
   const [listOrder, setListOrder] = useState([]);
@@ -35,13 +18,13 @@ function MyOrder(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await orderAPI.getAllOrderByAccount();
+        const response = await orderAPI.getAllOrderByAccount(value);
         setListOrder(response.data.data);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,84 +58,6 @@ function MyOrder(props) {
         </div>
         {listOrder.length ? (
           <>
-            {/* <div className="myOrder-listOrder">
-              <div className="myOrder-listOrder-table">
-                <TableContainer component={Paper}>
-                  <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell width="5%">STT</TableCell>
-                        <TableCell width="5%">ID</TableCell>
-                        <TableCell width="15%">Người nhận</TableCell>
-                        <TableCell width="10%">Số sản phẩm</TableCell>
-                        <TableCell width="10%">Tổng tiền</TableCell>
-                        <TableCell width="20%">Phương thức</TableCell>
-                        <TableCell width="15%">Trạng thái</TableCell>
-                        <TableCell width="12%">Ngày đặt hàng</TableCell>
-                        <TableCell width="8%"></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {listOrder.map((order, index) => {
-                        return (
-                          <TableRow key={order._id}>
-                            <TableCell>{index + 1}</TableCell>
-                            <TableCell>
-                              #
-                              {order._id.substring(
-                                order._id.length - 5,
-                                order._id.length
-                              )}
-                            </TableCell>
-                            <TableCell>{order.name}</TableCell>
-                            <TableCell>{order.quantity}</TableCell>
-                            <TableCell>
-                              {new Intl.NumberFormat("vi-VN", {
-                                style: "currency",
-                                currency: "VND",
-                              }).format(order.total)}
-                            </TableCell>
-                            <TableCell>
-                              {order.typePayment === "CASH"
-                                ? "Thanh toán khi nhận hàng"
-                                : "Thẻ VISA"}
-                            </TableCell>
-                            <TableCell>
-                              <div
-                                className={`${"myOrder-listOrder-table-status"} ${
-                                  order.status
-                                }`}
-                              >
-                                {order.status === "HANDLING"
-                                  ? "Chờ xử lý"
-                                  : order.status === "CANCELED"
-                                  ? "Đã bị hủy"
-                                  : order.status === "DONE"
-                                  ? "Hoàn thành"
-                                  : order.status === "DELIVERING"
-                                  ? "Đang vận chuyển"
-                                  : ""}
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              {moment(order.createdAt).format("L")}
-                            </TableCell>
-                            <TableCell>
-                              <button
-                                className="myOrder-listOrder-table-view"
-                                onClick={() => handleClickViewDetail(order)}
-                              >
-                                Xem
-                              </button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </div>
-            </div> */}
             <div className="myOrder-listOrder-title">
               <Tabs
                 value={value}
@@ -198,7 +103,7 @@ function MyOrder(props) {
                     <div className="myOrder-listOrder-title-list-order-header">
                       <div className="myOrder-listOrder-title-list-order-header-id">
                         <p>
-                          Mã hóa đơn: <b>123</b>
+                          Mã hóa đơn: <b>{order._id}</b>
                         </p>
                       </div>
                       <div className="myOrder-listOrder-title-list-order-header-status">
@@ -221,34 +126,64 @@ function MyOrder(props) {
                         </div>
                       </div>
                     </div>
-
-                    <div className="myOrder-listOrder-title-list-order-product">
-                      <div className="myOrder-listOrder-title-list-order-product-image">
-                        <img src={a} alt="" />
-                      </div>
-                      <div className="myOrder-listOrder-title-list-order-product-infor">
-                        <div className="myOrder-listOrder-title-list-order-product-infor-name">
-                          fdffef
+                    {order.listOrderDetail.map((product, index) => {
+                      return (
+                        <div
+                          className="myOrder-listOrder-title-list-order-product"
+                          key={index}
+                        >
+                          <div className="myOrder-listOrder-title-list-order-product-image">
+                            <img src={product.productDetail.image} alt="" />
+                          </div>
+                          <div className="myOrder-listOrder-title-list-order-product-infor">
+                            <div className="myOrder-listOrder-title-list-order-product-infor-name">
+                              {product.productDetail.product.name}
+                            </div>
+                            <div className="myOrder-listOrder-title-list-order-product-infor-size">
+                              Màu: {product.productDetail.color.name}
+                            </div>
+                            <div className="myOrder-listOrder-title-list-order-product-infor-size">
+                              Kích cỡ: {product.productDetail.size}
+                            </div>
+                            <div className="myOrder-listOrder-title-list-order-product-infor-name">
+                              x{product.quantity}
+                            </div>
+                          </div>
+                          <div className="myOrder-listOrder-title-list-order-product-price">
+                            {product.price ===
+                            product.productDetail.product.price ? (
+                              <>
+                                <span className="myOrder-listOrder-title-list-order-product-price-main-nosale">
+                                  {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }).format(
+                                    product.productDetail.product.price
+                                  )}
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="myOrder-listOrder-title-list-order-product-price-main">
+                                  {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }).format(
+                                    product.productDetail.product.price
+                                  )}
+                                </span>
+                                <span className="myOrder-listOrder-title-list-order-product-price-sale">
+                                  {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                  }).format(product.price)}
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </div>
-                        <div className="myOrder-listOrder-title-list-order-product-infor-size">
-                          Màu: êfegrg
-                        </div>
-                        <div className="myOrder-listOrder-title-list-order-product-infor-size">
-                          Kích cỡ: grfgrgd
-                        </div>
-                        <div className="myOrder-listOrder-title-list-order-product-infor-name">
-                          x2
-                        </div>
-                      </div>
-                      <div className="myOrder-listOrder-title-list-order-product-price">
-                        <span className="myOrder-listOrder-title-list-order-product-price-main">
-                          150.000 đ
-                        </span>
-                        <span className="myOrder-listOrder-title-list-order-product-price-sale">
-                          150.000 đ
-                        </span>
-                      </div>
-                    </div>
+                      );
+                    })}
 
                     <div className="myOrder-listOrder-title-list-order-footer">
                       <div className="myOrder-listOrder-title-list-order-footer-btn">
