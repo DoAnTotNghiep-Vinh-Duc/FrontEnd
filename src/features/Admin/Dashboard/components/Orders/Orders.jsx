@@ -1,9 +1,44 @@
-import React from "react";
+import Pagination from "@material-ui/lab/Pagination";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import adminAPI from "../../../../../api/adminAPI";
 import "./Orders.scss";
 
 Orders.propTypes = {};
 
 function Orders(props) {
+  const [orders, setOrders] = useState([]);
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 5,
+  });
+  const [pagination, setPagination] = useState({
+    limit: 5,
+    page: 1,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.getAllOrder({
+          _page: filters._page,
+          _limit: filters._limit,
+        });
+        setOrders(response.data);
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [filters]);
+
+  const handlePaginationChange = (event, page) => {
+    setFilters((prev) => ({
+      ...prev,
+      _page: page,
+    }));
+  };
+
   return (
     <div className="admin-content-body-lastOrder">
       <div className="admin-content-body-lastOrder-container">
@@ -37,115 +72,59 @@ function Orders(props) {
             </div>
           </div>
           <div className="admin-content-body-lastOrder-container-body-orders">
-            <div className="admin-content-body-lastOrder-container-body-orders-order">
-              <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
-                #16512
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-status">
-                <div
-                  className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${"waiting"}`}
-                >
-                  Chờ xử lý
+            {orders.map((order) => {
+              return (
+                <div className="admin-content-body-lastOrder-container-body-orders-order">
+                  <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
+                    #
+                    {order._id.substring(
+                      order._id.length - 5,
+                      order._id.length
+                    )}
+                  </div>
+                  <div className="admin-content-body-lastOrder-container-body-orders-order-status">
+                    <div
+                      className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${
+                        order.status
+                      }`}
+                    >
+                      {order.status === "DONE"
+                        ? "Đã hoàn tất"
+                        : order.status === "CANCELED"
+                        ? "Đã bị hủy"
+                        : order.status === "DELIVERING"
+                        ? "Đang vận chuyển"
+                        : order.status === "HANDLING"
+                        ? "Chờ xử lí"
+                        : ""}
+                    </div>
+                  </div>
+                  <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
+                    {order.account.information.name === ""
+                      ? order.account.nameDisplay
+                      : order.account.information.name}
+                  </div>
+                  <div className="admin-content-body-lastOrder-container-body-orders-order-date">
+                    {moment(order.createdAt).format("L")}
+                  </div>
+                  <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(order.total)}
+                  </div>
                 </div>
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
-                Lê Nguyễn Thành Vinh
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-date">
-                12/03/2022
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
-                450.000
-              </div>
-            </div>
-            <div className="admin-content-body-lastOrder-container-body-orders-order">
-              <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
-                #16512
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-status">
-                <div
-                  className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${"cancel"}`}
-                >
-                  Đã bị hủy
-                </div>
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
-                Đỗ Đạt Đức
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-date">
-                12/03/2022
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
-                450.000
-              </div>
-            </div>
-            <div className="admin-content-body-lastOrder-container-body-orders-order">
-              <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
-                #16512
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-status">
-                <div
-                  className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${"shipping"}`}
-                >
-                  Đang vận chuyển
-                </div>
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
-                Lê Võ Hửu Thái
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-date">
-                12/03/2022
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
-                450.000
-              </div>
-            </div>
-            <div className="admin-content-body-lastOrder-container-body-orders-order">
-              <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
-                #16512
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-status">
-                <div
-                  className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${"waiting"}`}
-                >
-                  Chờ xử lý
-                </div>
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
-                Trần Ngọc Hiển
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-date">
-                12/03/2022
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
-                450.000
-              </div>
-            </div>
-            <div className="admin-content-body-lastOrder-container-body-orders-order">
-              <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
-                #16512
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-status">
-                <div
-                  className={`${"admin-content-body-lastOrder-container-body-orders-order-status-container"} ${"done"}`}
-                >
-                  Hoàn tất
-                </div>
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-customer">
-                Hồ Dương Vũ
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-date">
-                12/03/2022
-              </div>
-              <div className="admin-content-body-lastOrder-container-body-orders-order-cash">
-                450.000
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
         <div className="admin-content-body-lastOrder-container-footer">
-          pagination
+          <Pagination
+            color="primary"
+            count={Math.ceil(pagination.total / pagination.limit)}
+            page={pagination.page}
+            onChange={handlePaginationChange}
+          />
         </div>
       </div>
     </div>

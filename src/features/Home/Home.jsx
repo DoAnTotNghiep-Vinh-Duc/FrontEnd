@@ -1,6 +1,6 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { add } from "date-fns";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ButtonChat from "../../components/ButtonChat/ButtonChat";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -16,17 +16,34 @@ import Slide from "./components/Slider/Slider";
 import Subscribe from "./components/Subscribe/Subscribe";
 import Support from "./components/Support/Support";
 import "./Home.scss";
+import io from "socket.io-client";
 
 Home.propTypes = {};
 
 function Home(props) {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const futureDate = add(new Date(), {
     days: 7,
     hours: 22,
     minutes: 40,
   });
 
-  console.log("aha");
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io("localhost:5000", {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.on("OKOK", (data) => {
+      console.log(data);
+    });
+  });
 
   return (
     <div className="container">
@@ -42,7 +59,7 @@ function Home(props) {
       <Blog />
       <Footer />
       <Scroll showBelow={250} />
-      <ButtonChat />
+      <ButtonChat socket={socket} />
     </div>
   );
 }

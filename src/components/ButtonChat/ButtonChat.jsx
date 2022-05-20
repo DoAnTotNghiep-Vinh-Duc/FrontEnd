@@ -1,10 +1,16 @@
+import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./ButtonChat.css";
 import "./ButtonChat.scss";
 
-ButtonChat.propTypes = {};
+ButtonChat.propTypes = {
+  socket: PropTypes.any,
+};
 
-function ButtonChat(props) {
+function ButtonChat({ socket }) {
+  const userLogIn = useSelector((state) => state.user.currentUser);
+
   const [openChat, setOpenChat] = useState(false);
   const [text, setText] = useState("");
 
@@ -45,103 +51,114 @@ function ButtonChat(props) {
                 <div className="chat-container-header-name">LemonShop</div>
               </div>
 
-              <div className="chat-container-body">
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
+              {userLogIn ? (
+                <>
+                  <div className="chat-container-body">
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message">
+                      <div className="message-shop">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
+                    <div className="message-own">
+                      <div className="message-customer">
+                        <p className="message-shop-text">vui úa đi</p>
+                        <p className="message-shop-time">19:45</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message">
-                  <div className="message-shop">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-                <div className="message-own">
-                  <div className="message-customer">
-                    <p className="message-shop-text">vui úa đi</p>
-                    <p className="message-shop-time">19:45</p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="chat-container-footer">
-                <input
-                  type="text"
-                  placeholder="Nhập tin nhắn..."
-                  value={text}
-                  onChange={handleTextChange}
-                />
-                <i className="bi bi-send" onClick={handleClickSend}></i>
-                <i className="bi bi-card-image"></i>
-              </div>
+                  <div className="chat-container-footer">
+                    <input
+                      type="text"
+                      placeholder="Nhập tin nhắn..."
+                      value={text}
+                      onChange={handleTextChange}
+                    />
+                    <i className="bi bi-send" onClick={handleClickSend}></i>
+                    <i className="bi bi-card-image"></i>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="chat-container-notauth">
+                    <p>Đăng nhập để có thể nhắn tin với shop dễ dàng hơn!</p>
+                    <a href="/auth">Đăng nhập ngay!</a>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}

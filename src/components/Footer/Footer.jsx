@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import userAPI from "../../api/userAPI";
 import "./Footer.scss";
 
 Footer.propTypes = {};
 
 function Footer(props) {
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await userAPI.getInformation();
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <div className="footer">
       <div className="footer1">

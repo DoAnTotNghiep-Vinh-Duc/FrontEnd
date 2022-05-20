@@ -7,20 +7,36 @@
         width: 50%;
         display: flex;
         align-items: center;
-        .admin-content-header-left-search {
-            display: inline-block;
-            background-color: #f5f7fb;
-            border-radius: 5px;
-            margin-left: 30px;
-            input {
-                padding: 10px;
-                color: #1f4173;
-            }
+        justify-content: center;
+        .admin-content-header-left-totalorder {
+            width: auto;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            color: #1f4173;
+            font-size: 16px;
             i {
-                padding-right: 10px;
-                color: #1f4173;
+                margin-right: 10px;
+            }
+            .admin-content-header-left-totalorder-progress {
+                margin: 0 10px;
+                width: 200px;
             }
         }
+        // .admin-content-header-left-search {
+        //     display: inline-block;
+        //     background-color: #f5f7fb;
+        //     border-radius: 5px;
+        //     margin-left: 30px;
+        //     input {
+        //         padding: 10px;
+        //         color: #1f4173;
+        //     }
+        //     i {
+        //         padding-right: 10px;
+        //         color: #1f4173;
+        //     }
+        // }
     }
     .admin-content-header-right {
         height: 100%;

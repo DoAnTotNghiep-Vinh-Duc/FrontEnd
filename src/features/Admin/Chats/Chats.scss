@@ -1,0 +1,214 @@
+.admin-chats {
+    width: 100%;
+    height: 100vh;
+    font-family: "Josefin Sans", sans-serif;
+    display: flex;
+    justify-content: flex-end;
+    .admin-chats-content {
+        width: 88%;
+        height: 100%;
+        .admin-chats-content-body {
+            width: 100%;
+            height: calc(100% - 50px);
+            border-top: 1px solid rgba($color: gray, $alpha: 0.3);
+            display: flex;
+            .admin-chats-listchat {
+                width: 350px;
+                height: 100%;
+                border-right: 1px solid rgba($color: gray, $alpha: 0.3);
+                overflow-y: auto;
+                .admin-chats-listchat-chat {
+                    width: 100%;
+                    height: 70px;
+                    display: flex;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #f4f5f7;
+                    }
+                    .admin-chats-listchat-chat-image {
+                        width: 20%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                    .admin-chats-listchat-chat-infor {
+                        width: 80%;
+                        height: 100%;
+                        padding: 10px 8px;
+                        .admin-chats-listchat-chat-infor-name-time {
+                            width: 100%;
+                            height: 50%;
+                            display: flex;
+                            .admin-chats-listchat-chat-infor-name {
+                                font-weight: bold;
+                                font-size: 16px;
+                                width: 200px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                            .admin-chats-listchat-chat-infor-time {
+                                width: calc(100% - 200px);
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-end;
+                                font-size: 12px;
+                                color: gray;
+                            }
+                        }
+                        .admin-chats-listchat-chat-infor-text {
+                            width: 100%;
+                            height: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-start;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+            .admin-chats-listchat::-webkit-scrollbar {
+                width: 8px;
+                border-radius: 10px;
+                background-color: #f5f5f5;
+            }
+            .admin-chats-listchat::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background-color: rgba(176, 179, 182, 0.8);
+            }
+            .admin-chats-boxchat {
+                width: calc(100% - 350px);
+                height: 100%;
+                .admin-chats-boxchat-header {
+                    width: 100%;
+                    height: 70px;
+                    display: flex;
+                    border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                    .admin-chats-boxchat-header-image {
+                        width: 80px;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        img {
+                            width: 60px;
+                            height: 60px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                    .admin-chats-boxchat-header-name {
+                        width: calc(100% - 80px);
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        font-weight: bold;
+                        font-size: 20px;
+                    }
+                }
+                .admin-chats-boxchat-body {
+                    width: 100%;
+                    height: 470px;
+                    border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
+                    overflow-y: auto;
+                    padding: 10px;
+                    .message-customer {
+                        width: 100%;
+                        height: auto;
+                        .message-customer-wrap {
+                            width: auto;
+                            max-width: 80%;
+                            height: auto;
+                            padding: 10px;
+                            background-color: #e4e6eb;
+                            border-radius: 10px;
+                            display: inline-block;
+                            .message-customer-time {
+                                margin-top: 10px;
+                                color: gray;
+                                font-size: 11px;
+                                text-align: right;
+                            }
+                        }
+                    }
+                    .message-own {
+                        width: 100%;
+                        height: auto;
+                        display: flex;
+                        justify-content: flex-end;
+                        .message-own-wrap {
+                            width: auto;
+                            max-width: 80%;
+                            height: auto;
+                            padding: 10px;
+                            background-color: #fb2e86;
+                            border-radius: 10px;
+                            display: inline-block;
+                            color: white;
+                            .message-own-time {
+                                margin-top: 10px;
+                                font-size: 11px;
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+                .admin-chats-boxchat-footer {
+                    width: 100%;
+                    height: calc(100% - 470px - 70px);
+                    display: flex;
+                    .admin-chats-boxchat-footer-input {
+                        width: 80%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        input {
+                            width: 95%;
+                            height: 50px;
+                            font-size: 16px;
+                        }
+                    }
+                    .admin-chats-boxchat-footer-icon {
+                        width: 20%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        i {
+                            cursor: pointer;
+                            font-size: 25px;
+                            padding: 5px 10px;
+                            border-radius: 5px;
+                            &:hover {
+                                background-color: #c5c7ca;
+                            }
+                        }
+                    }
+                }
+                .admin-chats-boxchat-body::-webkit-scrollbar {
+                    width: 8px;
+                    border-radius: 10px;
+                    background-color: #f5f5f5;
+                }
+                .admin-chats-boxchat-body::-webkit-scrollbar-thumb {
+                    border-radius: 10px;
+                    background-color: rgba(176, 179, 182, 0.8);
+                }
+            }
+        }
+    }
+}

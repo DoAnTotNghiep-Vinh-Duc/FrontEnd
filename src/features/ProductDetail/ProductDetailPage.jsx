@@ -3,9 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Navigation, Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { Swiper, SwiperSlide } from "swiper/react";
 import cartAPI from "../../api/cartAPI";
 import favoriteAPI from "../../api/favoriteAPI";
 import productAPI from "../../api/productAPI";
@@ -19,13 +21,15 @@ import useFavorite from "../../hooks/useFavorite";
 import ProductImageSlider from "./components/ProductImageSlider";
 import RateAndComment from "./components/RateAndComment/RateAndComment";
 import "./css/ProductDetailPage.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper";
 
 toast.configure();
 ProductDetailPage.propTypes = {};
 
 function ProductDetailPage(props) {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const {
     params: { productId },
   } = useRouteMatch();

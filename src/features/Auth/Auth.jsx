@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import SignIn from "./SignIn/SignIn";
-import SignUp from "./SignUp/SignUp";
+import { Redirect } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import "./Auth.scss";
+import SignIn from "./SignIn/SignIn";
+import SignUp from "./SignUp/SignUp";
 
 SignIn_SignUp.propTypes = {};
 
@@ -26,9 +26,9 @@ function SignIn_SignUp(props) {
         <div className="background-signin-signup">
           <Header />
           <div className="container-signin-signup">
-            <Link to="/" className="signin-signup-logo">
+            <a href="/" className="signin-signup-logo">
               Lemon
-            </Link>
+            </a>
             <div
               className={`${"frame-signin-signup"} ${
                 open ? "right-panel-active" : ""

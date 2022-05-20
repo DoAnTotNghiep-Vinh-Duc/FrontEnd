@@ -41,9 +41,9 @@
     }
     ,
     {
-        "displayName": "Cài đặt",
-        "route": "/admin/setting",
-        "icon": "bi bi-gear"
+        "displayName": "Tin nhắn",
+        "route": "/admin/chats",
+        "icon": "bi bi-chat-dots"
     },
     {
         "displayName": "Trang chủ",

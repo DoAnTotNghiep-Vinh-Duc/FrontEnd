@@ -106,10 +106,10 @@ function ListButton(props) {
         aria-describedby="alert-dialog-slide-description"
         maxWidth="lg"
       >
-        <QuickView
+        {/* <QuickView
           closeQuickView={handleClose}
           productSelected={productSelected}
-        />
+        /> */}
       </Dialog>
     </>
   );

@@ -50,10 +50,11 @@ function SignIn(props) {
             theme: "light",
           });
           if (result.data.account.role === "Admin") {
+            window.location = "http://localhost:3000/admin";
             History.push("/admin");
           } else {
+            window.location = "http://localhost:3000";
             History.push("/");
-            window.location.reload();
           }
         }
       } catch (error) {
