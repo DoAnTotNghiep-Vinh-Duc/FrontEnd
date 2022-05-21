@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { Route, Switch } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import io from "socket.io-client";
 import NotFound from "./components/NotFound/NotFound";
 import { DataProvider } from "./context/context";
 import AdminPage from "./features/Admin/index";
@@ -16,11 +18,27 @@ import { authentication } from "./pages/authentications";
 import "./sass/index.scss";
 
 function App() {
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io("localhost:5000", {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.on("OKOK", (data) => {
+      console.log(data);
+    });
+  });
+
   return (
     <div className="App">
       <DataProvider>
         <Switch>
-          <Route path="/" component={Home} exact></Route>
+          <Route path="/" exact>
+            <Home socket={socket} />
+          </Route>
 
           <Route path="/auth" component={Auth}></Route>
 

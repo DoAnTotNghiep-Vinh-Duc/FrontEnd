@@ -1,6 +1,8 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { add } from "date-fns";
-import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import React from "react";
+import { useSelector } from "react-redux";
 import ButtonChat from "../../components/ButtonChat/ButtonChat";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
@@ -16,11 +18,14 @@ import Slide from "./components/Slider/Slider";
 import Subscribe from "./components/Subscribe/Subscribe";
 import Support from "./components/Support/Support";
 import "./Home.scss";
-import io from "socket.io-client";
 
-Home.propTypes = {};
+Home.propTypes = {
+  socket: PropTypes.any,
+};
 
-function Home(props) {
+function Home({ socket }) {
+  const userLogIn = useSelector((state) => state.user.currentUser);
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -29,20 +34,6 @@ function Home(props) {
     days: 7,
     hours: 22,
     minutes: 40,
-  });
-
-  const socket = useRef();
-
-  useEffect(() => {
-    socket.current = io("localhost:5000", {
-      transports: ["websocket", "polling", "flashsocket"],
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.current.on("OKOK", (data) => {
-      console.log(data);
-    });
   });
 
   return (
@@ -59,7 +50,19 @@ function Home(props) {
       <Blog />
       <Footer />
       <Scroll showBelow={250} />
-      <ButtonChat socket={socket} />
+      {userLogIn ? (
+        <>
+          {userLogIn.role === "Admin" ? (
+            ""
+          ) : (
+            <>
+              <ButtonChat socket={socket} />
+            </>
+          )}
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

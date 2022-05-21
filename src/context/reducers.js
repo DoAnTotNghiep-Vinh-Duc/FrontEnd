@@ -56,6 +56,24 @@ const reducer = (state, action) => {
         changeColor: action.payload,
       };
 
+    case ACTIONS.dataMessage:
+      return {
+        ...state,
+        dataMessage: action.payload,
+      };
+
+    case ACTIONS.dataAllChatAdmin:
+      return {
+        ...state,
+        dataAllChatAdmin: action.payload,
+      };
+
+    case ACTIONS.dataAllMessageOfChatAdmin:
+      return {
+        ...state,
+        dataAllMessageOfChatAdmin: action.payload,
+      };
+
     default:
       return state;
   }

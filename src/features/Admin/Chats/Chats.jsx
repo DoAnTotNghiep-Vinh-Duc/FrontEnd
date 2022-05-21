@@ -1,16 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import adminAPI from "../../../api/adminAPI";
+import { ACTIONS } from "../../../context/actions";
+import { GlobalContext } from "../../../context/context";
 import Header from "../components/Header/Header";
 import NavBars from "../components/NavBars/NavBars";
 import "./Chats.scss";
+import BoxChat from "./components/BoxChat/BoxChat";
 import Chat from "./components/Chat/Chat";
+import PropTypes from "prop-types";
 
-Chats.propTypes = {};
+Chats.propTypes = {
+  socket: PropTypes.any,
+};
 
-function Chats(props) {
+function Chats({ socket }) {
+  const { dispatch, state } = useContext(GlobalContext);
+
   const [openBoxChat, setOpenBoxChat] = useState(false);
+  const [chat, setChat] = useState();
 
-  const handleOpenBoxChat = () => {
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.getAllChat();
+        dispatch({
+          type: ACTIONS.dataAllChatAdmin,
+          payload: response.data.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [dispatch]);
+
+  const handleOpenBoxChat = (value) => {
     setOpenBoxChat(true);
+    setChat(value);
   };
 
   return (
@@ -20,52 +45,19 @@ function Chats(props) {
         <Header />
         <div className="admin-chats-content-body">
           <div className="admin-chats-listchat">
-            <Chat openBoxChat={handleOpenBoxChat} />
+            {state.dataAllChatAdmin.map((chat) => {
+              return (
+                <Chat
+                  key={chat._id}
+                  openBoxChat={handleOpenBoxChat}
+                  chat={chat}
+                />
+              );
+            })}
           </div>
 
           <div className="admin-chats-boxchat">
-            {openBoxChat ? (
-              <>
-                <div className="admin-chats-boxchat-header">
-                  <div className="admin-chats-boxchat-header-image">
-                    <img
-                      src="https://vnn-imgs-f.vgcloud.vn/2019/11/03/17/bao-thy-moi-thong-tin-ket-hon-khong-phai-tu-toi-deu-la-tin-don.jpg"
-                      alt=""
-                    />
-                  </div>
-                  <div className="admin-chats-boxchat-header-name">
-                    Trần Thị Bảo Thy
-                  </div>
-                </div>
-
-                <div className="admin-chats-boxchat-body">
-                  <div className="message-customer">
-                    <div className="message-customer-wrap">
-                      <p className="message-customer-text">haha vui qúa nè</p>
-                      <p className="message-customer-time">15:20</p>
-                    </div>
-                  </div>
-                  <div className="message-own">
-                    <div className="message-own-wrap">
-                      <p className="message-own-text">haha vui qúa nè</p>
-                      <p className="message-own-time">15:20</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="admin-chats-boxchat-footer">
-                  <div className="admin-chats-boxchat-footer-input">
-                    <input type="text" placeholder="Nhập tin nhắn..." />
-                  </div>
-                  <div className="admin-chats-boxchat-footer-icon">
-                    <i className="bi bi-send"></i>
-                    <i className="bi bi-camera"></i>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
+            {openBoxChat ? <BoxChat socket={socket} chat={chat} /> : <></>}
           </div>
         </div>
       </div>

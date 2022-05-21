@@ -7,11 +7,16 @@ export const DataProvider = ({ children }) => {
     dataCart: [],
     dataFavorite: [],
     dataListProduct: [],
-    dataAllCustomerAdmin: [],
-    dataAllProductAdmin: [],
     emailForgotPassword: "",
     dataProductForRate: [],
+    dataMessage: [],
+
+    dataAllCustomerAdmin: [],
+    dataAllProductAdmin: [],
     dataAllDiscountAdmin: [],
+    dataAllChatAdmin: [],
+    dataAllMessageOfChatAdmin: [],
+
     changeColor: false,
   };
 

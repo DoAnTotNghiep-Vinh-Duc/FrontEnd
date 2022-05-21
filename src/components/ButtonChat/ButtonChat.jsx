@@ -1,6 +1,10 @@
+import moment from "moment";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import messageAPI from "../../api/messageAPI";
+import { ACTIONS } from "../../context/actions";
+import { GlobalContext } from "../../context/context";
 import "./ButtonChat.css";
 import "./ButtonChat.scss";
 
@@ -9,10 +13,26 @@ ButtonChat.propTypes = {
 };
 
 function ButtonChat({ socket }) {
+  const { dispatch, state } = useContext(GlobalContext);
   const userLogIn = useSelector((state) => state.user.currentUser);
 
   const [openChat, setOpenChat] = useState(false);
   const [text, setText] = useState("");
+  const [temp_message, setTemp_message] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await messageAPI.getAllMessage();
+        dispatch({
+          type: ACTIONS.dataMessage,
+          payload: response.data.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [dispatch]);
 
   const handleClickOpenChat = () => {
     setOpenChat(!openChat);
@@ -23,9 +43,45 @@ function ButtonChat({ socket }) {
   };
 
   const handleClickSend = () => {
-    alert(text);
-    setText("");
+    (async () => {
+      try {
+        const response = await messageAPI.sendMessage({
+          text: text,
+        });
+        if (response.status === 200) {
+          (async () => {
+            try {
+              const response = await messageAPI.getAllMessage();
+              dispatch({
+                type: ACTIONS.dataMessage,
+                payload: response.data.data,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+          setText("");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("adminAddMessage", (data) => {
+        setTemp_message(data.savedMessage);
+      });
+    }
+  }, [socket.current]);
+
+  useEffect(() => {
+    dispatch({
+      type: ACTIONS.dataMessage,
+      payload: [...state.dataMessage, temp_message],
+    });
+  }, [temp_message]);
 
   return (
     <>
@@ -54,90 +110,27 @@ function ButtonChat({ socket }) {
               {userLogIn ? (
                 <>
                   <div className="chat-container-body">
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message">
-                      <div className="message-shop">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
-                    <div className="message-own">
-                      <div className="message-customer">
-                        <p className="message-shop-text">vui úa đi</p>
-                        <p className="message-shop-time">19:45</p>
-                      </div>
-                    </div>
+                    {state.dataMessage.reverse().map((message) => {
+                      return message.sender === userLogIn._id ? (
+                        <div className="message-own" key={message._id}>
+                          <div className="message-customer">
+                            <p className="message-shop-text">{message.text}</p>
+                            <p className="message-shop-time">
+                              {moment(message.createdAt).format("LT")}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="message" key={message._id}>
+                          <div className="message-shop">
+                            <p className="message-shop-text">{message.text}</p>
+                            <p className="message-shop-time">
+                              {moment(message.createdAt).format("LT")}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
                   <div className="chat-container-footer">

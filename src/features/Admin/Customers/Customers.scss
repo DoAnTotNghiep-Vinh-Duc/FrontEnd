@@ -90,6 +90,7 @@
                                 right: 0;
                                 transform: translateY(-50%);
                                 font-size: 18px;
+                                z-index: 9999;
                                 &:hover {
                                     color: #e80000;
                                 }
@@ -150,6 +151,7 @@
                                 right: 0;
                                 transform: translateY(-50%);
                                 font-size: 18px;
+                                z-index: 9999;
                                 &:hover {
                                     color: #e80000;
                                 }
@@ -273,6 +275,7 @@
                             background-color: #f0f0f0;
                             position: relative;
                             overflow: hidden;
+                            z-index: 99;
                             .admin-customers-content-body-container-body-customers-customer-seri {
                                 opacity: 0.6;
                             }

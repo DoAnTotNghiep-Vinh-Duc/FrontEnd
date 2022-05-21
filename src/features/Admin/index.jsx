@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import io from "socket.io-client";
 import NotFound from "../../components/NotFound/NotFound";
 import Chats from "./Chats/Chats";
 import CustomerDetail from "./Customers/CustomerDetail/CustomerDetail";
@@ -16,6 +17,20 @@ AdminPage.propTypes = {};
 
 function AdminPage(props) {
   const match = useRouteMatch();
+
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io("localhost:5000", {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.on("OKOK", (data) => {
+      console.log(data);
+    });
+  });
 
   return (
     <div>
@@ -53,7 +68,7 @@ function AdminPage(props) {
         </Route>
 
         <Route path={`${match.url}/chats`} exact>
-          <Chats />
+          <Chats socket={socket} />
         </Route>
 
         <Route component={NotFound}></Route>

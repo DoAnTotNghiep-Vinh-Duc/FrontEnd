@@ -1,29 +1,38 @@
 import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 
-Chat.propTypes = {};
+Chat.propTypes = {
+  chat: PropTypes.object,
+};
 
 function Chat(props) {
+  const { chat } = props;
+
   const handleOpenBoxChat = () => {
-    props.openBoxChat(true);
+    props.openBoxChat(chat);
   };
 
   return (
     <div className="admin-chats-listchat-chat" onClick={handleOpenBoxChat}>
       <div className="admin-chats-listchat-chat-image">
-        <img
-          src="https://vnn-imgs-f.vgcloud.vn/2019/11/03/17/bao-thy-moi-thong-tin-ket-hon-khong-phai-tu-toi-deu-la-tin-don.jpg"
-          alt=""
-        />
+        <img src={chat.avatar} alt="" />
       </div>
       <div className="admin-chats-listchat-chat-infor">
         <div className="admin-chats-listchat-chat-infor-name-time">
           <div className="admin-chats-listchat-chat-infor-name">
-            Trần Thị Bảo Thy
+            {chat.user.nameDisplay}
           </div>
-          <div className="admin-chats-listchat-chat-infor-time">15:20</div>
+          <div className="admin-chats-listchat-chat-infor-time">
+            {chat.lastestMessage ? (
+              <>{moment(chat.lastestMessage?.createdAt).format("LT")}</>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className="admin-chats-listchat-chat-infor-text">
-          hihi vui quá chời nè
+          {chat.lastestMessage?.text}
         </div>
       </div>
     </div>

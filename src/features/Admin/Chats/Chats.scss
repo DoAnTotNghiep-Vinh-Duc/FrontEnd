@@ -125,9 +125,12 @@
                     border-bottom: 1px solid rgba($color: gray, $alpha: 0.3);
                     overflow-y: auto;
                     padding: 10px;
+                    display: flex;
+                    flex-direction: column-reverse;
                     .message-customer {
                         width: 100%;
                         height: auto;
+                        margin-bottom: 10px;
                         .message-customer-wrap {
                             width: auto;
                             max-width: 80%;
@@ -149,6 +152,7 @@
                         height: auto;
                         display: flex;
                         justify-content: flex-end;
+                        margin-bottom: 10px;
                         .message-own-wrap {
                             width: auto;
                             max-width: 80%;

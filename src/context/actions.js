@@ -4,10 +4,13 @@ export const ACTIONS = {
   dataListProduct: "dataListProduct",
   dataProductForRate: "dataProductForRate",
   emailForgotPassword: "emailForgotPassword",
+  dataMessage: "dataMessage",
 
   dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
   dataAllDiscountAdmin: "dataAllDiscountAdmin",
+  dataAllChatAdmin: "dataAllChatAdmin",
+  dataAllMessageOfChatAdmin: "dataAllMessageOfChatAdmin",
 
   changeColor: "changeColor",
 };

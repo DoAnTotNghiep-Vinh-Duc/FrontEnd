@@ -40,9 +40,12 @@
         height: 300px;
         overflow-y: auto;
         padding: 10px 0;
+        display: flex;
+        flex-direction: column-reverse;
         .message {
             width: 100%;
             height: auto;
+            margin-bottom: 5px;
             .message-shop {
                 display: inline-block;
                 width: auto;
@@ -61,6 +64,7 @@
             height: auto;
             display: flex;
             justify-content: flex-end;
+            margin-bottom: 5px;
             .message-customer {
                 display: inline-block;
                 width: auto;

@@ -207,6 +207,20 @@ const adminAPI = {
       },
     };
   },
+
+  //message
+  getAllChat() {
+    const url = "/admin/room";
+    return axiosClient.get(url);
+  },
+  getMessageOfChat(idRoom) {
+    const url = `/admin/message/${idRoom}`;
+    return axiosClient.get(url);
+  },
+  sendMessage(value) {
+    const url = "/admin/message";
+    return axiosClient.post(url, value);
+  },
 };
 
 export default adminAPI;
