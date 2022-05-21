@@ -111,6 +111,28 @@ const adminAPI = {
       },
     });
   },
+  async filterCustomer(keySearch, nameSort, typeSort, filters) {
+    const url = "/admin/account/filter-account";
+    const listCustomer = await axiosClient.get(url, {
+      params: {
+        keySearch,
+        nameSort,
+        typeSort,
+      },
+    });
+
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+
+    return {
+      data: listCustomer.data.data.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
+        total: listCustomer.data.data.length,
+      },
+    };
+  },
 
   // order
   async getAllOrder(params) {

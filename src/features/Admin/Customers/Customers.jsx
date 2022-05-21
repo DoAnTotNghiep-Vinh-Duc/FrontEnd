@@ -62,10 +62,67 @@ function Customers(props) {
   const handleSelectCustomerFiler = (item) => {
     setIconCustomer(item.value);
     setIconNumber("");
+    (async () => {
+      try {
+        const response = await adminAPI.filterCustomer(
+          "",
+          "NAME",
+          item.value,
+          filters
+        );
+        dispatch({
+          type: ACTIONS.dataAllCustomerAdmin,
+          payload: response.data,
+        });
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
+
   const handleSelectNumberFiler = (item) => {
     setIconNumber(item.value);
     setIconCustomer("");
+    (async () => {
+      try {
+        const response = await adminAPI.filterCustomer(
+          "",
+          "NUMBERPURCHASES",
+          item.value,
+          filters
+        );
+        dispatch({
+          type: ACTIONS.dataAllCustomerAdmin,
+          payload: response.data,
+        });
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
+  const handleSearchCustomer = (event) => {
+    setIconNumber("");
+    setIconCustomer("");
+    (async () => {
+      try {
+        const response = await adminAPI.filterCustomer(
+          event.target.value,
+          null,
+          null,
+          filters
+        );
+        dispatch({
+          type: ACTIONS.dataAllCustomerAdmin,
+          payload: response.data,
+        });
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   return (
@@ -81,7 +138,11 @@ function Customers(props) {
               </div>
               <div className="admin-customers-content-body-container-header-search">
                 <div className="admin-customers-content-body-container-header-search-container">
-                  <input type="text" placeholder="Tìm kiếm..." name="" id="" />
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm..."
+                    onChange={handleSearchCustomer}
+                  />
                   <i className="bi bi-search"></i>
                 </div>
               </div>
