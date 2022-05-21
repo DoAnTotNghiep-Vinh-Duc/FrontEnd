@@ -32,22 +32,78 @@ function Products(props) {
   const [iconPrice, setIconPrice] = useState("");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await adminAPI.getAllProduct({
-          _page: filters._page,
-          _limit: filters._limit,
-        });
-        dispatch({
-          type: ACTIONS.dataAllProductAdmin,
-          payload: response.data,
-        });
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [dispatch, filters]);
+    if (iconProduct) {
+      (async () => {
+        try {
+          const response = await adminAPI.filterProduct(
+            "",
+            "NAME",
+            iconProduct,
+            filters
+          );
+          dispatch({
+            type: ACTIONS.dataAllProductAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconQuantity) {
+      (async () => {
+        try {
+          const response = await adminAPI.filterProduct(
+            "",
+            "QUANTITY",
+            iconQuantity,
+            filters
+          );
+          dispatch({
+            type: ACTIONS.dataAllProductAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconPrice) {
+      (async () => {
+        try {
+          const response = await adminAPI.filterProduct(
+            "",
+            "PRICE",
+            iconPrice,
+            filters
+          );
+          dispatch({
+            type: ACTIONS.dataAllProductAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      (async () => {
+        try {
+          const response = await adminAPI.getAllProduct({
+            _page: filters._page,
+            _limit: filters._limit,
+          });
+          dispatch({
+            type: ACTIONS.dataAllProductAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [dispatch, filters, iconPrice, iconProduct, iconQuantity]);
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({
@@ -86,6 +142,29 @@ function Products(props) {
     setIconQuantity("");
   };
 
+  const handleSearchProduct = (event) => {
+    setIconPrice("");
+    setIconProduct("");
+    setIconQuantity("");
+    (async () => {
+      try {
+        const response = await adminAPI.filterProduct(
+          event.target.value,
+          null,
+          null,
+          filters
+        );
+        dispatch({
+          type: ACTIONS.dataAllProductAdmin,
+          payload: response.data,
+        });
+        setPagination(response.pagination);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
+
   return (
     <div className="admin-products">
       <NavBars />
@@ -108,7 +187,11 @@ function Products(props) {
               </div>
               <div className="admin-products-content-body-listProducts-header-search">
                 <div className="admin-products-content-body-listProducts-header-search-container">
-                  <input type="text" placeholder="Tìm kiếm..." name="" id="" />
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm..."
+                    onChange={handleSearchProduct}
+                  />
                   <i className="bi bi-search"></i>
                 </div>
               </div>

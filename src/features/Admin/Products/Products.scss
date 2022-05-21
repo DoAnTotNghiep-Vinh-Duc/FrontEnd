@@ -128,6 +128,7 @@
                                 &:hover {
                                     color: #e80000;
                                 }
+                                z-index: 99999;
                                 .dropdown-name {
                                     position: absolute;
                                     top: 100%;
@@ -137,7 +138,7 @@
                                     background-color: white;
                                     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
                                     border-radius: 5px;
-
+                                    z-index: 9999;
                                     p {
                                         width: 100%;
                                         height: 50%;
@@ -179,6 +180,7 @@
                                 right: 0;
                                 transform: translateY(-50%);
                                 font-size: 18px;
+                                z-index: 99999;
                                 &:hover {
                                     color: #e80000;
                                 }
@@ -233,6 +235,7 @@
                                 right: 0;
                                 transform: translateY(-50%);
                                 font-size: 18px;
+                                z-index: 99999;
                                 &:hover {
                                     color: #e80000;
                                 }
@@ -286,6 +289,7 @@
                     .admin-products-content-body-listProducts-body-products {
                         width: 100%;
                         height: 90%;
+                        z-index: 99;
                         .admin-products-content-body-listProducts-body-products-product {
                             width: 100%;
                             height: 20%;
@@ -373,6 +377,7 @@
                             background-color: #f0f0f0;
                             position: relative;
                             overflow: hidden;
+                            z-index: 1;
                             .stop-container {
                                 position: absolute;
                                 top: 20%;

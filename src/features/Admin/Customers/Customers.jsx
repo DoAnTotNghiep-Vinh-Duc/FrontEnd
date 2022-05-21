@@ -35,22 +35,60 @@ function Customers(props) {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await adminAPI.getAllCustomer({
-          _page: filters._page,
-          _limit: filters._limit,
-        });
-        dispatch({
-          type: ACTIONS.dataAllCustomerAdmin,
-          payload: response.data,
-        });
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [dispatch, filters]);
+    if (iconCustomer) {
+      (async () => {
+        try {
+          const response = await adminAPI.filterCustomer(
+            "",
+            "NAME",
+            iconCustomer,
+            filters
+          );
+          dispatch({
+            type: ACTIONS.dataAllCustomerAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconNumber) {
+      (async () => {
+        try {
+          const response = await adminAPI.filterCustomer(
+            "",
+            "NUMBERPURCHASES",
+            iconNumber,
+            filters
+          );
+          dispatch({
+            type: ACTIONS.dataAllCustomerAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      (async () => {
+        try {
+          const response = await adminAPI.getAllCustomer({
+            _page: filters._page,
+            _limit: filters._limit,
+          });
+          dispatch({
+            type: ACTIONS.dataAllCustomerAdmin,
+            payload: response.data,
+          });
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [dispatch, filters, iconCustomer, iconNumber]);
 
   const handleOpenFilterCustomer = () => {
     setOpenFilterCustomer(!openFilterCustomer);
@@ -62,45 +100,11 @@ function Customers(props) {
   const handleSelectCustomerFiler = (item) => {
     setIconCustomer(item.value);
     setIconNumber("");
-    (async () => {
-      try {
-        const response = await adminAPI.filterCustomer(
-          "",
-          "NAME",
-          item.value,
-          filters
-        );
-        dispatch({
-          type: ACTIONS.dataAllCustomerAdmin,
-          payload: response.data,
-        });
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   };
 
   const handleSelectNumberFiler = (item) => {
     setIconNumber(item.value);
     setIconCustomer("");
-    (async () => {
-      try {
-        const response = await adminAPI.filterCustomer(
-          "",
-          "NUMBERPURCHASES",
-          item.value,
-          filters
-        );
-        dispatch({
-          type: ACTIONS.dataAllCustomerAdmin,
-          payload: response.data,
-        });
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   };
 
   const handleSearchCustomer = (event) => {

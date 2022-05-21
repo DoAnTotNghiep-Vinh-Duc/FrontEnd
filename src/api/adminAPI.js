@@ -42,6 +42,28 @@ const adminAPI = {
       },
     };
   },
+  async filterProduct(keySearch, nameSort, typeSort, filters) {
+    const url = "/admin/product/filter-product";
+    const listProduct = await axiosClient.get(url, {
+      params: {
+        keySearch,
+        nameSort,
+        typeSort,
+      },
+    });
+
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+
+    return {
+      data: listProduct.data.data.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
+        total: listProduct.data.data.length,
+      },
+    };
+  },
   addProduct(value) {
     const url = "/admin/product";
     return axiosClient.post(url, value);

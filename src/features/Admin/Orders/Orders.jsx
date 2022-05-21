@@ -27,6 +27,7 @@ function Orders(props) {
   const [iconCustomer, setIconCustomer] = useState("");
   const [iconCash, setIconCash] = useState("");
   const [iconDate, setIconDate] = useState("");
+  const [iconStatus, setIconStatus] = useState("");
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({
@@ -36,19 +37,81 @@ function Orders(props) {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await adminAPI.getAllOrder({
-          _page: filters._page,
-          _limit: filters._limit,
-        });
-        setOrders(response.data);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [filters]);
+    if (iconCustomer) {
+      (async () => {
+        try {
+          const response = await adminAPI.sortOrder(
+            "NAME",
+            iconCustomer,
+            "ALL",
+            filters
+          );
+          setOrders(response.data);
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconCash) {
+      (async () => {
+        try {
+          const response = await adminAPI.sortOrder(
+            "TOTALMONEY",
+            iconCash,
+            "ALL",
+            filters
+          );
+          setOrders(response.data);
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconDate) {
+      (async () => {
+        try {
+          const response = await adminAPI.sortOrder(
+            "ORDERDATE",
+            iconDate,
+            "ALL",
+            filters
+          );
+          setOrders(response.data);
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else if (iconStatus) {
+      (async () => {
+        try {
+          const response = await adminAPI.sortOrder(
+            "NAME",
+            "ASC",
+            iconStatus,
+            filters
+          );
+          setOrders(response.data);
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      (async () => {
+        try {
+          const response = await adminAPI.getAllOrder({
+            _page: filters._page,
+            _limit: filters._limit,
+          });
+          setOrders(response.data);
+          setPagination(response.pagination);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [filters, iconCash, iconCustomer, iconDate, iconStatus]);
 
   const handleOpenFilterStatus = () => {
     setOpenFilterStatus(!openFilterStatus);
@@ -64,80 +127,28 @@ function Orders(props) {
   };
 
   const handleSelectStatusFiler = (item) => {
+    setIconStatus(item.value);
     setIconDate("");
     setIconCustomer("");
     setIconCash("");
-    (async () => {
-      try {
-        const response = await adminAPI.sortOrder(
-          "NAME",
-          "ASC",
-          item.value,
-          filters
-        );
-        setOrders(response.data);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   };
   const handleSelectCustomerFiler = (item) => {
     setIconCustomer(item.value);
     setIconCash("");
     setIconDate("");
-    (async () => {
-      try {
-        const response = await adminAPI.sortOrder(
-          "NAME",
-          item.value,
-          "ALL",
-          filters
-        );
-        setOrders(response.data);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    setIconStatus("");
   };
   const handleSelectCashFiler = (item) => {
     setIconCash(item.value);
     setIconCustomer("");
     setIconDate("");
-    (async () => {
-      try {
-        const response = await adminAPI.sortOrder(
-          "TOTALMONEY",
-          item.value,
-          "ALL",
-          filters
-        );
-        setOrders(response.data);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    setIconStatus("");
   };
   const handleSelectDateFiler = (item) => {
     setIconDate(item.value);
     setIconCustomer("");
     setIconCash("");
-    (async () => {
-      try {
-        const response = await adminAPI.sortOrder(
-          "ORDERDATE",
-          item.value,
-          "ALL",
-          filters
-        );
-        setOrders(response.data);
-        setPagination(response.pagination);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    setIconStatus("");
   };
 
   return (
