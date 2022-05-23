@@ -5,6 +5,7 @@ import ChangePassword from "../ChangePassword/ChangePassword";
 import MyOrder from "../MyOrder/MyOrder";
 import MyOrderDetail from "../MyOrder/MyOrderDetail/MyOrderDetail";
 import Phone from "../Phone/Phone";
+import Rated from "../Rated/Rated";
 import VerifyPhone from "../VerifyPhone/VerifyPhone";
 import UserInformation from "./UserInformation";
 
@@ -42,6 +43,10 @@ function InformationPage(props) {
         </Route>
         <Route path={`${match.url}/myOrders/:orderId`} exact>
           <MyOrderDetail />
+        </Route>
+
+        <Route path={`${match.url}/rated`} exact>
+          <Rated />
         </Route>
 
         <Route component={NotFound}></Route>

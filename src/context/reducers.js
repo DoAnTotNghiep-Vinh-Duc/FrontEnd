@@ -74,6 +74,12 @@ const reducer = (state, action) => {
         dataAllMessageOfChatAdmin: action.payload,
       };
 
+    case ACTIONS.dataProductRated:
+      return {
+        ...state,
+        dataProductRated: action.payload,
+      };
+
     default:
       return state;
   }

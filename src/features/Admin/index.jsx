@@ -21,7 +21,7 @@ function AdminPage(props) {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("localhost:5000", {
+    socket.current = io("http://13.213.8.146:5000", {
       transports: ["websocket", "polling", "flashsocket"],
     });
   }, []);

@@ -40,6 +40,15 @@ function NavbarUser(props) {
           <p>Đơn hàng của tôi</p>
         </Link>
         <Link
+          className={`${"userInformation-navbar-menu-rated"} ${
+            location.pathname === "/userInformation/rated" ? "active-rated" : ""
+          }`}
+          to="/userInformation/rated"
+        >
+          <i className="bi bi-card-text"></i>
+          <p>Đã đánh giá</p>
+        </Link>
+        <Link
           className={`${"userInformation-navbar-menu-password"} ${
             location.pathname === "/userInformation/changePassword"
               ? "active-password"

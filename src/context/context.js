@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
     emailForgotPassword: "",
     dataProductForRate: [],
     dataMessage: [],
+    dataProductRated: [],
 
     dataAllCustomerAdmin: [],
     dataAllProductAdmin: [],

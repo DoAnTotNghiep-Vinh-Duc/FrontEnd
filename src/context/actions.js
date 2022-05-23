@@ -5,6 +5,7 @@ export const ACTIONS = {
   dataProductForRate: "dataProductForRate",
   emailForgotPassword: "emailForgotPassword",
   dataMessage: "dataMessage",
+  dataProductRated: "dataProductRated",
 
   dataAllCustomerAdmin: "dataAllCustomerAdmin",
   dataAllProductAdmin: "dataAllProductAdmin",
