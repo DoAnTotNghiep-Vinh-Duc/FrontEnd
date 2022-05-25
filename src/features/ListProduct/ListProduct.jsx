@@ -90,9 +90,16 @@ function ListPage(props) {
           optionSizes: [...filters.optionSizes, value],
         }));
       } else {
+        const a = filters.optionSizes.slice(0, index);
+        const b = filters.optionSizes.slice(
+          index + 1,
+          filters.optionSizes.length
+        );
+        const new_arr = [...a, ...b];
+
         setFilters((prev) => ({
           ...prev,
-          optionSizes: filters.optionSizes.filter((x) => x !== value),
+          optionSizes: new_arr.length ? new_arr : null,
         }));
       }
     }
