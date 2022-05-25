@@ -43,6 +43,8 @@ function ProductDetailPage(props) {
   const [productDetails, setProductDetails] = useState([]);
   const [loadingAdd, setLoadingAdd] = useState(false);
   const [activeThumbsColor, setActiveThumbsColor] = useState();
+  const [btnAdd, setBtnAdd] = useState(false);
+  const [disable, setDisable] = useState(true);
 
   const { dispatch, state } = useContext(GlobalContext);
   const { listFavorite } = useFavorite();
@@ -97,6 +99,18 @@ function ProductDetailPage(props) {
     return true;
   };
 
+  useEffect(() => {
+    if (color === undefined || size === undefined) {
+      setBtnAdd(false);
+      setDisable(true);
+    } else if (!userLogin) {
+      setDisable(true);
+    } else {
+      setBtnAdd(true);
+      setDisable(false);
+    }
+  }, [color, size, userLogin]);
+
   const addToCart = () => {
     setLoadingAdd(true);
     if (check()) {
@@ -118,9 +132,7 @@ function ProductDetailPage(props) {
                 console.log(error);
               }
             })();
-            setTimeout(() => {
-              setLoadingAdd(false);
-            }, 300);
+
             toast.success("Thêm vào giỏ hành thành công", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 2000,
@@ -137,6 +149,9 @@ function ProductDetailPage(props) {
         }
       })();
     }
+    setTimeout(() => {
+      setLoadingAdd(false);
+    }, 300);
   };
 
   const handleClickAddToFavorite = () => {
@@ -278,25 +293,6 @@ function ProductDetailPage(props) {
                       </SwiperSlide>
                     ))}
                   </Swiper>
-
-                  {/* {colorDetails.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={`${"product-details-content-product-infor-color-filter-container"} ${
-                            color === Object.keys(item)[0] ? "active-color" : ""
-                          }`}
-                          onClick={() => handleClickColor(item)}
-                        >
-                          <div
-                            className={`circle`}
-                            style={{
-                              backgroundColor: `${Object.keys(item)[0]}`,
-                            }}
-                          ></div>
-                        </div>
-                      );
-                    })} */}
                 </div>
                 <div className="product-details-content-product-infor-size">
                   <span className="product-details-content-product-infor-size-title">
@@ -337,8 +333,8 @@ function ProductDetailPage(props) {
                   <button
                     className={`${"product-details-content-product-infor-action-btnadd"} ${
                       userLogin ? "" : "notadd"
-                    }`}
-                    disabled={userLogin ? false : true}
+                    } ${btnAdd ? "" : "notadd"}`}
+                    disabled={disable}
                     onClick={addToCart}
                   >
                     <i className="bi bi-handbag"></i>

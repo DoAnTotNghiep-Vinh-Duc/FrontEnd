@@ -63,7 +63,7 @@ function Rated(props) {
             </div>
           </div>
           <div className="rated-search">
-            <input type="text" placeholder="Nhập mã sản phẩm..." />
+            <input type="text" placeholder="Nhập tên sản phẩm..." />
             <div className="rated-search-icon">
               <i className="bi bi-search"></i>
             </div>

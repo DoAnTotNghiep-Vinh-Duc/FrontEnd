@@ -20,6 +20,7 @@
     "bootstrap-icons": "^1.8.0",
     "card-validator": "^8.1.1",
     "date-fns": "^2.28.0",
+    "dotenv": "^16.0.1",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.3",
@@ -76,4 +77,5 @@
     ]
   },
   "devDependencies": {}
+  
 }

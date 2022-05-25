@@ -65,7 +65,7 @@ function SignIn(props) {
   };
 
   const google = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    // window.open("http://localhost:5000/auth/google", "_self");
     // (async () => {
     //   try {
     //     const res = await userAPI.signInWithGoogle();
@@ -77,7 +77,7 @@ function SignIn(props) {
   };
 
   const facebook = () => {
-    window.open("http://localhost:5000/auth/facebook", "_self");
+    // window.open("http://localhost:5000/auth/facebook", "_self");
   };
 
   return (

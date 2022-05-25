@@ -11,8 +11,7 @@ var header = {
 };
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5000/",
-  // baseURL: "http://13.213.8.146:5000",
+  baseURL: "http://localhost:5000",
   headers: header,
 });
 
@@ -92,6 +91,11 @@ axiosClient.interceptors.response.use(
       return Promise.reject(error);
     }
     if (config.url === "/admin/discount/:discountId" && status === 400) {
+      const error = data.message;
+      return Promise.reject(error);
+    }
+
+    if (config.url === "/admin/product" && status === 400) {
       const error = data.message;
       return Promise.reject(error);
     }

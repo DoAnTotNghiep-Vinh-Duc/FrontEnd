@@ -89,7 +89,9 @@ function RateAndComment({ product }) {
           <div className="product-details-content-rate-left-container">
             <div className="product-details-content-rate-left-container-left">
               <div className="product-details-content-rate-left-container-left-total">
-                <span className="total">{product.point}</span>
+                <span className="total">
+                  {Math.round(product.point * 10) / 10}
+                </span>
                 <StyledRating
                   name="half-rating-read"
                   value={product.point ?? 2}

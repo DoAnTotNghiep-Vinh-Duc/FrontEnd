@@ -14,6 +14,7 @@ import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import AddColor from "./AddColor/AddColor";
 import "./AddProduct.scss";
+import Loading from "../../../../components/Loading/Loading";
 
 toast.configure();
 AddProduct.propTypes = {};
@@ -56,6 +57,7 @@ function AddProduct(props) {
   const [btnAddProduct, setBtnAddProduct] = useState(false);
   const [sameSize, setSameSize] = useState(true);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   let listSupplier = [];
   let listDiscount = [];
@@ -218,7 +220,7 @@ function AddProduct(props) {
   }, [listColorDetailAdd]);
 
   const handleClickAddProduct = () => {
-    (async () => {
+    setLoading(true)(async () => {
       try {
         const fd = new FormData();
         fd.append(
@@ -247,147 +249,156 @@ function AddProduct(props) {
             autoClose: 2000,
             theme: "dark",
           });
+          setLoading(false);
           History.push("/admin/products");
         }
       } catch (error) {
         console.log(error);
+        toast.error("Thêm sản phẩm mới thất bại!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: false,
+          theme: "dark",
+        });
       }
     })();
   };
 
   return (
-    <div className="admin-addproduct">
-      <NavBars />
-      <div className="admin-addproduct-content">
-        <Header />
-        <div className="admin-addproduct-content-body">
-          <div className="admin-addproduct-content-body-left">
-            <div className="admin-addproduct-title">
-              THÊM SẢN PHẨM
-              {!sameSize && (
-                <>
-                  <span>{error}</span>
-                </>
-              )}
-            </div>
-            <div className="admin-addproduct-body">
-              <div className="admin-addproduct-name">
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  label="Tên Sản Phẩm"
-                  value={name}
-                  onChange={handleNameProduct}
-                />
+    <>
+      {loading && <Loading />}
+      <div className="admin-addproduct">
+        <NavBars />
+        <div className="admin-addproduct-content">
+          <Header />
+          <div className="admin-addproduct-content-body">
+            <div className="admin-addproduct-content-body-left">
+              <div className="admin-addproduct-title">
+                THÊM SẢN PHẨM
+                {!sameSize && (
+                  <>
+                    <span>{error}</span>
+                  </>
+                )}
               </div>
-              <div className="admin-addproduct-supplier">
-                <label htmlFor="">Nhà cung cấp</label>
-                <div className="admin-addproduct-supplier-select">
-                  <Select
-                    fullWidth
-                    options={listSupplier}
-                    defaultValue={supplier}
-                    onChange={handleSelectSupplier}
-                  />
-                </div>
-              </div>
-              <div className="admin-addproduct-category">
-                <label htmlFor="">Danh Mục</label>
-                <div className="admin-addproduct-category-group">
-                  <div className="sort-select">
-                    <Select
-                      fullWidth
-                      options={gender}
-                      defaultValue={genderProduct}
-                      onChange={handleSelectGender}
-                    />
-                  </div>
-                  <div className="sort-select">
-                    <Select
-                      fullWidth
-                      options={short_long}
-                      defaultValue={typeProduct}
-                      onChange={handleSelectType}
-                    />
-                  </div>
-                  <div className="sort-select">
-                    <Select
-                      fullWidth
-                      options={
-                        genderProduct.value === "nữ"
-                          ? collar_female
-                          : collar_male
-                      }
-                      defaultValue={collarProduct}
-                      onChange={handleSelectCollar}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="admin-addproduct-discount-price">
-                <div className="admin-addproduct-discount">
-                  <label htmlFor="">Giảm giá</label>
-                  <div className="admin-addproduct-discount-select">
-                    <Select
-                      fullWidth
-                      options={listDiscount}
-                      defaultValue={discount}
-                      onChange={handleDiscountProduct}
-                    />
-                  </div>
-                </div>
-                <div className="admin-addproduct-price">
+              <div className="admin-addproduct-body">
+                <div className="admin-addproduct-name">
                   <TextField
                     id="outlined-basic"
                     variant="outlined"
                     size="small"
                     fullWidth
-                    label="Giá"
-                    type="number"
-                    value={price}
-                    onChange={handlePriceProduct}
+                    label="Tên Sản Phẩm"
+                    value={name}
+                    onChange={handleNameProduct}
                   />
                 </div>
-              </div>
-              <div className="admin-addproduct-description">
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Mô Tả"
-                  multiline
-                  rows={8}
-                  fullWidth
-                  variant="outlined"
-                  value={description}
-                  onChange={handleDescriptionProduct}
-                />
-              </div>
-              <div className="admin-product-button">
-                <button
-                  className={`${"admin-product-button-addProduct"} ${
-                    btnAddProduct ? "" : "isActive"
-                  }`}
-                  disabled={btnAddProduct ? false : true}
-                  onClick={handleClickAddProduct}
-                >
-                  Thêm Sản Phẩm
-                </button>
-                <button
-                  className="admin-product-button-addColor"
-                  onClick={handleClickAddColor}
-                >
-                  Thêm Màu Sắc
-                </button>
+                <div className="admin-addproduct-supplier">
+                  <label htmlFor="">Nhà cung cấp</label>
+                  <div className="admin-addproduct-supplier-select">
+                    <Select
+                      fullWidth
+                      options={listSupplier}
+                      defaultValue={supplier}
+                      onChange={handleSelectSupplier}
+                    />
+                  </div>
+                </div>
+                <div className="admin-addproduct-category">
+                  <label htmlFor="">Danh Mục</label>
+                  <div className="admin-addproduct-category-group">
+                    <div className="sort-select">
+                      <Select
+                        fullWidth
+                        options={gender}
+                        defaultValue={genderProduct}
+                        onChange={handleSelectGender}
+                      />
+                    </div>
+                    <div className="sort-select">
+                      <Select
+                        fullWidth
+                        options={short_long}
+                        defaultValue={typeProduct}
+                        onChange={handleSelectType}
+                      />
+                    </div>
+                    <div className="sort-select">
+                      <Select
+                        fullWidth
+                        options={
+                          genderProduct.value === "nữ"
+                            ? collar_female
+                            : collar_male
+                        }
+                        defaultValue={collarProduct}
+                        onChange={handleSelectCollar}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="admin-addproduct-discount-price">
+                  <div className="admin-addproduct-discount">
+                    <label htmlFor="">Giảm giá</label>
+                    <div className="admin-addproduct-discount-select">
+                      <Select
+                        fullWidth
+                        options={listDiscount}
+                        defaultValue={discount}
+                        onChange={handleDiscountProduct}
+                      />
+                    </div>
+                  </div>
+                  <div className="admin-addproduct-price">
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      label="Giá"
+                      type="number"
+                      value={price}
+                      onChange={handlePriceProduct}
+                    />
+                  </div>
+                </div>
+                <div className="admin-addproduct-description">
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Mô Tả"
+                    multiline
+                    rows={8}
+                    fullWidth
+                    variant="outlined"
+                    value={description}
+                    onChange={handleDescriptionProduct}
+                  />
+                </div>
+                <div className="admin-product-button">
+                  <button
+                    className={`${"admin-product-button-addProduct"} ${
+                      btnAddProduct ? "" : "isActive"
+                    }`}
+                    disabled={btnAddProduct ? false : true}
+                    onClick={handleClickAddProduct}
+                  >
+                    Thêm Sản Phẩm
+                  </button>
+                  <button
+                    className="admin-product-button-addColor"
+                    onClick={handleClickAddColor}
+                  >
+                    Thêm Màu Sắc
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="admin-addproduct-content-body-right">
-            {colorComponent}
+            <div className="admin-addproduct-content-body-right">
+              {colorComponent}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

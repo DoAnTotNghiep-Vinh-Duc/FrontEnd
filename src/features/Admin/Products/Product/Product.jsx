@@ -71,10 +71,7 @@ function Product({ product }) {
           }).format(product.price)}
         </div>
         <div className="admin-products-content-body-listProducts-body-products-product-category">
-          {Math.floor(
-            ((product.price - product.priceDiscount) / product.price) * 100
-          )}
-          %
+          {product.discount.percentDiscount * 100}%
         </div>
         <div className="admin-products-content-body-listProducts-body-products-product-action">
           <i className="bi bi-eye" onClick={handleClickViewDetail}></i>

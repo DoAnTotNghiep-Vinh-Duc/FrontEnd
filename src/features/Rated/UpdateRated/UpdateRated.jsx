@@ -1,19 +1,18 @@
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import Rating from "@material-ui/lab/Rating";
 import TextField from "@material-ui/core/TextField";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import GradeIcon from "@material-ui/icons/Grade";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import Rating from "@material-ui/lab/Rating";
+import PropTypes from "prop-types";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import rateAPI from "../../../api/rateAPI";
 import { ACTIONS } from "../../../context/actions";
 import { GlobalContext } from "../../../context/context";
-import { toast } from "react-toastify";
 
 toast.configure();
 UpdateRated.propTypes = {
@@ -22,9 +21,7 @@ UpdateRated.propTypes = {
 
 function UpdateRated(props) {
   const { rate } = props;
-  const { dispatch, state } = useContext(GlobalContext);
-
-  console.log(rate);
+  const { dispatch } = useContext(GlobalContext);
 
   const [productComment, setProductComment] = useState({
     rateId: rate._id,
