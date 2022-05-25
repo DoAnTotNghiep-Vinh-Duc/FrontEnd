@@ -126,9 +126,15 @@ function ListPage(props) {
           optionColors: [...filters.optionColors, value],
         }));
       } else {
+        const a = filters.optionColors.slice(0, index);
+        const b = filters.optionColors.slice(
+          index + 1,
+          filters.optionColors.length
+        );
+        const new_arr = [...a, ...b];
         setFilters((prev) => ({
           ...prev,
-          optionColors: filters.optionColors.filter((x) => x !== value),
+          optionColors: new_arr.length ? new_arr : null,
         }));
       }
     }
@@ -155,27 +161,27 @@ function ListPage(props) {
         <SkeletonProductList />
       ) : (
         <>
-          {products.length > 0 ? (
-            <>
-              <div className="product-sort">
-                <ProductSort onChange={handleChangeSort} />
+          <div className="product-sort">
+            <ProductSort onChange={handleChangeSort} />
+          </div>
+          <div className="product-content">
+            <div className="product-content-filter">
+              <div className="producr-content-filter-branch">
+                <FilterBySize onChange={handleChangeSize} />
               </div>
-              <div className="product-content">
-                <div className="product-content-filter">
-                  <div className="producr-content-filter-branch">
-                    <FilterBySize onChange={handleChangeSize} />
-                  </div>
-                  <div className="producr-content-filter-price">
-                    <FilterByPrice onChange={handleChangePrice} />
-                  </div>
-                  <div className="producr-content-filter-color">
-                    <FilterByColor onChange={handleChangeColor} />
-                  </div>
-                  <div className="producr-content-filter-rate">
-                    <FilterByRate onChange={handleChangeRate} />
-                  </div>
-                </div>
-                <div className="product-content-product">
+              <div className="producr-content-filter-price">
+                <FilterByPrice onChange={handleChangePrice} />
+              </div>
+              <div className="producr-content-filter-color">
+                <FilterByColor onChange={handleChangeColor} />
+              </div>
+              <div className="producr-content-filter-rate">
+                <FilterByRate onChange={handleChangeRate} />
+              </div>
+            </div>
+            <div className="product-content-product">
+              {products.length ? (
+                <>
                   <div className="product-content-product-container">
                     <ProductList data={products} />
                   </div>
@@ -187,16 +193,16 @@ function ListPage(props) {
                       onChange={handlePaginationChange}
                     />
                   </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="product-notfound">
-                <p>Không có sản phẩm phù hợp</p>
-              </div>
-            </>
-          )}
+                </>
+              ) : (
+                <>
+                  <div className="product-notfound">
+                    <p>Không có sản phẩm phù hợp</p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </>
       )}
 
