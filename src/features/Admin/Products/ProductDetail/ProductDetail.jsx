@@ -41,6 +41,9 @@ function ProductDetail(props) {
   const [collarProduct, setCollarProduct] = useState({});
   const [discountProduct, setDiscountProduct] = useState({});
 
+  const [temp, setTemp] = useState();
+  const [deleteTemp, setDeleteTemp] = useState();
+
   useEffect(() => {
     setProductEdit(product);
   }, [product]);
@@ -105,6 +108,50 @@ function ProductDetail(props) {
       }
     });
   }, [productEdit.typeProducts]);
+
+  useEffect(() => {
+    if (temp) {
+      console.log(temp);
+      console.log(listColorDetailAdd);
+      if (!listColorDetailAdd.length) {
+        setListColorDetailAdd([temp]);
+      } else {
+        const index = listColorDetailAdd.findIndex((x) => x.gen === temp.gen);
+        if (index >= 0) {
+          const a = listColorDetailAdd.slice(0, index);
+          const b = listColorDetailAdd.slice(
+            index + 1,
+            listColorDetailAdd.length
+          );
+          const new_arr = [...a, ...b];
+          new_arr.push(temp);
+          setListColorDetailAdd(new_arr);
+        } else {
+          setListColorDetailAdd([...listColorDetailAdd, temp]);
+        }
+      }
+    }
+  }, [temp]);
+
+  useEffect(() => {
+    if (deleteTemp) {
+      const index = listColor_add.findIndex(
+        (x) => x.props.id === deleteTemp.id
+      );
+      const a = listColor_add.slice(0, index);
+      const b = listColor_add.slice(index + 1, listColor_add.length);
+      const new_arr = [...a, ...b];
+      setListColor_add(new_arr);
+
+      const index2 = listColorDetailAdd.findIndex(
+        (x) => x.color === deleteTemp.colorProduct._id
+      );
+      const c = listColorDetailAdd.slice(0, index2);
+      const d = listColorDetailAdd.slice(index2 + 1, listColorDetailAdd.length);
+      const new_arr1 = [...c, ...d];
+      setListColorDetailAdd(new_arr1);
+    }
+  }, [deleteTemp]);
 
   if (loading) {
     return <div>Loading</div>;
@@ -187,19 +234,7 @@ function ProductDetail(props) {
   };
 
   const handleReceiveColorAndProductDetailsByAddColor = (value) => {
-    if (listColorDetailAdd.length < 1) {
-      setListColorDetailAdd([value]);
-    } else {
-      const index = listColorDetailAdd.findIndex(
-        (x) => x.color === value.color
-      );
-      if (index > -1) {
-        setListColorDetailAdd([listColorDetailAdd.splice(index, 1)]);
-        setListColorDetailAdd([...listColorDetailAdd, value]);
-      } else {
-        setListColorDetailAdd([...listColorDetailAdd, value]);
-      }
-    }
+    setTemp(value);
   };
 
   const handleReceiveColorWantDelete = (value) => {
@@ -217,14 +252,8 @@ function ProductDetail(props) {
     setColorDetails_temp(result);
   };
 
-  const handleReceiveColorWantDeleteByAddColor = ({ colorProduct, id }) => {
-    const index = listColor_add.findIndex((x) => x.props.id === id);
-    setListColor_add(listColor_add.splice(index, 1));
-
-    const index2 = listColorDetailAdd.findIndex(
-      (x) => x.color === colorProduct._id
-    );
-    setListColorDetailAdd(listColorDetailAdd.splice(index2, 1));
+  const handleReceiveColorWantDeleteByAddColor = (value) => {
+    setDeleteTemp(value);
   };
 
   const handleUpdateProduct = () => {

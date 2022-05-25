@@ -21,6 +21,9 @@ function Color(props) {
   const [listSize_temp, setListSize_temp] = useState([]);
   const [send, setSend] = useState(false);
 
+  const [temp, setTemp] = useState();
+  const [deleteTemp, setDeleteTemp] = useState();
+
   useEffect(() => {
     setListSize(Object.values(color)[0]);
   }, [color]);
@@ -55,21 +58,32 @@ function Color(props) {
   };
 
   const handleReceiveSizeAndQuantityByAddSize = (value) => {
-    setSend(true);
-    if (listProductDetail_add.length < 1) {
-      setListProductDetail_add([value]);
-    } else {
-      const index = listProductDetail_add.findIndex(
-        (x) => x.value === value.value
-      );
-      if (index > -1) {
-        setListProductDetail_add([listProductDetail_add.splice(index, 1)]);
-        setListProductDetail_add([...listProductDetail_add, value]);
+    setTemp(value);
+  };
+
+  useEffect(() => {
+    if (temp) {
+      if (!listProductDetail_add.length) {
+        setListProductDetail_add([temp]);
       } else {
-        setListProductDetail_add([...listProductDetail_add, value]);
+        const index = listProductDetail_add.findIndex(
+          (x) => x.gen === temp.gen
+        );
+        if (index >= 0) {
+          const a = listProductDetail_add.slice(0, index);
+          const b = listProductDetail_add.slice(
+            index + 1,
+            listProductDetail_add.length
+          );
+          const new_arr = [...a, ...b];
+          new_arr.push(temp);
+          setListProductDetail_add(new_arr);
+        } else {
+          setListProductDetail_add([...listProductDetail_add, temp]);
+        }
       }
     }
-  };
+  }, [temp]);
 
   const handleAddImage = (e) => {
     e.preventDefault();
@@ -95,14 +109,31 @@ function Color(props) {
   }, [image]);
 
   const handleReceiveSizeWantToDeleteByAddSize = (value) => {
-    const index = listSize_temp.findIndex((x) => x.props.gen === value.gen);
-    setListSize_temp(listSize_temp.splice(index, 1));
-
-    const index2 = listProductDetail_add.findIndex(
-      (x) => x.value === value.value
-    );
-    setListProductDetail_add(listProductDetail_add.splice(index2, 1));
+    setDeleteTemp(value);
   };
+
+  useEffect(() => {
+    if (deleteTemp) {
+      const index = listSize_temp.findIndex(
+        (x) => x.props.gen === deleteTemp.gen
+      );
+      const a = listSize_temp.slice(0, index);
+      const b = listSize_temp.slice(index + 1, listSize_temp.length);
+      const new_arr = [...a, ...b];
+      setListSize_temp(new_arr);
+
+      const index2 = listProductDetail_add.findIndex(
+        (x) => x.gen === deleteTemp.gen
+      );
+      const c = listProductDetail_add.slice(0, index2);
+      const d = listProductDetail_add.slice(
+        index2 + 1,
+        listProductDetail_add.length
+      );
+      const new_arr1 = [...c, ...d];
+      setListProductDetail_add(new_arr1);
+    }
+  }, [deleteTemp]);
 
   const handleReceiveSizeWantDelete = (value) => {
     var result = listSize.map((el) =>
@@ -115,6 +146,7 @@ function Color(props) {
     setSend(true);
     var result = listProductDetail.map((el) => ({ ...el, status: "DELETE" }));
     setListDeleteColor(result);
+    setListProductDetail_add([]);
     props.sendColorWantDelete(color);
   };
 
