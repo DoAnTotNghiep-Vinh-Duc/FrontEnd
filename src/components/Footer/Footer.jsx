@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import userAPI from "../../api/userAPI";
 import "./Footer.scss";
 
 Footer.propTypes = {};
 
 function Footer(props) {
-  const local = localStorage.getItem("account");
-  const account = local && JSON.parse(local);
+  const userLogIn = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
-    if (account) {
+    if (userLogIn) {
       (async () => {
         try {
           const response = await userAPI.getInformation();
@@ -18,7 +18,7 @@ function Footer(props) {
         }
       })();
     }
-  }, [account]);
+  }, [userLogIn]);
 
   return (
     <div className="footer">

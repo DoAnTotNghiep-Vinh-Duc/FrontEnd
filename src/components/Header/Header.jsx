@@ -2,6 +2,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import userAPI from "../../api/userAPI";
 import Logout from "../../features/Logout/Logout";
@@ -15,13 +16,16 @@ function Header(props) {
 
   const local = localStorage.getItem("account");
   const account = local && JSON.parse(local);
+
+  const userLogIn = useSelector((state) => state.user.currentUser);
+
   const [open, setOpen] = useState(false);
 
   const [openFormLogout, setOpenFormLogout] = useState(false);
   const [userInformation, setUserInformation] = useState({});
 
   useEffect(() => {
-    if (account) {
+    if (userLogIn) {
       (async () => {
         try {
           const response = await userAPI.getInformation();
@@ -31,7 +35,7 @@ function Header(props) {
         }
       })();
     }
-  }, [account]);
+  }, [userLogIn]);
 
   const handleClickOpenFormLogout = () => {
     setOpenFormLogout(true);
