@@ -5,15 +5,20 @@ import "./Footer.scss";
 Footer.propTypes = {};
 
 function Footer(props) {
+  const local = localStorage.getItem("account");
+  const account = local && JSON.parse(local);
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await userAPI.getInformation();
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    if (account) {
+      (async () => {
+        try {
+          const response = await userAPI.getInformation();
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [account]);
 
   return (
     <div className="footer">

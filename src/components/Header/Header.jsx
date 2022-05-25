@@ -21,15 +21,17 @@ function Header(props) {
   const [userInformation, setUserInformation] = useState({});
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await userAPI.getInformation();
-        setUserInformation(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    if (account) {
+      (async () => {
+        try {
+          const response = await userAPI.getInformation();
+          setUserInformation(response.data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [account]);
 
   const handleClickOpenFormLogout = () => {
     setOpenFormLogout(true);

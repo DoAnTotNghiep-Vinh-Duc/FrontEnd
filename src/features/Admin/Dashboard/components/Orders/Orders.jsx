@@ -74,7 +74,10 @@ function Orders(props) {
           <div className="admin-content-body-lastOrder-container-body-orders">
             {orders.map((order) => {
               return (
-                <div className="admin-content-body-lastOrder-container-body-orders-order">
+                <div
+                  className="admin-content-body-lastOrder-container-body-orders-order"
+                  key={order._id}
+                >
                   <div className="admin-content-body-lastOrder-container-body-orders-order-seri">
                     #
                     {order._id.substring(

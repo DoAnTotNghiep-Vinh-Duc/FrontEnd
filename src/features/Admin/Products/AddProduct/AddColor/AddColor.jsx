@@ -19,9 +19,11 @@ function AddColor(props) {
   const [imagePreview, setImagePreview] = useState();
   const [listSize, setListSize] = useState([]);
   const [color_temp, setColor_temp] = useState([]);
+  const [temp, setTemp] = useState();
+  const [listProductDetail, setListProductDetail] = useState([]);
+  const [deleteTemp, setDeleteTemp] = useState();
+
   let listColor = [];
-  const [send, setSend] = useState(false);
-  const [listProductDetail_add, setListProductDetail_add] = useState([]);
   let a = [];
 
   useEffect(() => {
@@ -87,34 +89,59 @@ function AddColor(props) {
   };
 
   const handleReceiveSizeAndQuantityByAddSize = (value) => {
-    setSend(true);
-    if (!listProductDetail_add.length) {
-      setListProductDetail_add([value]);
-    } else {
-      const index = listProductDetail_add.findIndex((x) => x.gen === value.gen);
-      if (index >= 0) {
-        setListProductDetail_add(listProductDetail_add.splice(index, 1));
-        setListProductDetail_add([...listProductDetail_add, value]);
+    setTemp(value);
+  };
+
+  useEffect(() => {
+    if (temp) {
+      if (!listProductDetail.length) {
+        setListProductDetail([temp]);
       } else {
-        setListProductDetail_add([...listProductDetail_add, value]);
+        const index = listProductDetail.findIndex((x) => x.gen === temp.gen);
+        if (index >= 0) {
+          const a = listProductDetail.slice(0, index);
+          const b = listProductDetail.slice(
+            index + 1,
+            listProductDetail.length
+          );
+          const new_arr = [...a, ...b];
+          new_arr.push(temp);
+          setListProductDetail(new_arr);
+        } else {
+          setListProductDetail([...listProductDetail, temp]);
+        }
       }
     }
-  };
+  }, [temp]);
 
   const handleReceiveSizeWantToDeleteByAddSize = (value) => {
-    const index = listSize.findIndex((x) => x.props.gen === value.gen);
-    setListSize(listSize.splice(index, 1));
-
-    const index2 = listProductDetail_add.findIndex((x) => x.gen === value.gen);
-    setListProductDetail_add(listProductDetail_add.splice(index2, 1));
+    setDeleteTemp(value);
   };
+
+  useEffect(() => {
+    if (deleteTemp) {
+      const index = listSize.findIndex((x) => x.props.gen === deleteTemp.gen);
+      const a = listSize.slice(0, index);
+      const b = listSize.slice(index + 1, listSize.length);
+      const new_arr = [...a, ...b];
+      setListSize(new_arr);
+
+      const index2 = listProductDetail.findIndex(
+        (x) => x.gen === deleteTemp.gen
+      );
+      const c = listProductDetail.slice(0, index2);
+      const d = listProductDetail.slice(index2 + 1, listProductDetail.length);
+      const new_arr1 = [...c, ...d];
+      setListProductDetail(new_arr1);
+    }
+  }, [deleteTemp]);
 
   const handleDeleteColor = () => {
     props.sendColorWantDelete({ colorProduct, id });
   };
 
   useEffect(() => {
-    listProductDetail_add.forEach((element) => {
+    listProductDetail.forEach((element) => {
       a.push({
         _id: element._id,
         size: element.value,
@@ -122,8 +149,7 @@ function AddColor(props) {
         status: element.status,
       });
     });
-
-    if (listProductDetail_add.length) {
+    if (listProductDetail.length) {
       props.sendColorAndProductDetails({
         gen: id,
         color: colorProduct._id,
@@ -133,7 +159,7 @@ function AddColor(props) {
           "https://media.istockphoto.com/vectors/default-image-icon-vector-missing-picture-page-for-website-design-or-vector-id1357365823?k=20&m=1357365823&s=612x612&w=0&h=ZH0MQpeUoSHM3G2AWzc8KkGYRg4uP_kuu0Za8GFxdFc=",
       });
     }
-  }, [a, colorProduct._id, id, image, listProductDetail_add, props]);
+  }, [a, colorProduct._id, id, image, listProductDetail, props]);
 
   return (
     <div className="admin-addproduct-product">

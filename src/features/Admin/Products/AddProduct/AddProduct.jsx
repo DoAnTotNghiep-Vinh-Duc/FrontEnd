@@ -50,7 +50,6 @@ function AddProduct(props) {
     _id: "62599849f8f6be052f0a901d",
   });
   const [price, setPrice] = useState(0);
-  const [listColorDetailAdd, setListColorDetailAdd] = useState([]);
   const [colorComponent, setColorComponent] = useState([]);
   const [listSupplier_temp, setListSupplier_temp] = useState([]);
   const [listDiscount_temp, setListDiscount_temp] = useState([]);
@@ -58,6 +57,10 @@ function AddProduct(props) {
   const [sameSize, setSameSize] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [temp, setTemp] = useState();
+  const [deleteTemp, setDeleteTemp] = useState();
+  const [listColorDetail, setListColorDetail] = useState([]);
 
   let listSupplier = [];
   let listDiscount = [];
@@ -145,29 +148,53 @@ function AddProduct(props) {
   };
 
   const handleReceiveColorAndProductDetailsByAddColor = (value) => {
-    if (listColorDetailAdd.length < 1) {
-      setListColorDetailAdd([value]);
-    } else {
-      const index = listColorDetailAdd.findIndex((x) => x.gen === value.gen);
-      if (index > -1) {
-        setListColorDetailAdd([listColorDetailAdd.splice(index, 1)]);
-        setListColorDetailAdd([...listColorDetailAdd, value]);
+    setTemp(value);
+  };
+
+  useEffect(() => {
+    if (temp) {
+      if (!listColorDetail.length) {
+        setListColorDetail([temp]);
       } else {
-        setListColorDetailAdd([...listColorDetailAdd, value]);
+        const index = listColorDetail.findIndex((x) => x.gen === temp.gen);
+        if (index >= 0) {
+          const a = listColorDetail.slice(0, index);
+          const b = listColorDetail.slice(index + 1, listColorDetail.length);
+          const new_arr = [...a, ...b];
+          new_arr.push(temp);
+          setListColorDetail(new_arr);
+        } else {
+          setListColorDetail([...listColorDetail, temp]);
+        }
       }
     }
+  }, [temp]);
+
+  const handleReceiveColorWantDeleteByAddColor = (value) => {
+    setDeleteTemp(value);
   };
 
-  const handleReceiveColorWantDeleteByAddColor = ({ colorProduct, id }) => {
-    const index = colorComponent.findIndex((x) => x.props.id === id);
-    setColorComponent(colorComponent.splice(index, 1));
+  useEffect(() => {
+    if (deleteTemp) {
+      const index = colorComponent.findIndex(
+        (x) => x.props.id === deleteTemp.id
+      );
+      const a = colorComponent.slice(0, index);
+      const b = colorComponent.slice(index + 1, colorComponent.length);
+      const new_arr = [...a, ...b];
+      setColorComponent(new_arr);
 
-    const index2 = listColorDetailAdd.findIndex(
-      (x) => x.color === colorProduct._id
-    );
-    setListColorDetailAdd(listColorDetailAdd.splice(index2, 1));
-  };
+      const index2 = listColorDetail.findIndex(
+        (x) => x.color === deleteTemp.colorProduct._id
+      );
+      const c = listColorDetail.slice(0, index2);
+      const d = listColorDetail.slice(index2 + 1, listColorDetail.length);
+      const new_arr1 = [...c, ...d];
+      setListColorDetail(new_arr1);
+    }
+  }, [deleteTemp]);
 
+  //check nut thêm
   useEffect(() => {
     if (
       !name ||
@@ -178,7 +205,7 @@ function AddProduct(props) {
       !collarProduct ||
       !discount ||
       !price ||
-      !listColorDetailAdd.length ||
+      !listColorDetail.length ||
       !sameSize
     ) {
       setBtnAddProduct(false);
@@ -190,7 +217,7 @@ function AddProduct(props) {
     description,
     discount,
     genderProduct,
-    listColorDetailAdd.length,
+    listColorDetail.length,
     name,
     price,
     sameSize,
@@ -198,14 +225,15 @@ function AddProduct(props) {
     typeProduct,
   ]);
 
+  //check màu
   useEffect(() => {
     let result = [];
     let count = 0;
 
-    for (let i = 0; i < listColorDetailAdd.length - 1; ++i) {
-      for (let j = i + 1; j < listColorDetailAdd.length; ++j) {
-        if (listColorDetailAdd[i].color === listColorDetailAdd[j].color) {
-          result.push(listColorDetailAdd[i]);
+    for (let i = 0; i < listColorDetail.length - 1; ++i) {
+      for (let j = i + 1; j < listColorDetail.length; ++j) {
+        if (listColorDetail[i].color === listColorDetail[j].color) {
+          result.push(listColorDetail[i]);
           ++count;
         }
       }
@@ -217,7 +245,7 @@ function AddProduct(props) {
       setSameSize(true);
       setError("");
     }
-  }, [listColorDetailAdd]);
+  }, [listColorDetail]);
 
   const handleClickAddProduct = () => {
     setLoading(true)(async () => {
@@ -238,8 +266,8 @@ function AddProduct(props) {
             price: Number(price),
           })
         );
-        fd.append("productDetails", JSON.stringify(listColorDetailAdd));
-        listColorDetailAdd.forEach((element) => {
+        fd.append("productDetails", JSON.stringify(listColorDetail));
+        listColorDetail.forEach((element) => {
           fd.append(element.color, element.image);
         });
         const response = await adminAPI.addProduct(fd);
