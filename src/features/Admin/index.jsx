@@ -21,7 +21,7 @@ function AdminPage(props) {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000", {
+    socket.current = io(process.env.REACT_APP_API_KEY, {
       transports: ["websocket", "polling", "flashsocket"],
     });
   }, []);

@@ -50,10 +50,10 @@ function SignIn(props) {
             theme: "light",
           });
           if (result.data.account.role === "Admin") {
-            window.location = "http://localhost:3000/admin";
+            window.location = `${process.env.REACT_APP_BASE_URL}/admin`;
             History.push("/admin");
           } else {
-            window.location = "http://localhost:3000";
+            window.location = process.env.REACT_APP_BASE_URL;
             History.push("/");
           }
         }
