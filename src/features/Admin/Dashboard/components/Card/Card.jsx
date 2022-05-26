@@ -205,14 +205,14 @@ function Card(props) {
         <div className="admin-content-body-total-views">
           <div className="admin-content-body-total-views-header">
             <div className="admin-content-body-total-views-header-title">
-              Lượt truy cập
+              Số khách hàng
             </div>
             <div className="admin-content-body-total-views-header-icon">
               <i className="bi bi-eye"></i>
             </div>
           </div>
           <div className="admin-content-body-total-views-numbers">
-            <span>321</span> lượt
+            <span>321</span> khách hàng
           </div>
         </div>
       </div>

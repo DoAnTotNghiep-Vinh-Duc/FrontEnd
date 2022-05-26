@@ -20,11 +20,6 @@
         "icon": "bi bi-card-list"
     },
     {
-        "displayName": "Thống kê",
-        "route": "/admin/analitics",
-        "icon": "bi bi-bar-chart"
-    },
-    {
         "displayName": "Giảm giá",
         "route": "/admin/discounts",
         "icon": "bi bi-gift"

@@ -221,6 +221,12 @@ const adminAPI = {
     const url = "/admin/message";
     return axiosClient.post(url, value);
   },
+
+  //cash
+  chartDashboard() {
+    const url = "/admin/order/get-data-order-for-chart";
+    return axiosClient.get(url);
+  },
 };
 
 export default adminAPI;

@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
+import adminAPI from "../../../../../api/adminAPI";
 import "./Chart.scss";
+import moment from "moment";
 
 ChartDashboard.propTypes = {};
 
 function ChartDashboard(props) {
+  const [cash, setCash] = useState([]);
+  const [date, setDate] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.chartDashboard();
+        setCash(response.data.data.listData);
+        setDate(response.data.data.listDate);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  let a = [];
+  date.forEach((x) => {
+    a.push(moment(x).format("dddd"));
+  });
+
   const chartOptions = {
     series: [
       {
         name: "Doanh thu",
-        data: [40, 70, 20, 90, 36, 80, 30, 91, 60],
+        data: cash,
       },
     ],
 
@@ -25,17 +47,7 @@ function ChartDashboard(props) {
         curve: "smooth",
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
+        categories: a,
       },
       legend: {
         position: "top",
@@ -57,7 +69,7 @@ function ChartDashboard(props) {
         />
       </div>
       <div className="admin-content-body-chart-title">
-        Biểu đồ đường hiển thị doanh thu
+        Biểu đồ đường hiển thị doanh thu 7 ngày gần nhất
       </div>
     </div>
   );
