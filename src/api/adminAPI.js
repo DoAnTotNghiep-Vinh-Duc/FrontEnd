@@ -101,6 +101,11 @@ const adminAPI = {
       },
     };
   },
+  customerVip() {
+    const url = "/admin/order/all-top-customer";
+    return axiosClient.get(url);
+  },
+
   async getAllCustomer(params) {
     const url = "/admin/account";
     const listCustomer = await axiosClient.get(url);

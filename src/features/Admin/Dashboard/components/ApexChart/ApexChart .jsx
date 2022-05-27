@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import adminAPI from "../../../../../api/adminAPI";
 
 ApexChart.propTypes = {};
 
 function ApexChart(props) {
+  const [total, setTotal] = useState([]);
+  let listCustomer = [];
+  let listCash = [];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await adminAPI.customerVip();
+        setTotal(response.data.data.slice(0, 7));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  total.forEach((x) => {
+    listCustomer.push(x.information.name);
+    listCash.push(x.totalPrice);
+  });
+
   const options = {
     series: [
       {
         name: "Doanh thu",
-        data: [21, 22, 10, 28, 16, 21, 13, 30],
+        data: listCash,
       },
     ],
     options: {
@@ -42,16 +63,7 @@ function ApexChart(props) {
         show: false,
       },
       xaxis: {
-        categories: [
-          ["Đỗ Đạt Đức"],
-          ["Joe", "Smith"],
-          ["Jake", "Williams"],
-          "Amber",
-          ["Peter", "Brown"],
-          ["Mary", "Evans"],
-          ["David", "Wilson"],
-          ["Lily", "Roberts"],
-        ],
+        categories: listCustomer,
         labels: {
           style: {
             colors: [

@@ -15,6 +15,7 @@ function Card(props) {
   const [nameTypeRequest, setNameTypeRequest] = useState("Hôm nay");
   const [totalOrder, setTotalOrder] = useState(0);
   const [total, setTotal] = useState([]);
+  const [totalUser, setTotalUser] = useState(0);
 
   let totalCash = 0;
   let totalQuantityProduct = 0;
@@ -40,9 +41,11 @@ function Card(props) {
         const response = await adminAPI.statistical({
           typeRequest: "TODAY",
         });
+        console.log(response);
         if (response.status === 200) {
-          setTotalOrder(response.data.data.length);
-          setTotal(response.data.data);
+          setTotalOrder(response.data.data.orders.length);
+          setTotal(response.data.data.orders);
+          setTotalUser(response.data.data.user);
         }
       } catch (error) {
         console.log(error);
@@ -56,9 +59,11 @@ function Card(props) {
         const response = await adminAPI.statistical({
           typeRequest: item.value,
         });
+        console.log(response);
         if (response.status === 200) {
-          setTotalOrder(response.data.data.length);
-          setTotal(response.data.data);
+          setTotalOrder(response.data.data.orders.length);
+          setTotal(response.data.data.orders);
+          setTotalUser(response.data.data.user);
         }
       } catch (error) {
         console.log(error);
@@ -76,9 +81,11 @@ function Card(props) {
           beginDate: moment(beginDate).format("YYYY-MM-DD"),
           endDate: moment(endDate).format("YYYY-MM-DD"),
         });
+        console.log(response);
         if (response.status === 200) {
-          setTotalOrder(response.data.data.length);
-          setTotal(response.data.data);
+          setTotalOrder(response.data.data.orders.length);
+          setTotal(response.data.data.orders);
+          setTotalUser(response.data.data.user);
         }
       } catch (error) {
         console.log(error);
@@ -212,7 +219,7 @@ function Card(props) {
             </div>
           </div>
           <div className="admin-content-body-total-views-numbers">
-            <span>321</span> khách hàng
+            <span>{totalUser}</span> khách hàng
           </div>
         </div>
       </div>
