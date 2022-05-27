@@ -41,7 +41,6 @@ function Card(props) {
         const response = await adminAPI.statistical({
           typeRequest: "TODAY",
         });
-        console.log(response);
         if (response.status === 200) {
           setTotalOrder(response.data.data.orders.length);
           setTotal(response.data.data.orders);
@@ -59,7 +58,6 @@ function Card(props) {
         const response = await adminAPI.statistical({
           typeRequest: item.value,
         });
-        console.log(response);
         if (response.status === 200) {
           setTotalOrder(response.data.data.orders.length);
           setTotal(response.data.data.orders);
@@ -81,7 +79,6 @@ function Card(props) {
           beginDate: moment(beginDate).format("YYYY-MM-DD"),
           endDate: moment(endDate).format("YYYY-MM-DD"),
         });
-        console.log(response);
         if (response.status === 200) {
           setTotalOrder(response.data.data.orders.length);
           setTotal(response.data.data.orders);

@@ -138,7 +138,6 @@ function Menu(props) {
           <li className="home_menu">
             <a href="\" className="h">
               Trang chủ
-              <i className="bi bi-chevron-down"></i>
             </a>
           </li>
           <li className="product_menu">

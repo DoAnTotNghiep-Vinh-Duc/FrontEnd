@@ -6,14 +6,16 @@ import {
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core/styles";
+import Cookies from "js-cookie";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import userAPI from "../../api/userAPI";
 import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import PasswordField from "../../form-control/PasswordField";
 import "./ChangePassword.scss";
-import { toast } from "react-toastify";
 
 toast.configure();
 ChangePassword.propTypes = {};
@@ -32,6 +34,7 @@ const theme = createTheme({
 
 function ChangePassword(props) {
   const classes = useStyles();
+  const History = useHistory();
 
   const schema = yup.object().shape({
     oldpassword: yup
@@ -72,6 +75,21 @@ function ChangePassword(props) {
             theme: "dark",
           });
           form.reset();
+          (async () => {
+            try {
+              const response = await userAPI.logout({
+                refreshToken: Cookies.get("refreshToken"),
+              });
+              if (response.status === 200) {
+                Cookies.remove("refreshToken");
+                Cookies.remove("token");
+                localStorage.removeItem("account");
+                History.push("/auth");
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          })();
         }
       } catch (error) {
         console.log(error);

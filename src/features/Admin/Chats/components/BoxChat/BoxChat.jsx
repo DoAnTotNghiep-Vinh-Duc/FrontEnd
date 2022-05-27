@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import adminAPI from "../../../../../api/adminAPI";
 import { ACTIONS } from "../../../../../context/actions";
 import { GlobalContext } from "../../../../../context/context";
+import Input from "../Input/Input";
 
 BoxChat.propTypes = {
   socket: PropTypes.any,
@@ -15,7 +16,6 @@ function BoxChat({ chat, socket }) {
   const { dispatch, state } = useContext(GlobalContext);
   const userLogIn = useSelector((state) => state.user.currentUser);
 
-  const [text, setText] = useState("");
   const [temp_message, setTemp_message] = useState();
 
   useEffect(() => {
@@ -31,37 +31,6 @@ function BoxChat({ chat, socket }) {
       }
     })();
   }, [chat._id, dispatch]);
-
-  const handleChangeText = (event) => {
-    setText(event.target.value);
-  };
-
-  const handleSendMessage = () => {
-    (async () => {
-      try {
-        const response = await adminAPI.sendMessage({
-          text: text,
-          roomId: chat._id,
-        });
-        if (response.status === 200) {
-          (async () => {
-            try {
-              const response = await adminAPI.getMessageOfChat(chat._id);
-              dispatch({
-                type: ACTIONS.dataAllMessageOfChatAdmin,
-                payload: response.data.data,
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          })();
-          setText("");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  };
 
   useEffect(() => {
     socket.current.on("addMessage", (data) => {
@@ -115,20 +84,7 @@ function BoxChat({ chat, socket }) {
         })}
       </div>
 
-      <div className="admin-chats-boxchat-footer">
-        <div className="admin-chats-boxchat-footer-input">
-          <input
-            type="text"
-            placeholder="Nhập tin nhắn..."
-            value={text}
-            onChange={handleChangeText}
-          />
-        </div>
-        <div className="admin-chats-boxchat-footer-icon">
-          <i className="bi bi-send" onClick={handleSendMessage}></i>
-          <i className="bi bi-camera"></i>
-        </div>
-      </div>
+      <Input chat={chat} />
     </>
   );
 }

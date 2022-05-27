@@ -38,6 +38,24 @@ function Chats({ socket }) {
     setChat(value);
   };
 
+  useEffect(() => {
+    socket.current.on("addMessage", (data) => {
+      if (data) {
+        (async () => {
+          try {
+            const response = await adminAPI.getAllChat();
+            dispatch({
+              type: ACTIONS.dataAllChatAdmin,
+              payload: response.data.data,
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        })();
+      }
+    });
+  }, []);
+
   return (
     <div className="admin-chats">
       <NavBars />

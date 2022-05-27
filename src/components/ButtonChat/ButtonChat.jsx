@@ -7,6 +7,7 @@ import { ACTIONS } from "../../context/actions";
 import { GlobalContext } from "../../context/context";
 import "./ButtonChat.css";
 import "./ButtonChat.scss";
+import Input from "./Input/Input";
 
 ButtonChat.propTypes = {
   socket: PropTypes.any,
@@ -17,7 +18,7 @@ function ButtonChat({ socket }) {
   const userLogIn = useSelector((state) => state.user.currentUser);
 
   const [openChat, setOpenChat] = useState(false);
-  const [text, setText] = useState("");
+
   const [temp_message, setTemp_message] = useState();
 
   useEffect(() => {
@@ -36,36 +37,6 @@ function ButtonChat({ socket }) {
 
   const handleClickOpenChat = () => {
     setOpenChat(!openChat);
-  };
-
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  };
-
-  const handleClickSend = () => {
-    (async () => {
-      try {
-        const response = await messageAPI.sendMessage({
-          text: text,
-        });
-        if (response.status === 200) {
-          (async () => {
-            try {
-              const response = await messageAPI.getAllMessage();
-              dispatch({
-                type: ACTIONS.dataMessage,
-                payload: response.data.data,
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          })();
-          setText("");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   };
 
   useEffect(() => {
@@ -133,16 +104,7 @@ function ButtonChat({ socket }) {
                     })}
                   </div>
 
-                  <div className="chat-container-footer">
-                    <input
-                      type="text"
-                      placeholder="Nhập tin nhắn..."
-                      value={text}
-                      onChange={handleTextChange}
-                    />
-                    <i className="bi bi-send" onClick={handleClickSend}></i>
-                    <i className="bi bi-card-image"></i>
-                  </div>
+                  <Input />
                 </>
               ) : (
                 <>
