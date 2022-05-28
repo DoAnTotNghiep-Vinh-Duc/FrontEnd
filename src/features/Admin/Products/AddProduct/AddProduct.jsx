@@ -248,7 +248,8 @@ function AddProduct(props) {
   }, [listColorDetail]);
 
   const handleClickAddProduct = () => {
-    setLoading(true)(async () => {
+    setLoading(true);
+    (async () => {
       try {
         const fd = new FormData();
         fd.append(
