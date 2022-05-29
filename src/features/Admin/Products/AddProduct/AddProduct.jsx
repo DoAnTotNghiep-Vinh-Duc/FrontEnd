@@ -283,6 +283,7 @@ function AddProduct(props) {
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
         toast.error("Thêm sản phẩm mới thất bại!", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: false,
