@@ -64,6 +64,7 @@ function PaymentPage({ user }) {
             phone: userShip.phone,
           });
           console.log(response);
+          window.location = response.data;
         } catch (error) {
           console.log(error);
         }
