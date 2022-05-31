@@ -27,7 +27,7 @@ function Orders(props) {
   const [iconCustomer, setIconCustomer] = useState("");
   const [iconCash, setIconCash] = useState("");
   const [iconDate, setIconDate] = useState("");
-  const [iconStatus, setIconStatus] = useState("");
+  const [iconStatus, setIconStatus] = useState("HANDLING");
 
   const handlePaginationChange = (event, page) => {
     setFilters((prev) => ({
@@ -43,7 +43,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "NAME",
             iconCustomer,
-            "HANDLING",
+            iconStatus,
             filters
           );
           setOrders(response.data);
@@ -58,7 +58,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "TOTALMONEY",
             iconCash,
-            "HANDLING",
+            iconStatus,
             filters
           );
           setOrders(response.data);
@@ -73,7 +73,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "ORDERDATE",
             iconDate,
-            "HANDLING",
+            iconStatus,
             filters
           );
           setOrders(response.data);
@@ -103,7 +103,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "ORDERDATE",
             "DESC",
-            "HANDLING",
+            iconStatus,
             filters
           );
           setOrders(response.data);
@@ -138,19 +138,16 @@ function Orders(props) {
     setIconCustomer(item.value);
     setIconCash("");
     setIconDate("");
-    setIconStatus("");
   };
   const handleSelectCashFiler = (item) => {
     setIconCash(item.value);
     setIconCustomer("");
     setIconDate("");
-    setIconStatus("");
   };
   const handleSelectDateFiler = (item) => {
     setIconDate(item.value);
     setIconCustomer("");
     setIconCash("");
-    setIconStatus("");
   };
 
   return (
