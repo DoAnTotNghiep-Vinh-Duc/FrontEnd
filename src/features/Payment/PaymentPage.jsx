@@ -51,18 +51,25 @@ function PaymentPage({ user }) {
   }, [user]);
 
   const handleSubmit = () => {
-    setLoading(true);
     if (selectedValue === "ONLINE") {
-      // setOpenFormPayPal(true);
       (async () => {
         try {
-          const response = await orderAPI.paymentPaypal();
+          const response = await orderAPI.paymentPaypal({
+            listOrderDetail: listProductCart.listIdProductCart,
+            name: userShip.name,
+            city: userShip.city,
+            district: userShip.district,
+            ward: userShip.ward,
+            street: userShip.street,
+            phone: userShip.phone,
+          });
           console.log(response);
         } catch (error) {
           console.log(error);
         }
       })();
     } else {
+      setLoading(true);
       (async () => {
         try {
           const response = await cartAPI.payment({

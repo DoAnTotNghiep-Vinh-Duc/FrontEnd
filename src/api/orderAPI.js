@@ -17,9 +17,17 @@ const orderAPI = {
     const url = `/rate/get-product-for-rate/${orderId}`;
     return axiosClient.get(url);
   },
-  paymentPaypal() {
+  paymentPaypal(value) {
     const url = "/order/payment-paypal";
-    return axiosClient.get(url);
+    return axiosClient.post(url, {
+      listOrderDetail: value.listOrderDetail,
+      name: value.name,
+      city: value.city,
+      district: value.district,
+      ward: value.ward,
+      street: value.street,
+      phone: value.phone,
+    });
   },
   cancelOrder(orderId) {
     const url = "/order/cancel-order";
