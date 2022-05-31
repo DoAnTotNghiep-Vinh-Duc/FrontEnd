@@ -51,6 +51,7 @@ function PaymentPage({ user }) {
   }, [user]);
 
   const handleSubmit = () => {
+    setLoading(true);
     if (selectedValue === "ONLINE") {
       (async () => {
         try {
@@ -63,14 +64,15 @@ function PaymentPage({ user }) {
             street: userShip.street,
             phone: userShip.phone,
           });
-          console.log(response);
-          window.location = response.data;
+          if (response) {
+            window.location = response.data;
+            setLoading(false);
+          }
         } catch (error) {
           console.log(error);
         }
       })();
     } else {
-      setLoading(true);
       (async () => {
         try {
           const response = await cartAPI.payment({

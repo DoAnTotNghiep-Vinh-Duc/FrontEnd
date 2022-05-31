@@ -20,6 +20,11 @@
         "icon": "bi bi-card-list"
     },
     {
+        "displayName": "Vận chuyển",
+        "route": "/admin/shippers",
+        "icon": "bi bi-person-workspace"
+    },
+    {
         "displayName": "Giảm giá",
         "route": "/admin/discounts",
         "icon": "bi bi-gift"
