@@ -16,6 +16,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import orderAPI from "../../../api/orderAPI";
 import NavbarUser from "../../../components/NavBarUser/NavbarUser";
 import FormComment from "../../FormComment/FormComment";
+import CancelOrder from "../CancelOrder/CancelOrder";
 import Product from "../Product/Product";
 import "./MyOrderDetail.scss";
 
@@ -47,13 +48,16 @@ function MyOrderDetail(props) {
   } = useRouteMatch();
 
   const [open, setOpen] = useState(false);
+  const [cancel, setCancel] = useState(false);
   const [myOrder, setMyOrder] = useState({});
+  const [canCancel, setCanCancel] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
         const response = await orderAPI.getOrderByOrderId(orderId);
-        setMyOrder(response.data.data[0]);
+        setMyOrder(response.data.data.order[0]);
+        setCanCancel(response.data.data.canCancelOrder);
       } catch (error) {
         console.log(error);
       }
@@ -66,6 +70,14 @@ function MyOrderDetail(props) {
 
   const handleCloseComment = () => {
     setOpen(false);
+  };
+
+  const handleClickOpenCancel = () => {
+    setCancel(true);
+  };
+
+  const handleCloseCancel = () => {
+    setCancel(false);
   };
 
   return (
@@ -85,20 +97,34 @@ function MyOrderDetail(props) {
               <p className="myOrderDetail-title-right-order">Đơn hàng</p>
             </div>
           </div>
+
+          {canCancel && (
+            <div className="myOrderDetail-cancel">
+              <Button
+                variant="contained"
+                color="secondary"
+                size="medium"
+                onClick={handleClickOpenCancel}
+              >
+                hủy đơn hàng
+              </Button>
+            </div>
+          )}
+
           <div className="myOrderDetail-status">
             <div className="myOrderDetail-status-title">
               TÌNH TRẠNG ĐƠN HÀNG
             </div>
             <div
               className={`${"myOrderDetail-status-body"} ${
-                myOrder.status === "CANCELED" ? "cancel" : ""
+                myOrder?.status === "CANCELED" ? "cancel" : ""
               }`}
             >
               <div
                 className={`${"myOrderDetail-status-body-card"} ${
-                  myOrder.status === "DELIVERING"
+                  myOrder?.status === "DELIVERING"
                     ? "shipping"
-                    : myOrder.status === "DONE"
+                    : myOrder?.status === "DONE"
                     ? "done"
                     : ""
                 }`}
@@ -146,28 +172,28 @@ function MyOrderDetail(props) {
               <div className="myOrderDetail-order-detail-side">
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Đến: </label>
-                  <span>{myOrder.name}</span>
+                  <span>{myOrder?.name}</span>
                 </div>
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Địa chỉ: </label>
                   <span>
-                    {myOrder.street}, {myOrder.ward}, {myOrder.district},{" "}
-                    {myOrder.city}
+                    {myOrder?.street}, {myOrder?.ward}, {myOrder?.district},{" "}
+                    {myOrder?.city}
                   </span>
                 </div>
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Số điện thoại: </label>
-                  <span>{myOrder.account?.information.phone}</span>
+                  <span>{myOrder?.account?.information.phone}</span>
                 </div>
               </div>
               <div className="myOrderDetail-order-detail-side">
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Mã hóa đơn: </label>
-                  <span>{myOrder._id}</span>
+                  <span>{myOrder?._id}</span>
                 </div>
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Ngày đặt hàng: </label>
-                  <span> {moment(myOrder.createdAt).format("L")}</span>
+                  <span> {moment(myOrder?.createdAt).format("L")}</span>
                 </div>
               </div>
             </div>
@@ -188,7 +214,7 @@ function MyOrderDetail(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {myOrder.listOrderDetail?.map((product, index) => {
+                    {myOrder?.listOrderDetail?.map((product, index) => {
                       return (
                         <Product
                           key={index}
@@ -211,7 +237,7 @@ function MyOrderDetail(props) {
                   {new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(myOrder.subTotal)}
+                  }).format(myOrder?.subTotal)}
                 </div>
               </div>
               <div className="myOrderDetail-table-footer-subtotal">
@@ -233,7 +259,7 @@ function MyOrderDetail(props) {
                   {new Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(myOrder.total)}
+                  }).format(myOrder?.total)}
                 </div>
               </div>
             </div>
@@ -262,6 +288,15 @@ function MyOrderDetail(props) {
         aria-labelledby="responsive-dialog-title"
       >
         <FormComment closeComment={handleCloseComment} />
+      </Dialog>
+
+      <Dialog
+        fullScreen={fullScreen}
+        open={cancel}
+        onClose={handleCloseCancel}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <CancelOrder closeCancel={handleCloseCancel} myOrder={myOrder} />
       </Dialog>
     </>
   );

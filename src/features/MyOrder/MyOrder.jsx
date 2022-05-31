@@ -13,7 +13,7 @@ function MyOrder(props) {
   const History = useHistory();
 
   const [listOrder, setListOrder] = useState([]);
-  const [value, setValue] = useState("ALL");
+  const [value, setValue] = useState("HANDLING");
 
   useEffect(() => {
     (async () => {
@@ -67,11 +67,6 @@ function MyOrder(props) {
                 aria-label="disabled tabs example"
               >
                 <Tab
-                  value="ALL"
-                  label="tất cả"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-                <Tab
                   value="HANDLING"
                   label="chờ xử lí"
                   style={{ minWidth: "20%", fontSize: "12px" }}
@@ -89,6 +84,11 @@ function MyOrder(props) {
                 <Tab
                   value="CANCELED"
                   label="đã hủy"
+                  style={{ minWidth: "20%", fontSize: "12px" }}
+                />
+                <Tab
+                  value="ALL"
+                  label="tất cả"
                   style={{ minWidth: "20%", fontSize: "12px" }}
                 />
               </Tabs>

@@ -21,6 +21,10 @@ const orderAPI = {
     const url = "/order/payment-paypal";
     return axiosClient.get(url);
   },
+  cancelOrder(orderId) {
+    const url = "/order/cancel-order";
+    return axiosClient.post(url, { orderId });
+  },
 };
 
 export default orderAPI;
