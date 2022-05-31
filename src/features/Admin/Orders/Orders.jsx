@@ -43,7 +43,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "NAME",
             iconCustomer,
-            "ALL",
+            "HANDLING",
             filters
           );
           setOrders(response.data);
@@ -58,7 +58,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "TOTALMONEY",
             iconCash,
-            "ALL",
+            "HANDLING",
             filters
           );
           setOrders(response.data);
@@ -73,7 +73,7 @@ function Orders(props) {
           const response = await adminAPI.sortOrder(
             "ORDERDATE",
             iconDate,
-            "ALL",
+            "HANDLING",
             filters
           );
           setOrders(response.data);
@@ -86,8 +86,8 @@ function Orders(props) {
       (async () => {
         try {
           const response = await adminAPI.sortOrder(
-            "NAME",
-            "ASC",
+            "ORDERDATE",
+            "DESC",
             iconStatus,
             filters
           );
@@ -100,10 +100,12 @@ function Orders(props) {
     } else {
       (async () => {
         try {
-          const response = await adminAPI.getAllOrder({
-            _page: filters._page,
-            _limit: filters._limit,
-          });
+          const response = await adminAPI.sortOrder(
+            "ORDERDATE",
+            "DESC",
+            "HANDLING",
+            filters
+          );
           setOrders(response.data);
           setPagination(response.pagination);
         } catch (error) {

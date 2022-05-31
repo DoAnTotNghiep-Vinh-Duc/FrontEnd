@@ -193,7 +193,10 @@ function MyOrderDetail(props) {
                 </div>
                 <div className="myOrderDetail-order-detail-side-text">
                   <label htmlFor="">Ngày đặt hàng: </label>
-                  <span> {moment(myOrder?.createdAt).format("L")}</span>
+                  <span>
+                    {moment(myOrder?.createdAt).format("LTS")} -{" "}
+                    {moment(myOrder?.createdAt).format("L")}
+                  </span>
                 </div>
               </div>
             </div>

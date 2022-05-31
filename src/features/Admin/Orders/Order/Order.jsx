@@ -31,6 +31,7 @@ function Order({ order }) {
         }).format(order.total)}
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-date">
+        {moment(order.createdAt).format("LTS")} -{" "}
         {moment(order.createdAt).format("L")}
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-status">
