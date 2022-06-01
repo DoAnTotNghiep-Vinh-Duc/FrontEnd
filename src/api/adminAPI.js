@@ -232,6 +232,28 @@ const adminAPI = {
     const url = "/admin/order/get-data-order-for-chart";
     return axiosClient.get(url);
   },
+
+  //shiper
+  createShipper(value) {
+    const url = "/admin/shipper";
+    return axiosClient.post(url, value);
+  },
+  async getAllShipper(filters) {
+    const url = "/admin/shipper/get-all-shipper";
+    const listShipper = await axiosClient.get(url);
+
+    const start = filters._page * filters._limit - filters._limit;
+    const end = filters._page * filters._limit - 1;
+
+    return {
+      data: listShipper.data.data.slice(start, end + 1),
+      pagination: {
+        page: filters._page,
+        limit: filters._limit,
+        total: listShipper.data.data.length,
+      },
+    };
+  },
 };
 
 export default adminAPI;

@@ -12,7 +12,7 @@ import Orders from "./Orders/Orders";
 import AddProduct from "./Products/AddProduct/AddProduct";
 import ProductDetail from "./Products/ProductDetail/ProductDetail";
 import Products from "./Products/Products";
-import Shipper from "./Shipper/Shipper";
+import Shippers from "./Shippers/Shippers";
 
 AdminPage.propTypes = {};
 
@@ -65,7 +65,7 @@ function AdminPage(props) {
         </Route>
 
         <Route path={`${match.url}/shippers`} exact>
-          <Shipper />
+          <Shippers />
         </Route>
 
         <Route path={`${match.url}/discounts`} exact>

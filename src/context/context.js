@@ -17,6 +17,7 @@ export const DataProvider = ({ children }) => {
     dataAllDiscountAdmin: [],
     dataAllChatAdmin: [],
     dataAllMessageOfChatAdmin: [],
+    dataAllShipperAdmin: [],
 
     changeColor: false,
   };

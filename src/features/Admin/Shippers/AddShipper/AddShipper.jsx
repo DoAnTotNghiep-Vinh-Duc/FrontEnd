@@ -15,10 +15,15 @@ import {
 import TextField from "@material-ui/core/TextField";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import adminAPI from "../../../../api/adminAPI";
 import iconshipper from "../../../../assets/images/iconshipper.png";
+import { ACTIONS } from "../../../../context/actions";
+import { GlobalContext } from "../../../../context/context";
 import "./AddShipper.scss";
 
+toast.configure();
 AddShipper.propTypes = {};
 
 const useStyles = makeStyles((theme) => ({
@@ -42,8 +47,10 @@ const theme = createTheme({
 
 function AddShipper(props) {
   const classes = useStyles();
+  const { dispatch } = useContext(GlobalContext);
 
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
@@ -66,6 +73,9 @@ function AddShipper(props) {
 
   const handleChangeName = (event) => {
     setName(event.target.value);
+  };
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
   };
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
@@ -93,6 +103,8 @@ function AddShipper(props) {
   const handleAddShipper = () => {
     if (name === "") {
       setError("Chưa nhập tên!");
+    } else if (password === "") {
+      setError("Chưa nhập mật khẩu!");
     } else if (email === "") {
       setError("Chưa nhập email!");
     } else if (phone === "") {
@@ -107,6 +119,44 @@ function AddShipper(props) {
       setError("Chưa nhập số nhà, đường!");
     } else {
       setError("");
+      (async () => {
+        try {
+          const response = await adminAPI.createShipper({
+            email,
+            password,
+            name,
+            phone,
+            city,
+            district,
+            ward,
+            street,
+          });
+          if (response.status === 201) {
+            toast.success("Tạo tài khoản người vận chuyển mới thành công!", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000,
+              theme: "dark",
+            });
+            (async () => {
+              try {
+                const response = await adminAPI.getAllShipper({
+                  _page: 1,
+                  _limit: 10,
+                });
+                dispatch({
+                  type: ACTIONS.dataAllShipperAdmin,
+                  payload: response.data,
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            })();
+            props.closeAddShipper(false);
+          }
+        } catch (error) {
+          setError(error);
+        }
+      })();
     }
   };
 
@@ -123,17 +173,31 @@ function AddShipper(props) {
             </div>
           </div>
           <div className="admin-addship-infor">
-            <div className="admin-addship-infor-name">
-              <TextField
-                id="outlined-basic"
-                label="Họ và Tên"
-                variant="outlined"
-                size="small"
-                placeholder="Nhập họ và tên..."
-                fullWidth
-                value={name}
-                onChange={handleChangeName}
-              />
+            <div className="admin-addship-infor-phone-email">
+              <div className="admin-addship-infor-phone">
+                <TextField
+                  id="outlined-basic"
+                  label="Họ và tên"
+                  variant="outlined"
+                  size="small"
+                  placeholder="Nhập họ và tên..."
+                  fullWidth
+                  value={name}
+                  onChange={handleChangeName}
+                />
+              </div>
+              <div className="admin-addship-infor-email">
+                <TextField
+                  id="outlined-basic"
+                  label="Mật khẩu"
+                  variant="outlined"
+                  size="small"
+                  type="password"
+                  fullWidth
+                  value={password}
+                  onChange={handleChangePassword}
+                />
+              </div>
             </div>
             <div className="admin-addship-infor-phone-email">
               <div className="admin-addship-infor-phone">

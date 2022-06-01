@@ -12,6 +12,7 @@ export const ACTIONS = {
   dataAllDiscountAdmin: "dataAllDiscountAdmin",
   dataAllChatAdmin: "dataAllChatAdmin",
   dataAllMessageOfChatAdmin: "dataAllMessageOfChatAdmin",
+  dataAllShipperAdmin: "dataAllShipperAdmin",
 
   changeColor: "changeColor",
 };

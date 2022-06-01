@@ -80,6 +80,12 @@ const reducer = (state, action) => {
         dataProductRated: action.payload,
       };
 
+    case ACTIONS.dataAllShipperAdmin:
+      return {
+        ...state,
+        dataAllShipperAdmin: action.payload,
+      };
+
     default:
       return state;
   }
