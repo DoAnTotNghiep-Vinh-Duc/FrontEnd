@@ -16,9 +16,6 @@ function Order({ order }) {
 
   return (
     <div className="admin-orders-content-body-container-body-orders-order">
-      <div className="admin-orders-content-body-container-body-orders-order-seri">
-        #{order._id.substring(order._id.length - 5, order._id.length)}
-      </div>
       <div className="admin-orders-content-body-container-body-orders-order-customer">
         {order.account.information.name === ""
           ? order.account.nameDisplay
@@ -30,9 +27,23 @@ function Order({ order }) {
           currency: "VND",
         }).format(order.total)}
       </div>
+
       <div className="admin-orders-content-body-container-body-orders-order-date">
         {moment(order.createdAt).format("LTS")} -{" "}
         {moment(order.createdAt).format("L")}
+      </div>
+      <div className="admin-orders-content-body-container-body-orders-order-dateReceive">
+        {order.receiveDay === null ? (
+          ""
+        ) : (
+          <>
+            {moment(order.receiveDay).format("LTS")} -{" "}
+            {moment(order.receiveDay).format("L")}
+          </>
+        )}
+      </div>
+      <div className="admin-orders-content-body-container-body-orders-order-shipper">
+        {order.shipperName}
       </div>
       <div className="admin-orders-content-body-container-body-orders-order-status">
         <div
@@ -48,6 +59,8 @@ function Order({ order }) {
             ? "Đang vận chuyển"
             : order.status === "HANDLING"
             ? "Chờ xử lí"
+            : order.status === "WAITING"
+            ? "Chờ nhận hàng"
             : ""}
         </div>
       </div>

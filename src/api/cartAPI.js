@@ -22,7 +22,7 @@ const cartAPI = {
     return axiosClient.put(url, productDetailId);
   },
   payment(value) {
-    const url = "/order";
+    const url = "/order/payment-cash";
     return axiosClient.post(url, {
       listOrderDetail: value.listOrderDetail,
       name: value.name,

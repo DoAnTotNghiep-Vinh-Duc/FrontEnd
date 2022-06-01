@@ -6,21 +6,26 @@
     },
     {
         "id": 2,
+        "value":"WAITING",
+        "label": "Chờ nhận hàng"
+    },
+    {
+        "id": 3,
         "value":"DELIVERING",
         "label": "Đang vận chuyển"
     },
     {
-        "id": 3,
+        "id": 4,
         "value":"CANCELED",
         "label": "Đã bị hủy"
     },
     {
-        "id": 4,
+        "id": 5,
         "value":"DONE",
         "label": "Đã hoàn tất"
     },
     {
-        "id": 5,
+        "id": 6,
         "value":"All",
         "label": "Tất cả"
     }

@@ -56,44 +56,51 @@ function MyOrder(props) {
             <i className="bi bi-search"></i>
           </div>
         </div>
-        {listOrder.length ? (
-          <>
-            <div className="myOrder-listOrder-title">
-              <Tabs
-                value={value}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={handleChange}
-                aria-label="disabled tabs example"
-              >
-                <Tab
-                  value="HANDLING"
-                  label="chờ xử lí"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-                <Tab
-                  value="DELIVERING"
-                  label="đang vận chuyển"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-                <Tab
-                  value="DONE"
-                  label="đã giao"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-                <Tab
-                  value="CANCELED"
-                  label="đã hủy"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-                <Tab
-                  value="ALL"
-                  label="tất cả"
-                  style={{ minWidth: "20%", fontSize: "12px" }}
-                />
-              </Tabs>
-            </div>
-            <div className="myOrder-listOrder-title-list">
+
+        <div className="myOrder-listOrder-title">
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="disabled tabs example"
+          >
+            <Tab
+              value="HANDLING"
+              label="chờ xử lí"
+              style={{ minWidth: "16.5%", fontSize: "12px" }}
+            />
+            <Tab
+              value="WAITING"
+              label="chờ nhận hàng"
+              style={{ minWidth: "16.5%", fontSize: "12px" }}
+            />
+            <Tab
+              value="DELIVERING"
+              label="đang vận chuyển"
+              style={{ minWidth: "16.5%", fontSize: "12px" }}
+            />
+            <Tab
+              value="DONE"
+              label="đã giao"
+              style={{ minWidth: "16.5%", fontSize: "12px" }}
+            />
+            <Tab
+              value="CANCELED"
+              label="đã hủy"
+              style={{ minWidth: "16.5%", fontSize: "12px" }}
+            />
+            <Tab
+              value="ALL"
+              label="tất cả"
+              style={{ minWidth: "16%", fontSize: "12px" }}
+            />
+          </Tabs>
+        </div>
+
+        <div className="myOrder-listOrder-title-list">
+          {listOrder.length ? (
+            <>
               {listOrder.map((order) => {
                 return (
                   <div
@@ -121,6 +128,8 @@ function MyOrder(props) {
                               ? "Đang vận chuyển"
                               : order.status === "HANDLING"
                               ? "Chờ xử lí"
+                              : order.status === "WAITING"
+                              ? "Chờ nhận hàng"
                               : ""}
                           </p>
                         </div>
@@ -205,16 +214,16 @@ function MyOrder(props) {
                   </div>
                 );
               })}
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="myOrder-listOrder-notfound">
-              <img src={icon_order} alt="" />
-              <p>Chưa có đơn hàng</p>
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="myOrder-listOrder-notfound">
+                <img src={icon_order} alt="" />
+                <p>Chưa có đơn hàng</p>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

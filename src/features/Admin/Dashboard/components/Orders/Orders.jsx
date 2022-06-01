@@ -99,6 +99,8 @@ function Orders(props) {
                         ? "Đang vận chuyển"
                         : order.status === "HANDLING"
                         ? "Chờ xử lí"
+                        : order.status === "WAITING"
+                        ? "Chờ nhận hàng"
                         : ""}
                     </div>
                   </div>

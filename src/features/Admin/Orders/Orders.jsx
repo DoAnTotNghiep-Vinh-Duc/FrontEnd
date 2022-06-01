@@ -170,9 +170,6 @@ function Orders(props) {
             </div>
             <div className="admin-orders-content-body-container-body">
               <div className="admin-orders-content-body-container-body-header">
-                <div className="admin-orders-content-body-container-body-header-seri">
-                  MÃ HÓA ĐƠN
-                </div>
                 <div className="admin-orders-content-body-container-body-header-customer">
                   <div className="admin-orders-customer-icon">
                     {iconCustomer === "ASC" ? (
@@ -272,6 +269,12 @@ function Orders(props) {
                       )}
                     </i>
                   </div>
+                </div>
+                <div className="admin-orders-content-body-container-body-header-dateReceive">
+                  <p>NGÀY NHẬN HÀNG</p>
+                </div>
+                <div className="admin-orders-content-body-container-body-header-shipper">
+                  <p>NGƯỜI VẬN CHUYỂN</p>
                 </div>
                 <div className="admin-orders-content-body-container-body-header-status">
                   <p>TÌNH TRẠNG</p>

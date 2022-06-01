@@ -122,7 +122,9 @@ function MyOrderDetail(props) {
             >
               <div
                 className={`${"myOrderDetail-status-body-card"} ${
-                  myOrder?.status === "DELIVERING"
+                  myOrder?.status === "WAITING"
+                    ? "waiting"
+                    : myOrder?.status === "DELIVERING"
                     ? "shipping"
                     : myOrder?.status === "DONE"
                     ? "done"
@@ -137,6 +139,10 @@ function MyOrderDetail(props) {
                   <i className="bi bi-arrow-repeat"></i>
                 </div>
                 <div className="line-handling"></div>
+                <div className="myOrderDetail-status-body-card-waiting">
+                  <i className="bi bi-box2"></i>
+                </div>
+                <div className="line-waiting"></div>
                 <div className="myOrderDetail-status-body-card-shipping">
                   <i className="bi bi-truck"></i>
                 </div>
@@ -154,6 +160,9 @@ function MyOrderDetail(props) {
                 </div>
                 <div className="myOrderDetail-status-body-text-handling">
                   Chờ xử lý
+                </div>
+                <div className="myOrderDetail-status-body-text-waiting">
+                  Chờ nhận hàng
                 </div>
                 <div className="myOrderDetail-status-body-text-shipping">
                   Đang vận chuyển
@@ -198,6 +207,34 @@ function MyOrderDetail(props) {
                     {moment(myOrder?.createdAt).format("L")}
                   </span>
                 </div>
+
+                {myOrder.status === "DELIVERING" && (
+                  <div className="myOrderDetail-order-detail-side-text">
+                    <label htmlFor="">Ngày vận chuyển: </label>
+                    <span>
+                      {moment(myOrder?.deliveryDay).format("LTS")} -{" "}
+                      {moment(myOrder?.deliveryDay).format("L")}
+                    </span>
+                  </div>
+                )}
+                {myOrder.status === "DONE" && (
+                  <>
+                    <div className="myOrderDetail-order-detail-side-text">
+                      <label htmlFor="">Ngày vận chuyển: </label>
+                      <span>
+                        {moment(myOrder?.deliveryDay).format("LTS")} -{" "}
+                        {moment(myOrder?.deliveryDay).format("L")}
+                      </span>
+                    </div>
+                    <div className="myOrderDetail-order-detail-side-text">
+                      <label htmlFor="">Ngày nhận hàng: </label>
+                      <span>
+                        {moment(myOrder?.receiveDay).format("LTS")} -{" "}
+                        {moment(myOrder?.receiveDay).format("L")}
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className="myOrderDetail-table-title">CHI TIẾT HÓA ĐƠN</div>

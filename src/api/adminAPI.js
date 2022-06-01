@@ -212,6 +212,10 @@ const adminAPI = {
       },
     };
   },
+  addShipperToOrder(orderId, shipperId) {
+    const url = `/admin/order/add-shipper-to-order/${orderId}/${shipperId}`;
+    return axiosClient.put(url);
+  },
 
   //message
   getAllChat() {
@@ -237,6 +241,10 @@ const adminAPI = {
   createShipper(value) {
     const url = "/admin/shipper";
     return axiosClient.post(url, value);
+  },
+  getAllShipperToSend() {
+    const url = "/admin/shipper/get-all-shipper";
+    return axiosClient.get(url);
   },
   async getAllShipper(filters) {
     const url = "/admin/shipper/get-all-shipper";

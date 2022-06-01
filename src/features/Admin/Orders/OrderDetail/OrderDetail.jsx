@@ -1,9 +1,7 @@
 import Button from "@material-ui/core/Button";
-import { green } from "@material-ui/core/colors";
 import Dialog from "@material-ui/core/Dialog";
 import Paper from "@material-ui/core/Paper";
 import {
-  createTheme,
   makeStyles,
   ThemeProvider,
   useTheme,
@@ -30,6 +28,7 @@ import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import PrintOrder from "../PrintOrder/PrintOrder";
 import "./OrderDetail.scss";
+import Select from "react-select";
 
 moment.locale("vi");
 toast.configure();
@@ -53,12 +52,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const theme = createTheme({
-  palette: {
-    primary: green,
-  },
-});
-
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
@@ -74,49 +67,54 @@ function OrderDetail(props) {
   const classes = useStyles();
   const History = useHistory();
 
-  const [openPrintOrder, setOpenPrintOrder] = useState(false);
-
   const {
     params: { orderId },
   } = useRouteMatch();
 
+  const [openPrintOrder, setOpenPrintOrder] = useState(false);
+  const [cancelOrder, setCancelOrder] = useState(false);
   const [orderDetail, setOrderDetail] = useState({});
+  const [listShipper, setListShipper] = useState([]);
+  const [shipper, setShipper] = useState(undefined);
+  const [disable, setDisable] = useState(true);
+  let tempListShipper = [];
 
   useEffect(() => {
     (async () => {
       try {
         const response = await adminAPI.getOrderById(orderId);
-        setOrderDetail(response.data.data[0]);
+        setOrderDetail(response.data.data.order[0]);
+        setCancelOrder(response.data.data.canCancelOrder);
       } catch (error) {
         console.log(error);
       }
     })();
   }, [orderId]);
 
-  const handleAcceptOrder = () => {
+  useEffect(() => {
     (async () => {
       try {
-        const response = await adminAPI.nextStatus(orderId);
-        if (response.status === 204) {
-          toast.success("Nhận đơn hàng thành công", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 2000,
-            theme: "dark",
-          });
-          History.push("/admin/orders");
-        }
+        const response = await adminAPI.getAllShipperToSend();
+        setListShipper(response.data.data);
       } catch (error) {
         console.log(error);
       }
     })();
-  };
+  }, []);
 
-  const handleDoneOrder = () => {
+  listShipper.forEach((shipper) => {
+    tempListShipper.push({ label: shipper.nameDisplay, value: shipper._id });
+  });
+
+  const handleAcceptOrder = () => {
     (async () => {
       try {
-        const response = await adminAPI.nextStatus(orderId);
+        const response = await adminAPI.addShipperToOrder(
+          orderId,
+          shipper.value
+        );
         if (response.status === 204) {
-          toast.success("Đơn hàng giao hàng thành công", {
+          toast.success("Nhận đơn hàng thành công", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             theme: "dark",
@@ -154,6 +152,20 @@ function OrderDetail(props) {
   const handleClosePrintOrder = () => {
     setOpenPrintOrder(false);
   };
+
+  const handleSelectShipper = (newValue) => {
+    setShipper(newValue);
+  };
+
+  useEffect(() => {
+    if (shipper) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [shipper]);
+
+  console.log(orderDetail);
 
   return (
     <>
@@ -243,14 +255,48 @@ function OrderDetail(props) {
                     </p>
                   </div>
                 </div>
-                <div className="admin-orderDetail-infor-card">
+                <div
+                  className="admin-orderDetail-infor-card"
+                  style={{ width: "25%" }}
+                >
                   <div className="admin-orderDetail-infor-card-title">
-                    Ngày đặt hàng
+                    Sự kiện
                   </div>
                   <div className="admin-orderDetail-infor-card-content">
                     <p className="admin-orderDetail-infor-card-content-text">
-                      {moment(orderDetail.createdAt).format("LLLL")}
+                      Ngày đặt hàng:{" "}
+                      <b>
+                        {moment(orderDetail.createdAt).format("LTS")} -{" "}
+                        {moment(orderDetail.createdAt).format("L")}
+                      </b>
                     </p>
+                    {orderDetail.status === "DELIVERING" && (
+                      <p className="admin-orderDetail-infor-card-content-text">
+                        Ngày giao hàng:{" "}
+                        <b>
+                          {moment(orderDetail.deliveryDay).format("LTS")} -{" "}
+                          {moment(orderDetail.deliveryDay).format("L")}
+                        </b>
+                      </p>
+                    )}
+                    {orderDetail.status === "DONE" && (
+                      <>
+                        <p className="admin-orderDetail-infor-card-content-text">
+                          Ngày giao hàng:{" "}
+                          <b>
+                            {moment(orderDetail.deliveryDay).format("LTS")} -{" "}
+                            {moment(orderDetail.deliveryDay).format("L")}
+                          </b>
+                        </p>
+                        <p className="admin-orderDetail-infor-card-content-text">
+                          Ngày nhận hàng:{" "}
+                          <b>
+                            {moment(orderDetail.receiveDay).format("LTS")} -{" "}
+                            {moment(orderDetail.receiveDay).format("L")}
+                          </b>
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -266,7 +312,9 @@ function OrderDetail(props) {
               >
                 <div
                   className={`${"admin-orderDetail-status-body-card"} ${
-                    orderDetail.status === "DELIVERING"
+                    orderDetail.status === "WAITING"
+                      ? "waiting"
+                      : orderDetail.status === "DELIVERING"
                       ? "shipping"
                       : orderDetail.status === "DONE"
                       ? "done"
@@ -281,6 +329,10 @@ function OrderDetail(props) {
                     <i className="bi bi-arrow-repeat"></i>
                   </div>
                   <div className="line-handling"></div>
+                  <div className="admin-orderDetail-status-body-card-waiting">
+                    <i className="bi bi-box2"></i>
+                  </div>
+                  <div className="line-waiting"></div>
                   <div className="admin-orderDetail-status-body-card-shipping">
                     <i className="bi bi-truck"></i>
                   </div>
@@ -298,6 +350,9 @@ function OrderDetail(props) {
                   </div>
                   <div className="admin-orderDetail-status-body-text-handling">
                     Chờ xử lý
+                  </div>
+                  <div className="admin-orderDetail-status-body-text-waiting">
+                    Chờ nhận hàng
                   </div>
                   <div className="admin-orderDetail-status-body-text-shipping">
                     Đang vận chuyển
@@ -399,28 +454,76 @@ function OrderDetail(props) {
               </div>
             </div>
 
-            {orderDetail.status === "CANCELED" ? (
-              ""
-            ) : orderDetail.status === "DONE" ? (
-              ""
-            ) : (
+            {orderDetail.status === "WAITING" ? (
+              <div className="admin-orderDetail-shipper-container">
+                <div className="admin-orderDetail-shipper-container-title">
+                  Người vận chuyển:
+                  <span>
+                    <b>
+                      <i>{orderDetail.shipperName}</i>
+                    </b>
+                  </span>
+                </div>
+              </div>
+            ) : orderDetail.status === "DELIVERING" ? (
               <>
-                <div className="admin-orderDetail-btn">
-                  <div className="admin-orderDetail-btn-cancel">
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      className={classes.button}
-                      startIcon={<CancelIcon />}
-                      onClick={handleCancelOrder}
-                    >
-                      HỦY ĐƠN
-                    </Button>
+                <div className="admin-orderDetail-shipper-container">
+                  <div className="admin-orderDetail-shipper-container-title">
+                    Người vận chuyển:
+                    <span>
+                      <b>
+                        <i>{orderDetail.shipperName}</i>
+                      </b>
+                    </span>
                   </div>
-                  <div className="admin-orderDetail-btn-shipping">
-                    {orderDetail.status === "HANDLING" ? (
-                      <>
+                </div>
+              </>
+            ) : orderDetail.status === "DONE" ? (
+              <>
+                <div className="admin-orderDetail-shipper-container">
+                  <div className="admin-orderDetail-shipper-container-title">
+                    Người vận chuyển:
+                    <span>
+                      <b>
+                        <i>{orderDetail.shipperName}</i>
+                      </b>
+                    </span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+
+            {orderDetail.status === "HANDLING" ? (
+              <>
+                {!cancelOrder && (
+                  <>
+                    <div className="admin-orderDetail-shipper-container">
+                      <label htmlFor="admin-orderDetail-shipper-title">
+                        Người vận chuyển:
+                      </label>
+                      <div className="admin-orderDetail-shipper">
+                        <Select
+                          options={tempListShipper}
+                          onChange={handleSelectShipper}
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-orderDetail-btn">
+                      <div className="admin-orderDetail-btn-cancel">
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="large"
+                          className={classes.button}
+                          startIcon={<CancelIcon />}
+                          onClick={handleCancelOrder}
+                        >
+                          HỦY ĐƠN
+                        </Button>
+                      </div>
+                      <div className="admin-orderDetail-btn-shipping">
                         <Button
                           variant="contained"
                           color="primary"
@@ -428,31 +531,17 @@ function OrderDetail(props) {
                           className={classes.button}
                           startIcon={<LocalShippingIcon />}
                           onClick={handleAcceptOrder}
+                          disabled={disable}
                         >
                           CHẤP NHẬN
                         </Button>
-                      </>
-                    ) : orderDetail.status === "DELIVERING" ? (
-                      <>
-                        <ThemeProvider theme={theme}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            className={classes.margin}
-                            startIcon={<CheckCircleOutlineIcon />}
-                            onClick={handleDoneOrder}
-                          >
-                            HOÀN THÀNH
-                          </Button>
-                        </ThemeProvider>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
+            ) : (
+              <></>
             )}
           </div>
         </div>
