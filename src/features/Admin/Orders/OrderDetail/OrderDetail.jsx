@@ -1,12 +1,7 @@
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Paper from "@material-ui/core/Paper";
-import {
-  makeStyles,
-  ThemeProvider,
-  useTheme,
-  withStyles,
-} from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -15,20 +10,19 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import CancelIcon from "@material-ui/icons/Cancel";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import LocalPrintshopIcon from "@material-ui/icons/LocalPrintshop";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import moment from "moment";
 import "moment/locale/vi";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import Select from "react-select";
 import { toast } from "react-toastify";
 import adminAPI from "../../../../api/adminAPI";
 import Header from "../../components/Header/Header";
 import NavBars from "../../components/NavBars/NavBars";
 import PrintOrder from "../PrintOrder/PrintOrder";
 import "./OrderDetail.scss";
-import Select from "react-select";
 
 moment.locale("vi");
 toast.configure();
@@ -165,8 +159,6 @@ function OrderDetail(props) {
     }
   }, [shipper]);
 
-  console.log(orderDetail);
-
   return (
     <>
       <div className="admin-orderDetail">
@@ -265,35 +257,25 @@ function OrderDetail(props) {
                   <div className="admin-orderDetail-infor-card-content">
                     <p className="admin-orderDetail-infor-card-content-text">
                       Ngày đặt hàng:{" "}
-                      <b>
-                        {moment(orderDetail.createdAt).format("LTS")} -{" "}
-                        {moment(orderDetail.createdAt).format("L")}
-                      </b>
+                      {moment(orderDetail.createdAt).format("LTS")} -{" "}
+                      {moment(orderDetail.createdAt).format("L")}
                     </p>
                     {orderDetail.status === "DELIVERING" && (
                       <p className="admin-orderDetail-infor-card-content-text">
-                        Ngày giao hàng:{" "}
-                        <b>
-                          {moment(orderDetail.deliveryDay).format("LTS")} -{" "}
-                          {moment(orderDetail.deliveryDay).format("L")}
-                        </b>
+                        Ngày giao hàng: {orderDetail.deliveryDay.slice(11, 19)}{" "}
+                        - {moment(orderDetail.deliveryDay).format("L")}
                       </p>
                     )}
                     {orderDetail.status === "DONE" && (
                       <>
                         <p className="admin-orderDetail-infor-card-content-text">
                           Ngày giao hàng:{" "}
-                          <b>
-                            {moment(orderDetail.deliveryDay).format("LTS")} -{" "}
-                            {moment(orderDetail.deliveryDay).format("L")}
-                          </b>
+                          {orderDetail.deliveryDay.slice(11, 19)} -{" "}
+                          {moment(orderDetail.deliveryDay).format("L")}
                         </p>
                         <p className="admin-orderDetail-infor-card-content-text">
-                          Ngày nhận hàng:{" "}
-                          <b>
-                            {moment(orderDetail.receiveDay).format("LTS")} -{" "}
-                            {moment(orderDetail.receiveDay).format("L")}
-                          </b>
+                          Ngày nhận hàng: {orderDetail.receiveDay.slice(11, 19)}{" "}
+                          - {moment(orderDetail.receiveDay).format("L")}
                         </p>
                       </>
                     )}

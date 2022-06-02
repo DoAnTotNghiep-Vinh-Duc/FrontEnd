@@ -9,6 +9,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import GradeIcon from "@material-ui/icons/Grade";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -210,9 +211,9 @@ function MyOrderDetail(props) {
 
                 {myOrder.status === "DELIVERING" && (
                   <div className="myOrderDetail-order-detail-side-text">
-                    <label htmlFor="">Ngày vận chuyển: </label>
+                    <label htmlFor="">Ngày giao hàng: </label>
                     <span>
-                      {moment(myOrder?.deliveryDay).format("LTS")} -{" "}
+                      {myOrder.deliveryDay.slice(11, 19)}{" "}
                       {moment(myOrder?.deliveryDay).format("L")}
                     </span>
                   </div>
@@ -220,16 +221,16 @@ function MyOrderDetail(props) {
                 {myOrder.status === "DONE" && (
                   <>
                     <div className="myOrderDetail-order-detail-side-text">
-                      <label htmlFor="">Ngày vận chuyển: </label>
+                      <label htmlFor="">Ngày giao hàng: </label>
                       <span>
-                        {moment(myOrder?.deliveryDay).format("LTS")} -{" "}
+                        {myOrder.deliveryDay.slice(11, 19)}{" "}
                         {moment(myOrder?.deliveryDay).format("L")}
                       </span>
                     </div>
                     <div className="myOrderDetail-order-detail-side-text">
                       <label htmlFor="">Ngày nhận hàng: </label>
                       <span>
-                        {moment(myOrder?.receiveDay).format("LTS")} -{" "}
+                        {myOrder.receiveDay.slice(11, 19)}{" "}
                         {moment(myOrder?.receiveDay).format("L")}
                       </span>
                     </div>
@@ -307,6 +308,13 @@ function MyOrderDetail(props) {
 
           {myOrder.status === "DONE" && (
             <div className="myOrderDetail-comment">
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<CheckCircleOutlineIcon />}
+              >
+                xác nhận giao hàng thành công
+              </Button>
               <Button
                 variant="outlined"
                 color="secondary"

@@ -252,6 +252,15 @@
                         }
                     }
                     .shipping {
+                        .line-handling {
+                            border-top: 3px solid #88aaf3;
+                        }
+                        .admin-orderDetail-status-body-card-waiting {
+                            background-color: #88aaf3;
+                            i {
+                                color: white;
+                            }
+                        }
                         .line-waiting {
                             border-top: 3px solid #88aaf3;
                         }
@@ -264,6 +273,15 @@
                     }
                     .done {
                         .line-handling {
+                            border-top: 3px solid #88aaf3;
+                        }
+                        .admin-orderDetail-status-body-card-waiting {
+                            background-color: #88aaf3;
+                            i {
+                                color: white;
+                            }
+                        }
+                        .line-waiting {
                             border-top: 3px solid #88aaf3;
                         }
                         .admin-orderDetail-status-body-card-shipping {

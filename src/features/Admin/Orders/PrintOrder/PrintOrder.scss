@@ -1,9 +1,41 @@
 .print-order {
+    font-family: "Josefin Sans", sans-serif;
     width: 100%;
     height: auto;
     border: 1px solid rgba($color: gray, $alpha: 0.3);
     padding: 20px;
     margin-bottom: 50px;
+    .print-order-company {
+        width: 100%;
+        height: auto;
+        display: flex;
+        .print-order-company-left {
+            margin-right: 10px;
+            .print-order-company-text {
+                margin-bottom: 10px;
+            }
+        }
+        .print-order-company-right {
+            font-weight: bold;
+            .print-order-company-text {
+                margin-bottom: 10px;
+            }
+        }
+    }
+    .print-order-title {
+        width: 100%;
+        height: auto;
+        .print-order-title-text {
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .print-order-title-date {
+            width: 100%;
+            text-align: center;
+        }
+    }
     .print-order-logo {
         width: 100%;
         height: 50px;
@@ -39,7 +71,6 @@
         }
     }
     .print-table-title {
-        margin-top: 30px;
         width: 100%;
         height: 50px;
         background-color: #f7f7f7;
@@ -102,5 +133,23 @@
                 align-items: center;
             }
         }
+    }
+    .print-order-dateSignal {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 50px;
+    }
+    .print-order-Signal {
+        margin-top: 10px;
+        margin-bottom: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: bold;
+        padding: 0 50px;
     }
 }

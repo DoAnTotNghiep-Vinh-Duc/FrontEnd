@@ -62,7 +62,7 @@ function PrintOrder(props) {
     (async () => {
       try {
         const response = await adminAPI.getOrderById(orderId);
-        setOrderDetail(response.data.data[0]);
+        setOrderDetail(response.data.data.order[0]);
       } catch (error) {
         console.log(error);
       }
@@ -73,6 +73,29 @@ function PrintOrder(props) {
     render() {
       return (
         <div className="print-order">
+          <div className="print-order-company">
+            <div className="print-order-company-left">
+              <div className="print-order-company-text">Tên cửa hàng</div>
+              <div className="print-order-company-text">Địa chỉ</div>
+              <div className="print-order-company-text">Số điện thoại</div>
+            </div>
+            <div className="print-order-company-right">
+              <div className="print-order-company-text">: LemonShop</div>
+              <div className="print-order-company-text">
+                : 12 Nguyễn Văn Bảo, Phường 4, Quận Gò Vấp, TP. Hồ Chí Minh
+              </div>
+              <div className="print-order-company-text">: 0359 806 666</div>
+            </div>
+          </div>
+          <div className="print-order-title">
+            <div className="print-order-title-text">PHIẾU GIAO HÀNG</div>
+            <div className="print-order-title-date">
+              <span>
+                {moment(new Date()).format("LTS")} -{" "}
+                {moment(new Date()).format("L")}
+              </span>
+            </div>
+          </div>
           <div className="print-order-logo">
             <p>Lemon</p>
           </div>
@@ -101,7 +124,10 @@ function PrintOrder(props) {
               </div>
               <div className="print-order-detail-side-text">
                 <label htmlFor="">Ngày đặt hàng: </label>
-                <span> {moment(orderDetail.createdAt).format("L")}</span>
+                <span>
+                  {moment(orderDetail.createdAt).format("LTS")} -{" "}
+                  {moment(orderDetail.createdAt).format("L")}
+                </span>
               </div>
             </div>
           </div>
@@ -184,6 +210,15 @@ function PrintOrder(props) {
                 }).format(orderDetail.total)}
               </div>
             </div>
+          </div>
+          <div className="print-order-dateSignal">
+            <span>Ngày ........ </span>
+            <span>tháng ........ </span>
+            <span>năm 2022 </span>
+          </div>
+          <div className="print-order-Signal">
+            <div className="print-order-Signal-customer">Người nhận hàng</div>
+            <div className="print-order-Signal-shipper">Người giao hàng</div>
           </div>
         </div>
       );

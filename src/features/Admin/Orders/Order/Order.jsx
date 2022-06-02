@@ -37,7 +37,7 @@ function Order({ order }) {
           ""
         ) : (
           <>
-            {moment(order.receiveDay).format("LTS")} -{" "}
+            {order.receiveDay.slice(11, 19)} -{" "}
             {moment(order.receiveDay).format("L")}
           </>
         )}
