@@ -1,11 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 Shipper.propTypes = {
   shipper: PropTypes.object,
 };
 
 function Shipper({ shipper }) {
+  const history = useHistory();
+
+  const handleViewDetail = () => {
+    history.push(`${history.location.pathname}/${shipper._id}`);
+  };
+
   return (
     <div className="admin-shipper-content-body-container-body-shippers-item">
       <div className="admin-shipper-content-body-container-body-shippers-item-avatar">
@@ -28,7 +35,7 @@ function Shipper({ shipper }) {
         {shipper.information.district} {shipper.information.city}
       </div>
       <div className="admin-shipper-content-body-container-body-shippers-item-action">
-        <i className="bi bi-eye"></i>
+        <i className="bi bi-eye" onClick={handleViewDetail}></i>
       </div>
     </div>
   );

@@ -262,6 +262,15 @@ const adminAPI = {
       },
     };
   },
+  getShipperDetail(accountId, statusOrder) {
+    const url = "/admin/order/get-shipper-order";
+    return axiosClient.get(url, {
+      params: {
+        accountId,
+        statusOrder,
+      },
+    });
+  },
 };
 
 export default adminAPI;
