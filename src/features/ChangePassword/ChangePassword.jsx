@@ -16,6 +16,7 @@ import userAPI from "../../api/userAPI";
 import NavbarUser from "../../components/NavBarUser/NavbarUser";
 import PasswordField from "../../form-control/PasswordField";
 import "./ChangePassword.scss";
+import iconChangePassword from "../../assets/images/changepassword.jpg";
 
 toast.configure();
 ChangePassword.propTypes = {};
@@ -112,10 +113,7 @@ function ChangePassword(props) {
       <div className="user-changePassword-container">
         <div className="user-changePassword-container-left">
           <div className="user-changePassword-container-left-image">
-            <img
-              src="https://cdni.iconscout.com/illustration/premium/thumb/concept-of-reset-lost-password-in-mobile-1886567-1598238.png"
-              alt=""
-            />
+            <img src={iconChangePassword} alt="" />
           </div>
         </div>
         <div className="user-changePassword-container-right">

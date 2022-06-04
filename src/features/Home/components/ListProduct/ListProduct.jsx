@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import productAPI from "../../../../api/productAPI";
 import "./ListProduct.scss";
 import Product from "./Product/Product";
@@ -6,6 +7,8 @@ import Product from "./Product/Product";
 ListProduct.propTypes = {};
 
 function ListProduct(props) {
+  const history = useHistory();
+
   const filters = [
     { value: 0, label: "Mới nhất" },
     { value: 1, label: "Bán chạy" },
@@ -57,6 +60,10 @@ function ListProduct(props) {
     })();
   }, []);
 
+  const handleViewMore = () => {
+    history.push("/products");
+  };
+
   return (
     <div className="home-products">
       <div className="home-products-title">Sản phẩm</div>
@@ -77,13 +84,15 @@ function ListProduct(props) {
         })}
       </div>
       <div className="home-products-list">
-        {listProduct.slice(0, 8).map((data) => {
+        {listProduct.slice(0, 16).map((data) => {
           return <Product product={data} key={data._id} />;
         })}
       </div>
       <div className="home-products-more">
         <div className="home-products-more-background">
-          <div className="home-products-more-title">Xem thêm</div>
+          <div className="home-products-more-title" onClick={handleViewMore}>
+            Xem thêm
+          </div>
           <div className="home-products-more-icon">
             <i className="bi bi-chevron-down"></i>
           </div>

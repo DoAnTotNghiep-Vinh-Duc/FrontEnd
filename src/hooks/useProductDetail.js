@@ -3,7 +3,6 @@ import productAPI from "../api/productAPI";
 
 export default function useProductDetail(productId) {
   const [product, setProduct] = useState({});
-  const [loading, setLoading] = useState(true);
   const [colorDetails, setColorDetails] = useState([]);
 
   useEffect(() => {

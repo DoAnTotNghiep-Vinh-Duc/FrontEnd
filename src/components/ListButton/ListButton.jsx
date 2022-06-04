@@ -61,7 +61,11 @@ function ListButton(props) {
           });
         }
       } catch (error) {
-        console.log(error);
+        toast.error("Chưa đăng nhập", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: false,
+          theme: "dark",
+        });
       }
     })();
   };
@@ -105,11 +109,13 @@ function ListButton(props) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
         maxWidth="lg"
+        disableEscapeKeyDown={true}
+        disableBackdropClick={true}
       >
-        {/* <QuickView
+        <QuickView
           closeQuickView={handleClose}
           productSelected={productSelected}
-        /> */}
+        />
       </Dialog>
     </>
   );

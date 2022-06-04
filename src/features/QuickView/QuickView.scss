@@ -230,6 +230,13 @@
                     background-color: #fb2e86;
                 }
             }
+            .disable {
+                opacity: 0.65;
+                cursor: not-allowed;
+                &:hover {
+                    background-color: #1a0b5b;
+                }
+            }
         }
         .quickview-details {
             margin-top: 20px;

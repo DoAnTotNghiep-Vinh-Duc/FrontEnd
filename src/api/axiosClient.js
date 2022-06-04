@@ -76,6 +76,11 @@ axiosClient.interceptors.response.use(
       const error = data.message;
       return Promise.reject(error);
     }
+    if (config.url === "/favorite/add-favorite" && status === 403) {
+      const error = data.error.message;
+      return Promise.reject(error);
+    }
+
     if (config.url === "/cart/decrease-quantity" && status === 400) {
       const error = data.message;
       return Promise.reject(error);
