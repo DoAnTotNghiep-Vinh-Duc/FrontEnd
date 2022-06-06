@@ -243,7 +243,7 @@ function OrderDetail(props) {
                     <p className="admin-orderDetail-infor-card-content-text">
                       {orderDetail.typePayment === "CASH"
                         ? "Thanh toán khi nhận hàng"
-                        : "Thanh toán bằng thẻ VISA"}
+                        : "Thanh toán paypal"}
                     </p>
                   </div>
                 </div>
