@@ -110,7 +110,6 @@ function ListButton(props) {
         aria-describedby="alert-dialog-slide-description"
         maxWidth="lg"
         disableEscapeKeyDown={true}
-        disableBackdropClick={true}
       >
         <QuickView
           closeQuickView={handleClose}

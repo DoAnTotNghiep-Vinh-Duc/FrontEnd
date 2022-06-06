@@ -9,7 +9,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import GradeIcon from "@material-ui/icons/Grade";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -308,13 +307,6 @@ function MyOrderDetail(props) {
 
           {myOrder.status === "DONE" && (
             <div className="myOrderDetail-comment">
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<CheckCircleOutlineIcon />}
-              >
-                xác nhận giao hàng thành công
-              </Button>
               <Button
                 variant="outlined"
                 color="secondary"
